@@ -9,7 +9,8 @@ import {
   ItemChat,
   ListFriend,
   ItemFriend,
+  ListGroup,
 } from './screens';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => () => <ListFriend />);
+AppRegistry.registerComponent(appName, () => () => <ListGroup />);
