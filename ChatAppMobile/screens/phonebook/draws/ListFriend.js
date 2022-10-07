@@ -113,24 +113,24 @@ function ListFriend(props) {
             <Image
               source={images.addfriend}
               style={{
-                height: 40,
-                width: 40,
+                height: 35,
+                width: 35,
                 backgroundColor: 'blue',
                 borderRadius: 5,
                 marginTop: 10,
                 marginLeft: 13,
               }}
             />
-            <Text style={{color: 'white', fontSize: 15, margin: 15}}>
+            <Text style={{color: 'white', fontSize: 16, margin: 15}}>
               Lời mời kết bạn
             </Text>
           </View>
           <View style={{flexDirection: 'row', marginBottom: 15}}>
             <Image
-              source={images.addfriend}
+              source={images.listfriend}
               style={{
-                height: 40,
-                width: 40,
+                height: 35,
+                width: 35,
                 backgroundColor: 'blue',
                 borderRadius: 5,
                 marginTop: 10,
@@ -141,7 +141,7 @@ function ListFriend(props) {
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 15,
+                  fontSize: 16,
                   marginStart: 15,
                   marginTop: 10,
                 }}>

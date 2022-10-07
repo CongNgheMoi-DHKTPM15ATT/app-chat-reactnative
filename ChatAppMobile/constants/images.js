@@ -9,4 +9,5 @@ export default {
   phone: require('../assets/phone.png'),
   video: require('../assets/video.png'),
   addfriend: require('../assets/friend.png'),
+  listfriend: require('../assets/list.png'),
 };
