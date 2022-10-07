@@ -10,24 +10,27 @@ import {images} from '../../../constants';
 function ItemChat(props) {
   let {title, content, image, time} = props.chat;
   const {onPress} = props;
+  const {index} = props;
   return (
     <View
       style={{
-        backgroundColor: '#202124',
+        backgroundColor: index == 0 ? 'black' : '#202124',
       }}>
       <View style={{flexDirection: 'row', padding: 15}}>
         <Image
           source={image}
-          style={{height: 60, width: 60, borderRadius: 100}}></Image>
+          style={{height: 50, width: 50, borderRadius: 100}}></Image>
         <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
             <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
               style={{
                 color: 'white',
                 paddingHorizontal: 15,
                 paddingVertical: 5,
-                fontSize: 15,
-                width: 210,
+                fontSize: 13,
+                width: 230,
               }}>
               {title}
             </Text>
@@ -35,20 +38,37 @@ function ItemChat(props) {
             <Image
               source={images.notification}
               style={{
-                height: 20,
-                width: 20,
+                height: 15,
+                width: 15,
               }}
             />
-            <Text style={{color: 'white', paddingHorizontal: 5, opacity: 0.5}}>
+            <Text
+              style={{
+                color: 'white',
+                paddingHorizontal: 5,
+                opacity: 0.5,
+                fontSize: 12,
+              }}>
               {time}
             </Text>
           </View>
-          <Text style={{color: 'white', paddingHorizontal: 15, opacity: 0.5}}>
-            {content}
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{color: 'white', paddingHorizontal: 15, opacity: 0.5}}>
+              {content}
+            </Text>
+          </View>
         </View>
       </View>
-      <View style={{height: 1, backgroundColor: 'gray', opacity: 0.2}}></View>
+      <View
+        style={{
+          height: 1,
+          backgroundColor: 'gray',
+          opacity: 0.2,
+          marginStart: 80,
+        }}></View>
     </View>
   );
 }
