@@ -59,9 +59,10 @@ function ChatActivity(props) {
   return (
     <FlatList
       data={chat}
-      renderItem={({item}) => (
+      renderItem={({item, index}) => (
         <ItemChat
           chat={item}
+          index={index}
           onPress={() => {
             alert(`name is: ${item.title}`);
           }}

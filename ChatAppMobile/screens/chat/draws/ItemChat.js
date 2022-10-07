@@ -10,10 +10,11 @@ import {images} from '../../../constants';
 function ItemChat(props) {
   let {title, content, image, time} = props.chat;
   const {onPress} = props;
+  const {index} = props;
   return (
     <View
       style={{
-        backgroundColor: '#202124',
+        backgroundColor: index == 0 ? 'black' : '#202124',
       }}>
       <View style={{flexDirection: 'row', padding: 15}}>
         <Image
@@ -22,6 +23,8 @@ function ItemChat(props) {
         <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
             <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
               style={{
                 color: 'white',
                 paddingHorizontal: 15,
