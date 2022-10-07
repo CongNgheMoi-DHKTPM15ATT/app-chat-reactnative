@@ -9,4 +9,11 @@ export default {
   phone: require('../assets/phone.png'),
   video: require('../assets/video.png'),
   addfriend: require('../assets/friend.png'),
+  listfriend: require('../assets/list.png'),
+  group: require('../assets/group.png'),
+  celendar: require('../assets/calendar.png'),
+  clock: require('../assets/clock.png'),
+  nosignal: require('../assets/no-signal.png'),
+  post: require('../assets/post.png'),
+  sort: require('../assets/sort.png'),
 };
