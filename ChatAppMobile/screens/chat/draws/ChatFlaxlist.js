@@ -38,7 +38,8 @@ function ChatActivity(props) {
     },
     {
       title: 'DHDTMT17ATT-Hệ thống máy tính',
-      content: '[File] bai tap html.docx',
+      content:
+        '[File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx',
       image: images.item_chat3,
       time: '23 giờ',
     },
