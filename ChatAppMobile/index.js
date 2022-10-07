@@ -10,7 +10,8 @@ import {
   ListFriend,
   ItemFriend,
   ListGroup,
+  MyProfile,
 } from './screens';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => () => <ListGroup />);
+AppRegistry.registerComponent(appName, () => () => <MyProfile />);
