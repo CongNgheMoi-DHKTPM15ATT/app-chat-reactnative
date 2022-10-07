@@ -16,4 +16,10 @@ export default {
   nosignal: require('../assets/no-signal.png'),
   post: require('../assets/post.png'),
   sort: require('../assets/sort.png'),
+  avatar: require('../assets/friend_item2.jpg'),
+  update: require('../assets/transaction.png'),
+  qr: require('../assets/qr-code.png'),
+  cloud2: require('../assets/cloud2.png'),
+  shield: require('../assets/shield.png'),
+  padlock: require('../assets/padlock.png'),
 };
