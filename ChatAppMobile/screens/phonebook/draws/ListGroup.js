@@ -94,7 +94,7 @@ function ListGroup(props) {
                 color: 'white',
                 fontSize: 13,
                 fontWeight: 'bold',
-                marginHorizontal: 20,
+                marginHorizontal: 15,
                 marginTop: 10,
               }}>
               Tính năng nổi bậc
