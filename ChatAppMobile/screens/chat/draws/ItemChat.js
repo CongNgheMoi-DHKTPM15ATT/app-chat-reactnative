@@ -16,7 +16,7 @@ function ItemChat(props) {
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: index == 0 ? 'black' : '#202124',
+        backgroundColor: '#202124',
       }}>
       <View style={{flexDirection: 'row', padding: 15}}>
         <Image
