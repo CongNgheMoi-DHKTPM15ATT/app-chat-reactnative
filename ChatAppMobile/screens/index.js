@@ -5,6 +5,7 @@ import ListFriend from './phonebook/draws/ListFriend';
 import ItemFriend from './phonebook/draws/ItemFriend';
 import ListGroup from './phonebook/draws/ListGroup';
 import MyProfile from './profile/MyProfile';
+import ChatScreen from './messenger/ChatScreen';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -13,4 +14,5 @@ export {
   ItemFriend,
   ListGroup,
   MyProfile,
+  ChatScreen,
 };

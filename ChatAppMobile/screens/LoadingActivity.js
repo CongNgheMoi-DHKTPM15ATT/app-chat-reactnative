@@ -22,7 +22,7 @@ function LoadingActivity(props) {
           color: 'white',
           fontWeight: 'bold',
         }}>
-        NALO
+        NULO
       </Text>
     </View>
   );
