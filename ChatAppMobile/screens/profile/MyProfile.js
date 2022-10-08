@@ -27,25 +27,40 @@ function MyProfile(props) {
             <Text style={{fontSize: 18, color: 'white', marginLeft: 15}}>
               A N H T H Ư
             </Text>
-            <Text style={{fontSize: 13, color: 'white', marginLeft: 15}}>
+            <Text
+              style={{
+                fontSize: 13,
+                color: 'white',
+                marginLeft: 15,
+                opacity: 0.5,
+              }}>
               Xem trang cá nhân
             </Text>
           </View>
           <View style={{flex: 1}}></View>
           <Image
             source={images.update}
-            style={{height: 25, width: 25, margin: 10}}></Image>
+            style={{height: 25, width: 25, margin: 10}}
+          />
         </View>
       </View>
       <View style={{height: 10, backgroundColor: 'black'}}></View>
       <View
         style={{flex: 20, backgroundColor: '#202124', flexDirection: 'column'}}>
         <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', padding: 15}}>
+          style={{
+            justifyContent: 'center',
+            paddingLeft: 25,
+            paddingTop: 10,
+            marginBottom: 15,
+          }}>
           <View style={{flexDirection: 'row'}}>
-            <Image source={images.qr} style={{height: 40, width: 40}}></Image>
+            <Image
+              source={images.qr}
+              style={{height: 40, width: 40, marginLeft: 5}}
+            />
             <View style={{marginLeft: 15}}>
-              <Text style={{color: 'white', fontSize: 16}}>Ví QR</Text>
+              <Text style={{color: 'white', fontSize: 16}}>Cloud của tôi</Text>
               <Text style={{color: 'white', fontSize: 13, opacity: 0.5}}>
                 Lưu trữ và xuất trình các mã QR quan trọng
               </Text>
@@ -63,7 +78,8 @@ function MyProfile(props) {
           <View style={{flexDirection: 'row'}}>
             <Image
               source={images.cloud2}
-              style={{height: 40, width: 40, marginLeft: 5}}></Image>
+              style={{height: 40, width: 40, marginLeft: 5}}
+            />
             <View style={{marginLeft: 15}}>
               <Text style={{color: 'white', fontSize: 16}}>Cloud của tôi</Text>
               <Text style={{color: 'white', fontSize: 13, opacity: 0.5}}>
@@ -82,9 +98,7 @@ function MyProfile(props) {
         }}>
         <TouchableOpacity style={{padding: 15, marginLeft: 15}}>
           <View style={{flexDirection: 'row'}}>
-            <Image
-              source={images.shield}
-              style={{height: 40, width: 40}}></Image>
+            <Image source={images.shield} style={{height: 40, width: 40}} />
             <View style={{marginLeft: 15}}>
               <Text style={{color: 'white', fontSize: 16, marginVertical: 10}}>
                 Tài khoản và bảo mật
@@ -100,9 +114,7 @@ function MyProfile(props) {
           }}></View>
         <TouchableOpacity style={{padding: 15, marginLeft: 15}}>
           <View style={{flexDirection: 'row'}}>
-            <Image
-              source={images.padlock}
-              style={{height: 40, width: 40}}></Image>
+            <Image source={images.padlock} style={{height: 40, width: 40}} />
             <View style={{marginLeft: 15}}>
               <Text style={{color: 'white', fontSize: 16, marginVertical: 5}}>
                 Quyền riêng tư
@@ -111,7 +123,7 @@ function MyProfile(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={{flex: 30, backgroundColor: 'black'}}></View>
+      <View style={{flex: 35, backgroundColor: 'black'}}></View>
     </View>
   );
 }
