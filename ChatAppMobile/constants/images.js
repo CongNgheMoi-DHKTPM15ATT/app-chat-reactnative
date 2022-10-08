@@ -22,4 +22,8 @@ export default {
   cloud2: require('../assets/cloud2.png'),
   shield: require('../assets/shield.png'),
   padlock: require('../assets/padlock.png'),
+  mess: require('../assets/mess.png'),
+  friendlist: require('../assets/friendlist.png'),
+  people: require('../assets/people.png'),
+  account: require('../assets/account.png'),
 };

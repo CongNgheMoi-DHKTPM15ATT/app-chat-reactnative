@@ -41,7 +41,7 @@ function ChatActivity(props) {
       numberOfChat: 5,
     },
     {
-      title: 'DHDTMT17ATT-Hệ thống máy tính',
+      title: 'DHDTMT17ATT-Hệ thống máy tính DHDTMT17ATT-Hệ thống máy tính',
       content:
         '[File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx',
       image: images.item_chat3,
