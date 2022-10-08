@@ -6,13 +6,14 @@ import {
   ImageBackground,
   TouchableOpacity,
   FlatList,
+  TextInput,
 } from 'react-native';
 import {UIHeader} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
 function ChatScreen(props) {
   const [isActive, setIsActive] = useState(false);
-  // const {title, image} = props.chat;
+  const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([
     {
       url: 'https://s120-ava-talk.zadn.vn/9/a/9/6/7/120/d091055bc64c43fbd496df5470d078b8.jpg',
@@ -53,7 +54,7 @@ function ChatScreen(props) {
   let {title, content, image, time, numberOfChat} = props.route.params.users;
   const {navigate, goBack} = props.navigation;
   return (
-    <View>
+    <View style={{flex: 1}}>
       <UIHeader
         leftIconName={'search'}
         rightIconName={'back'}
@@ -78,6 +79,49 @@ function ChatScreen(props) {
         )}
         keyExtractor={eachChat => eachChat.timeSend}
       />
+      <View
+        style={{
+          height: 50,
+          position: 'absolute',
+          flexDirection: 'row',
+          bottom: 0,
+          left: 0,
+          backgroundColor: '#202124',
+          right: 0,
+        }}>
+        <TextInput
+          placeholderTextColor={'white'}
+          autoCorrect={false}
+          placeholder="Tin nhắn"
+          onChangeText={text => {
+            setTypeText(text);
+          }}
+          value={typeText}
+          style={{
+            height: 60,
+            flex: 1,
+            marginEnd: 8,
+            borderRadius: 5,
+            opacity: 0.5,
+            color: 'white',
+            paddingStart: 60,
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            if (typeText.trim().length == 0) {
+              return;
+            }
+          }}>
+          <Image
+            source={images.send}
+            style={{
+              height: 25,
+              width: 25,
+              margin: 15,
+            }}></Image>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
