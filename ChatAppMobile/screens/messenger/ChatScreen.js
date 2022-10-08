@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Keyboard,
 } from 'react-native';
 import {UIHeader} from '../../components';
 import {images} from '../../constants';
@@ -112,6 +113,7 @@ function ChatScreen(props) {
             if (typeText.trim().length == 0) {
               return;
             }
+            Keyboard.dismiss();
           }}>
           {typeText.trim().length > 0 ? (
             <Image
