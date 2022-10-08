@@ -113,13 +113,17 @@ function ChatScreen(props) {
               return;
             }
           }}>
-          <Image
-            source={images.send}
-            style={{
-              height: 25,
-              width: 25,
-              margin: 15,
-            }}></Image>
+          {typeText.trim().length > 0 ? (
+            <Image
+              source={images.send}
+              style={{
+                height: 25,
+                width: 25,
+                margin: 15,
+              }}></Image>
+          ) : (
+            <View></View>
+          )}
         </TouchableOpacity>
       </View>
     </View>
