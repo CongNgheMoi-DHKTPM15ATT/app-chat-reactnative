@@ -123,7 +123,7 @@ function MyProfile(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={{flex: 35, backgroundColor: 'black'}}></View>
+      <View style={{flex: 25, backgroundColor: 'black'}}></View>
     </View>
   );
 }

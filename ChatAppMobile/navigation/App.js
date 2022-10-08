@@ -8,7 +8,11 @@ import {
   ImageBackground,
   FlatList,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -22,7 +26,7 @@ import UITag from './UITag';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
         initialRouteName="LoadingActivity"
         screenOptions={{
