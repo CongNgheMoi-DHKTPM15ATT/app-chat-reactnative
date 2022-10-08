@@ -8,8 +8,13 @@ import {
 } from 'react-native';
 import {colors, fontSizes} from '../constants';
 function LoadingActivity(props) {
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => {
+        navigate('UITag');
+      }}
       style={{
         flex: 1,
         backgroundColor: colors.background,
@@ -24,7 +29,7 @@ function LoadingActivity(props) {
         }}>
         NULO
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 export default LoadingActivity;
