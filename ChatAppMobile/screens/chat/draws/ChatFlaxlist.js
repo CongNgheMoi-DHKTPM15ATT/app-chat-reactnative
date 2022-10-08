@@ -81,7 +81,7 @@ function ChatActivity(props) {
     },
   ]);
   return (
-    <View>
+    <View style={{flex: 1}}>
       <UIHeader
         leftIconName={'search'}
         rightIconName={'QR'}
