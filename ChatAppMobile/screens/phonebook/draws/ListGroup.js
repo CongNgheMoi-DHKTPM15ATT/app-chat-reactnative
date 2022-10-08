@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import ItemChat from '../../chat/draws/ItemChat';
 import {images} from '../../../constants';
+import {UIHeader} from '../../../components';
 function ListGroup(props) {
   const [isActive, setIsActive] = useState(false);
   const [chat, setChat] = useState([
@@ -60,6 +61,15 @@ function ListGroup(props) {
   ]);
   return (
     <ScrollView>
+      <UIHeader
+        leftIconName={'search'}
+        rightIconName={'QR'}
+        onPressLeftIcon={() => {
+          alert('Left icon');
+        }}
+        onPressRightIcon={() => {
+          alert('Right icon');
+        }}></UIHeader>
       <View
         style={{flex: 1, flexDirection: 'column', backgroundColor: '#202124'}}>
         <View

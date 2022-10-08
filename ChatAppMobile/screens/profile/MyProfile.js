@@ -9,10 +9,20 @@ import {
   SectionList,
   ScrollView,
 } from 'react-native';
+import {UIHeader} from '../../components';
 import {images} from '../../constants';
 function MyProfile(props) {
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
+      <UIHeader
+        leftIconName={'search'}
+        rightIconName={'QR'}
+        onPressLeftIcon={() => {
+          alert('Left icon');
+        }}
+        onPressRightIcon={() => {
+          alert('Right icon');
+        }}></UIHeader>
       <View style={{flex: 13, backgroundColor: '#202124'}}>
         <View style={{flexDirection: 'row', margin: 15}}>
           <Image
@@ -124,7 +134,7 @@ function MyProfile(props) {
         </TouchableOpacity>
       </View>
       <View style={{flex: 25, backgroundColor: 'black'}}></View>
-    </View>
+    </ScrollView>
   );
 }
 export default MyProfile;

@@ -12,15 +12,15 @@ const screenOption = ({route}) => ({
   tabBarIcon: ({focused, color, size}) => {
     let screenName = route.name;
 
-    return screenName == 'Tin nhắn' ? (
+    return screenName == 'ChatFlaxlist' ? (
       <Image
         source={images.mess}
         style={{height: 20, width: 20, opacity: focused ? 0.5 : 1}}></Image>
-    ) : screenName == 'Danh bạ' ? (
+    ) : screenName == 'ListFriend' ? (
       <Image
         source={images.friendlist}
         style={{height: 20, width: 20, opacity: focused ? 0.5 : 1}}></Image>
-    ) : screenName == 'Khám phá' ? (
+    ) : screenName == 'ListGroup' ? (
       <Image
         source={images.people}
         style={{height: 20, width: 20, opacity: focused ? 0.5 : 1}}></Image>
@@ -34,10 +34,26 @@ const screenOption = ({route}) => ({
 function UITag(props) {
   return (
     <Tab.Navigator screenOptions={screenOption}>
-      <Tab.Screen name={'Tin nhắn'} component={ChatFlaxlist} />
-      <Tab.Screen name={'Danh bạ'} component={ListFriend} />
-      <Tab.Screen name={'Khám phá'} component={ListGroup} />
-      <Tab.Screen name={'Cá nhân'} component={MyProfile} />
+      <Tab.Screen
+        name={'ChatFlaxlist'}
+        options={{tabBarLabel: 'Tin nhắn'}}
+        component={ChatFlaxlist}
+      />
+      <Tab.Screen
+        name={'ListFriend'}
+        options={{tabBarLabel: 'Danh bạ'}}
+        component={ListFriend}
+      />
+      <Tab.Screen
+        name={'ListGroup'}
+        options={{tabBarLabel: 'Khám phá'}}
+        component={ListGroup}
+      />
+      <Tab.Screen
+        name={'MyProfile'}
+        options={{tabBarLabel: 'Cá nhân'}}
+        component={MyProfile}
+      />
     </Tab.Navigator>
   );
 }
