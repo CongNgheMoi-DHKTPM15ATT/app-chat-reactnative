@@ -112,6 +112,7 @@ function ChatScreen(props) {
             if (typeText.trim().length == 0) {
               return;
             }
+            setTypeText('');
           }}>
           {typeText.trim().length > 0 ? (
             <Image
