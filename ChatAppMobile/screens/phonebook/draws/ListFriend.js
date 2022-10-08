@@ -9,6 +9,7 @@ import {
   SectionList,
   ScrollView,
 } from 'react-native';
+import {UIHeader} from '../../../components';
 import {images} from '../../../constants';
 import ItemFriend from './ItemFriend';
 function ListFriend(props) {
@@ -102,6 +103,15 @@ function ListFriend(props) {
 
   return (
     <ScrollView>
+      <UIHeader
+        leftIconName={''}
+        rightIconName={''}
+        onPressLeftIcon={() => {
+          alert('Left icon');
+        }}
+        onPressRightIcon={() => {
+          alert('Right icon of list friend');
+        }}></UIHeader>
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View
           style={{

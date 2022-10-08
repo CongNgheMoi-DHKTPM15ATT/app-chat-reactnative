@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 import {images} from '../../../constants';
 import ItemChat from './ItemChat';
+import {UIHeader} from '../../../components';
 function ChatActivity(props) {
   const [isActive, setIsActive] = useState(false);
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
   const [chat, setChat] = useState([
     {
       title: 'Cloud của tôi',
@@ -78,19 +81,32 @@ function ChatActivity(props) {
     },
   ]);
   return (
-    <FlatList
-      data={chat}
-      renderItem={({item, index}) => (
-        <ItemChat
-          chat={item}
-          index={index}
-          onPress={() => {
-            alert(`name is: ${item.title}`);
-          }}
-        />
-      )}
-      keyExtractor={eachChat => eachChat.title}
-    />
+    <View>
+      <UIHeader
+        leftIconName={'search'}
+        rightIconName={'QR'}
+        onPressLeftIcon={() => {
+          alert('Left icon');
+        }}
+        onPressRightIcon={() => {
+          alert('Right icon');
+        }}></UIHeader>
+      <FlatList
+        data={chat}
+        renderItem={({item, index}) => (
+          <ItemChat
+            chat={item}
+            key={item.title}
+            index={index}
+            onPress={() => {
+              //alert(`name is: ${item.title}`);
+              navigate('Messenger', {users: item});
+            }}
+          />
+        )}
+        keyExtractor={eachChat => eachChat.title}
+      />
+    </View>
   );
 }
 export default ChatActivity;

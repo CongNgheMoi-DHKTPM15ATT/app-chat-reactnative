@@ -26,4 +26,7 @@ export default {
   friendlist: require('../assets/friendlist.png'),
   people: require('../assets/people.png'),
   account: require('../assets/account.png'),
+  icon_search: require('../assets/search.png'),
+  icon_menu: require('../assets/bonus.png'),
+  send: require('../assets/send.png'),
 };
