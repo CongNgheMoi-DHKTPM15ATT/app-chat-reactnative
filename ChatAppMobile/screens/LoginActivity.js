@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const axios = require('axios').default;
 function LoginActivity(props) {
   //state for validating
@@ -25,6 +26,7 @@ function LoginActivity(props) {
     isValidPass(pass) == true;
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+  const [account, setAccount] = useState([]);
   handleLogin = () => {
     const url = 'https://halo-chat.herokuapp.com/api/auth/login';
     const method = 'POST';
@@ -35,13 +37,20 @@ function LoginActivity(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        phone: phone,
+        //mot sua lại dang nhap bang sdt
+        user_name: phone,
         password: pass,
       }),
     })
       .then(res => res.json())
       .then(resJson => {
+        const currentUser = resJson.data;
         console.log(resJson.data);
+        alert(resJson);
+        AsyncStorage.setItem('user_id', currentUser._id);
+        AsyncStorage.setItem('phone', currentUser.phone);
+        AsyncStorage.setItem('user_name', currentUser.user_name);
+        // setAccount(resJson.data);
         navigate('UITag');
       });
     // alert(phone + ' ' + pass);
