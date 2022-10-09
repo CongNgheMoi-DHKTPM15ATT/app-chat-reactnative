@@ -26,7 +26,7 @@ function LoginActivity(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   handleLogin = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/auth/register';
+    const url = 'https://halo-chat.herokuapp.com/api/auth/login';
     const method = 'POST';
     fetch(url, {
       method,
@@ -35,13 +35,14 @@ function LoginActivity(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_name: phone,
+        phone: phone,
         password: pass,
       }),
     })
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
-        alert(resJson);
+        console.log(resJson.data);
+        navigate('UITag');
       });
     // alert(phone + ' ' + pass);
   };
@@ -117,7 +118,6 @@ function LoginActivity(props) {
             secureTextEntry={sercuPass}
             style={{paddingLeft: 15}}></TextInput>
           <View style={{flex: 1}}></View>
-
           {sercuPass == true ? (
             <TouchableOpacity
               style={{alignItems: 'flex-end', marginTop: 15, marginEnd: 15}}

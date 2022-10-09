@@ -24,7 +24,27 @@ function RegisterActivity(props) {
     isValidPass(pass) == true;
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
-
+  handleRegister = () => {
+    const url = 'https://halo-chat.herokuapp.com/api/auth/register';
+    const method = 'POST';
+    fetch(url, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: phone,
+        password: pass,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        console.log(resJson.data);
+        goBack();
+      });
+    // alert(phone + ' ' + pass);
+  };
   return (
     <ImageBackground source={images.background_login} style={{flex: 1}}>
       {/* <Text>{val}</Text> */}
@@ -151,6 +171,10 @@ function RegisterActivity(props) {
             borderRadius: 25,
             margin: 15,
             height: 50,
+          }}
+          onPress={() => {
+            // navigate('UITag');
+            this.handleRegister();
           }}>
           <Text style={{fontSize: fontSizes.h2, color: colors.second}}>
             Register

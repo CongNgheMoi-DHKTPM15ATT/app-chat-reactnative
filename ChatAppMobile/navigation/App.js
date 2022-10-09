@@ -36,11 +36,11 @@ function App(props) {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
         <Stack.Screen name={'LoginActivity'} component={LoginActivity} />
         <Stack.Screen name={'LoadingActivity'} component={LoadingActivity} />
         <Stack.Screen name={'UITag'} component={UITag} />
         <Stack.Screen name={'Messenger'} component={ChatScreen} />
+        <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
       </Stack.Navigator>
     </NavigationContainer>
   );
