@@ -29,4 +29,6 @@ export default {
   icon_search: require('../assets/search.png'),
   icon_menu: require('../assets/bonus.png'),
   send: require('../assets/send.png'),
+  background_login: require('../assets/background_login.jpg'),
+  icon_phone: require('../assets/call.png'),
 };
