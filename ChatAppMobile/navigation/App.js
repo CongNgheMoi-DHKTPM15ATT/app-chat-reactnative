@@ -22,6 +22,7 @@ import {
   ListGroup,
   MyProfile,
   ChatScreen,
+  LoginActivity,
 } from '../screens';
 import UITag from './UITag';
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,7 @@ function App(props) {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name={'LoginActivity'} component={LoginActivity} />
         <Stack.Screen name={'LoadingActivity'} component={LoadingActivity} />
         <Stack.Screen name={'UITag'} component={UITag} />
         <Stack.Screen name={'Messenger'} component={ChatScreen} />

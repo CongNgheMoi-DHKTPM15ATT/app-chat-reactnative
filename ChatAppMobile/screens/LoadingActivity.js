@@ -13,7 +13,7 @@ function LoadingActivity(props) {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigate('UITag');
+        navigate('LoginActivity');
       }}
       style={{
         flex: 1,
