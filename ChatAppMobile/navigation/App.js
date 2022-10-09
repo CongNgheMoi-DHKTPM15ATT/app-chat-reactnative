@@ -23,8 +23,10 @@ import {
   MyProfile,
   ChatScreen,
   LoginActivity,
+  RegisterActivity,
 } from '../screens';
 import UITag from './UITag';
+import {AuthProvider} from '../repositories/AuthContext';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -38,6 +40,7 @@ function App(props) {
         <Stack.Screen name={'LoadingActivity'} component={LoadingActivity} />
         <Stack.Screen name={'UITag'} component={UITag} />
         <Stack.Screen name={'Messenger'} component={ChatScreen} />
+        <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
       </Stack.Navigator>
     </NavigationContainer>
   );

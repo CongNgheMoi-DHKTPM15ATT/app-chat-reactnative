@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
+    "axios": "^1.1.2",
     "react": "18.1.0",
     "react-native": "0.70.2",
     "react-native-gifted-chat": "^1.0.4",

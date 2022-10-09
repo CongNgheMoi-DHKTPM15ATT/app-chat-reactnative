@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {images, fontSizes, colors} from '../constants';
 import {isValidPhone, isValidPass} from '../utils/Validation';
 import {
@@ -9,8 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-// const axios = require('axios').default;
-function LoginActivity(props) {
+function RegisterActivity(props) {
   //state for validating
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
@@ -25,8 +24,8 @@ function LoginActivity(props) {
     isValidPass(pass) == true;
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
-  handleLogin = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/auth/login';
+  handleRegister = () => {
+    const url = 'https://halo-chat.herokuapp.com/api/auth/register';
     const method = 'POST';
     fetch(url, {
       method,
@@ -42,12 +41,13 @@ function LoginActivity(props) {
       .then(res => res.json())
       .then(resJson => {
         console.log(resJson.data);
-        navigate('UITag');
+        goBack();
       });
     // alert(phone + ' ' + pass);
   };
   return (
     <ImageBackground source={images.background_login} style={{flex: 1}}>
+      {/* <Text>{val}</Text> */}
       <View
         style={{
           height: 100,
@@ -118,6 +118,7 @@ function LoginActivity(props) {
             secureTextEntry={sercuPass}
             style={{paddingLeft: 15}}></TextInput>
           <View style={{flex: 1}}></View>
+
           {sercuPass == true ? (
             <TouchableOpacity
               style={{alignItems: 'flex-end', marginTop: 15, marginEnd: 15}}
@@ -162,10 +163,6 @@ function LoginActivity(props) {
         </Text>
         <TouchableOpacity
           disabled={isValidationOk() == false}
-          onPress={() => {
-            // navigate('UITag');
-            this.handleLogin();
-          }}
           style={{
             backgroundColor:
               isValidationOk() == true ? '#283238' : colors.disable,
@@ -174,14 +171,18 @@ function LoginActivity(props) {
             borderRadius: 25,
             margin: 15,
             height: 50,
+          }}
+          onPress={() => {
+            // navigate('UITag');
+            this.handleRegister();
           }}>
           <Text style={{fontSize: fontSizes.h2, color: colors.second}}>
-            Login
+            Register
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigate('RegisterActivity');
+            navigate('LoginActivity');
           }}>
           <Text
             style={{
@@ -189,11 +190,11 @@ function LoginActivity(props) {
               color: 'black',
               alignSelf: 'center',
             }}>
-            Don't have an account? Sign-up
+            Have an account? Login now
           </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
   );
 }
-export default LoginActivity;
+export default RegisterActivity;
