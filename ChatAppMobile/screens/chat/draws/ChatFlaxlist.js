@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {images} from '../../../constants';
 import ItemChat from './ItemChat';
 import {UIHeader} from '../../../components';
@@ -14,6 +15,7 @@ function ChatActivity(props) {
   const [isActive, setIsActive] = useState(false);
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+  const [username, setUsername] = useState('');
   const [chat, setChat] = useState([
     {
       title: 'Cloud của tôi',
@@ -80,8 +82,15 @@ function ChatActivity(props) {
       numberOfChat: 100,
     },
   ]);
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_name').then(result => {
+      setUsername(result);
+    });
+  });
   return (
     <View style={{flex: 1}}>
+      <Text style={{color: 'white'}}>{username}</Text>
       <UIHeader
         leftIconName={'search'}
         rightIconName={'QR'}
