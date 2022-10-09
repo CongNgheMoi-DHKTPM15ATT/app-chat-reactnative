@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {images, fontSizes, colors} from '../constants';
 import {isValidPhone, isValidPass} from '../utils/Validation';
 import {
@@ -9,8 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-// const axios = require('axios').default;
-function LoginActivity(props) {
+function RegisterActivity(props) {
   //state for validating
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
@@ -25,28 +24,10 @@ function LoginActivity(props) {
     isValidPass(pass) == true;
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
-  handleLogin = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/auth/register';
-    const method = 'POST';
-    fetch(url, {
-      method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_name: phone,
-        password: pass,
-      }),
-    })
-      .then(res => res.text())
-      .then(resJson => {
-        alert(resJson);
-      });
-    // alert(phone + ' ' + pass);
-  };
+
   return (
     <ImageBackground source={images.background_login} style={{flex: 1}}>
+      {/* <Text>{val}</Text> */}
       <View
         style={{
           height: 100,
@@ -162,10 +143,6 @@ function LoginActivity(props) {
         </Text>
         <TouchableOpacity
           disabled={isValidationOk() == false}
-          onPress={() => {
-            // navigate('UITag');
-            this.handleLogin();
-          }}
           style={{
             backgroundColor:
               isValidationOk() == true ? '#283238' : colors.disable,
@@ -176,12 +153,12 @@ function LoginActivity(props) {
             height: 50,
           }}>
           <Text style={{fontSize: fontSizes.h2, color: colors.second}}>
-            Login
+            Register
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigate('RegisterActivity');
+            navigate('LoginActivity');
           }}>
           <Text
             style={{
@@ -189,11 +166,11 @@ function LoginActivity(props) {
               color: 'black',
               alignSelf: 'center',
             }}>
-            Don't have an account? Sign-up
+            Have an account? Login now
           </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
   );
 }
-export default LoginActivity;
+export default RegisterActivity;

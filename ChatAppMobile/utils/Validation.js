@@ -1,4 +1,4 @@
 //valid email
-export const isValidPhone = stringPhone => /^\d{10}$/.test(stringPhone);
+export const isValidPhone = stringPhone => /^\w{10}$/.test(stringPhone);
 // valid pass
 export const isValidPass = stringPass => stringPass.length >= 3;

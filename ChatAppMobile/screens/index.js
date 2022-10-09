@@ -7,6 +7,7 @@ import ListGroup from './phonebook/draws/ListGroup';
 import MyProfile from './profile/MyProfile';
 import ChatScreen from './messenger/ChatScreen';
 import LoginActivity from './LoginActivity';
+import RegisterActivity from './RegisterActivity';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -17,4 +18,5 @@ export {
   MyProfile,
   ChatScreen,
   LoginActivity,
+  RegisterActivity,
 };
