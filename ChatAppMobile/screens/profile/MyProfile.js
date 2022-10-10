@@ -9,9 +9,21 @@ import {
   SectionList,
   ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UIHeader} from '../../components';
 import {images} from '../../constants';
 function MyProfile(props) {
+  const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState('');
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_name').then(result => {
+      setUsername(result);
+    });
+    AsyncStorage.getItem('avatar').then(result => {
+      setAvatar(result);
+    });
+  });
   return (
     <ScrollView style={{flex: 1}}>
       <UIHeader
@@ -26,7 +38,9 @@ function MyProfile(props) {
       <View style={{flex: 13, backgroundColor: '#202124'}}>
         <View style={{flexDirection: 'row', margin: 15}}>
           <Image
-            source={images.avatar}
+            source={{
+              uri: avatar,
+            }}
             style={{
               height: 60,
               width: 60,
@@ -35,7 +49,7 @@ function MyProfile(props) {
             }}></Image>
           <View style={{flexDirection: 'column', margin: 5}}>
             <Text style={{fontSize: 18, color: 'white', marginLeft: 15}}>
-              A N H T H Ư
+              {username}
             </Text>
             <Text
               style={{
