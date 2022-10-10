@@ -46,8 +46,8 @@ function LoginActivity(props) {
       .then(resJson => {
         const currentUser = resJson.data;
         console.log(resJson.data);
-        alert(resJson);
-        AsyncStorage.setItem('user_id', currentUser._id);
+        alert(resJson.data.avatar);
+        AsyncStorage.setItem('avatar', currentUser.avatar);
         AsyncStorage.setItem('phone', currentUser.phone);
         AsyncStorage.setItem('user_name', currentUser.user_name);
         // setAccount(resJson.data);

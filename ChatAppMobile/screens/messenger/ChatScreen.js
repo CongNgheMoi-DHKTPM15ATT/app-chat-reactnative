@@ -46,7 +46,7 @@ function ChatScreen(props) {
     {
       url: 'https://s120-ava-talk.zadn.vn/9/a/9/6/7/120/d091055bc64c43fbd496df5470d078b8.jpg',
       isSender: false,
-      messenger: 'Ỉaaaaa',
+      messenger: 'Dạaaaa',
       timeSend: 1665243791,
       showUrl: true,
     },
