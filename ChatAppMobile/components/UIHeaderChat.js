@@ -54,6 +54,8 @@ function UIHeaderChat(props) {
         // onChangeText={text => {
         //   setSearchText(text);
         // }}
+        numberOfLines={1}
+        ellipsizeMode="tail"
         style={{
           height: 60,
           flex: 1,
@@ -65,7 +67,7 @@ function UIHeaderChat(props) {
           marginLeft: 5,
           fontSize: 18,
         }}>
-        ANTi
+        {title}
       </Text>
       {phoneRightIconName != undefined ? (
         <TouchableOpacity onPress={onPressPhoneRightIcon}>
