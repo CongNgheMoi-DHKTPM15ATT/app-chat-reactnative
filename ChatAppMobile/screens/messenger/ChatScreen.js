@@ -56,6 +56,7 @@ function ChatScreen(props) {
   return (
     <View style={{flex: 1}}>
       <UIHeaderChat
+        title={title}
         leftIconName={'search'}
         rightIconName={'back'}
         phoneRightIconName={'phone'}
