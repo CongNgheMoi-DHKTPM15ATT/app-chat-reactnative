@@ -1,2 +1,3 @@
 import UIHeader from './UIHeader';
-export {UIHeader};
+import UIHeaderChat from './UIHeaderChat';
+export {UIHeader, UIHeaderChat};

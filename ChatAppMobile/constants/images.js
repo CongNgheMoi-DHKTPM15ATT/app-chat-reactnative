@@ -31,4 +31,8 @@ export default {
   send: require('../assets/send.png'),
   background_login: require('../assets/background_login.jpg'),
   icon_phone: require('../assets/call.png'),
+  icon_menu2: require('../assets/outline_list_white_24dp.png'),
+  back: require('../assets/outline_arrow_back_white_24dp.png'),
+  phone2: require('../assets/outline_call_white_24dp.png'),
+  video_call: require('../assets/outline_videocam_white_24dp.png'),
 };
