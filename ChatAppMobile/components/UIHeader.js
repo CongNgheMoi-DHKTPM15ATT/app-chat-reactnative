@@ -53,7 +53,6 @@ function UIHeader(props) {
           flex: 1,
           marginEnd: 8,
           borderRadius: 5,
-          opacity: 0.5,
           color: 'white',
           paddingStart: 60,
         }}

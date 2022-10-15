@@ -8,7 +8,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import {UIHeader} from '../../components';
+import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
 function ChatScreen(props) {
@@ -55,15 +55,17 @@ function ChatScreen(props) {
   const {navigate, goBack} = props.navigation;
   return (
     <View style={{flex: 1}}>
-      <UIHeader
+      <UIHeaderChat
         leftIconName={'search'}
         rightIconName={'back'}
+        phoneRightIconName={'phone'}
+        videoRightIconName={'video'}
         onPressLeftIcon={() => {
           goBack();
         }}
-        onPressRightIcon={() => {
-          goBack();
-        }}></UIHeader>
+        onPressRightIcon={() => {}}
+        onPressPhoneRightIcon={() => {}}
+        onPressVideoRightIcon={() => {}}></UIHeaderChat>
       <FlatList
         data={chatHistory}
         renderItem={({item, index}) => (
@@ -102,7 +104,6 @@ function ChatScreen(props) {
             flex: 1,
             marginEnd: 8,
             borderRadius: 5,
-            opacity: 0.5,
             color: 'white',
             paddingStart: 60,
           }}
