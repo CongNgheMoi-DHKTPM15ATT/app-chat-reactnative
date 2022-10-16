@@ -46,12 +46,16 @@ function LoginActivity(props) {
       .then(resJson => {
         const currentUser = resJson.data;
         console.log(resJson.data);
-        alert(resJson.data.avatar);
+        alert(resJson.message);
         AsyncStorage.setItem('avatar', currentUser.avatar);
         AsyncStorage.setItem('phone', currentUser.phone);
         AsyncStorage.setItem('user_name', currentUser.user_name);
+        AsyncStorage.setItem('user_id', currentUser._id);
         // setAccount(resJson.data);
         navigate('UITag');
+      })
+      .catch(resJson => {
+        alert(resJson.message);
       });
     // alert(phone + ' ' + pass);
   };
