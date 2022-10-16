@@ -7,9 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {colors, fontSizes} from '../constants';
+
 function LoadingActivity(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('LoginActivity');
+    }, 5000);
+  }, []);
   return (
     <TouchableOpacity
       onPress={() => {
