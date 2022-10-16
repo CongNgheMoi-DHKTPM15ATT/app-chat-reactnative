@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {images} from '../../../constants';
 import ItemChat from './ItemChat';
 import {UIHeader} from '../../../components';
@@ -15,7 +15,47 @@ function ChatActivity(props) {
   const [isActive, setIsActive] = useState(false);
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
-
+  const [userId, setUser_id] = useState('');
+  const [data, setData] = useState([]);
+  // https://halo-chat.herokuapp.com/api/conversation
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
+  handleListConversation = () => {
+    const url = 'https://halo-chat.herokuapp.com/api/conversation';
+    const method = 'POST';
+    const id = userId;
+    console.log('User id là: ', id);
+    fetch(url, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: id,
+      }),
+    })
+      .then(res => res.text())
+      .then(resJson => {
+        const currentUser = resJson;
+        console.log(currentUser.conversations);
+        console.log(userId);
+        // setData(data);
+        alert(resJson);
+      })
+      .catch(resJson => {
+        alert(resJson);
+        // alert('okkk');
+        console.log(resJson);
+      });
+  };
+  useEffect(() => {
+    handleListConversation();
+  }, []);
   const [chat, setChat] = useState([
     {
       title: 'Cloud của tôi',
@@ -92,8 +132,9 @@ function ChatActivity(props) {
           alert('Left icon');
         }}
         onPressRightIcon={() => {
-          alert('Right icon');
+          handleListConversation();
         }}></UIHeader>
+      <Text style={{color: 'white'}}>{userId}</Text>
       <FlatList
         data={chat}
         renderItem={({item, index}) => (
