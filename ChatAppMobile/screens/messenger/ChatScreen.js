@@ -51,12 +51,12 @@ function ChatScreen(props) {
       showUrl: true,
     },
   ]);
-  let {title, content, image, time, numberOfChat} = props.route.params.users;
+  let {receiver, content, image, time, numberOfChat} = props.route.params.users;
   const {navigate, goBack} = props.navigation;
   return (
     <View style={{flex: 1}}>
       <UIHeaderChat
-        title={title}
+        title={receiver.nick_name}
         leftIconName={'search'}
         rightIconName={'back'}
         phoneRightIconName={'phone'}

@@ -8,8 +8,32 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {images} from '../../../constants';
+import moment from 'moment-feiertage';
 function ItemChat(props) {
-  let {receiver, content, image, time, numberOfChat, last_message} = props.chat;
+  let {
+    receiver,
+    content,
+    image,
+    time,
+    numberOfChat,
+    last_message,
+    seen_last_messages,
+  } = props.chat;
+  var formattedDate = moment(last_message.createdAt)
+    .utc()
+    .format('MM/DD/YY h:mm a');
+  getTimeOnChat = () => {
+    if (new Date().toLocaleString() !== formattedDate) {
+      console.log(new Date());
+      return (formattedDate = moment(last_message.createdAt)
+        .utc()
+        .format('MM/DD/YY'));
+    } else {
+      return (formattedDate = moment(last_message.createdAt)
+        .utc()
+        .format('h:mm a'));
+    }
+  };
   const {onPress} = props;
   const {index} = props;
   return (
@@ -47,11 +71,11 @@ function ItemChat(props) {
             <Text
               style={{
                 color: 'white',
-                paddingHorizontal: 5,
+                paddingHorizontal: 2,
                 opacity: 0.5,
-                fontSize: 12,
+                fontSize: 10,
               }}>
-              {time}
+              {getTimeOnChat()}
             </Text>
           </View>
           <View style={{width: 250, flexDirection: 'row'}}>
@@ -61,7 +85,7 @@ function ItemChat(props) {
               style={{
                 color: 'white',
                 paddingHorizontal: 15,
-                opacity: numberOfChat > 0 ? 1 : 0.5,
+                opacity: {seen_last_messages} ? 1 : 0.5,
                 width: 250,
               }}>
               {last_message.content}
