@@ -16,9 +16,10 @@ function LoginActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
   //state to store email/pass
-  const [phone, setPhone] = useState('');
-  const [pass, setPass] = useState('');
+  const [phone, setPhone] = useState('nguyenhainam_01');
+  const [pass, setPass] = useState('123456');
   const [sercuPass, setSercuPass] = useState(true);
+  const [userId, setUser_id] = useState('');
   const isValidationOk = () =>
     phone.length > 0 &&
     pass.length > 0 &&
@@ -51,6 +52,7 @@ function LoginActivity(props) {
         AsyncStorage.setItem('phone', currentUser.phone);
         AsyncStorage.setItem('user_name', currentUser.user_name);
         AsyncStorage.setItem('user_id', currentUser._id);
+        setUser_id(currentUser._id);
         // setAccount(resJson.data);
         navigate('UITag');
       })
@@ -59,6 +61,39 @@ function LoginActivity(props) {
       });
     // alert(phone + ' ' + pass);
   };
+  // handleListConversation = () => {
+  //   const url = 'https://halo-chat.herokuapp.com/api/conversation';
+  //   const method = 'POST';
+  //   const id = userId;
+  //   console.log('User id là: ', id);
+  //   fetch(url, {
+  //     method,
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       user_id: userId,
+  //     }),
+  //   })
+  //     .then(res => res.json())
+  //     .then(resJson => {
+  //       const currentUser = resJson.conversations;
+  //       console.log(currentUser.conversations);
+  //       AsyncStorage.setItem('data', JSON.stringify(currentUser));
+  //       // alert(currentUser.conversations);
+  //     })
+  //     .catch(resJson => {
+  //       alert(resJson);
+  //       // alert('okkk');
+  //       console.log(resJson);
+
+  //       // AsyncStorage.setItem('avatar', resJson.receiver.nick_name);
+  //       // AsyncStorage.setItem('phone', resJson.receiver.avatar);
+  //       // AsyncStorage.setItem('user_name', currentUser.last_message.content);
+  //       // AsyncStorage.setItem('user_name', currentUser.last_message.createdAt);
+  //     });
+  // };
   return (
     <ImageBackground source={images.background_login} style={{flex: 1}}>
       <View
@@ -83,9 +118,9 @@ function LoginActivity(props) {
             // }else{
             //   setEmail('')
             // }
-            setErrorPhone(
-              isValidPhone(text) == true ? '' : 'Phone not is correct format',
-            );
+            // setErrorPhone(
+            //   isValidPhone(text) == true ? '' : 'Phone not is correct format',
+            // );
             setPhone(text);
           }}
           placeholder="Your Phone"
@@ -174,7 +209,7 @@ function LoginActivity(props) {
           Forget password?
         </Text>
         <TouchableOpacity
-          disabled={isValidationOk() == false}
+          disabled={isValidationOk() == true}
           onPress={() => {
             // navigate('UITag');
             this.handleLogin();

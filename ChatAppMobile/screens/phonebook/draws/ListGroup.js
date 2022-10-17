@@ -9,7 +9,7 @@ import {
   SectionList,
   ScrollView,
 } from 'react-native';
-import ItemChat from '../../chat/draws/ItemChat';
+import ItemGroup from '../../phonebook/draws/ItemGroup';
 import {images} from '../../../constants';
 import {UIHeader} from '../../../components';
 function ListGroup(props) {
@@ -60,7 +60,7 @@ function ListGroup(props) {
     },
   ]);
   return (
-    <ScrollView>
+    <ScrollView horizontal={false} style={{flex: 1}}>
       <UIHeader
         leftIconName={'search'}
         rightIconName={'QR'}
@@ -305,7 +305,7 @@ function ListGroup(props) {
           <FlatList
             data={chat}
             renderItem={({item, index}) => (
-              <ItemChat
+              <ItemGroup
                 chat={item}
                 onPress={() => {
                   alert(`name is: ${item.title}`);
@@ -313,6 +313,7 @@ function ListGroup(props) {
               />
             )}
             keyExtractor={eachChat => eachChat.title}
+            key={eachChat => eachChat.title}
           />
         </View>
       </View>

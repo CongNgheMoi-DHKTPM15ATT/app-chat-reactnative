@@ -16,112 +16,45 @@ function ChatActivity(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [userId, setUser_id] = useState('');
-  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [chat, setChat] = useState([]);
   // https://halo-chat.herokuapp.com/api/conversation
+  const BASE_URL = 'https://halo-chat.herokuapp.com/api/conversation';
+
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
       setUser_id(result);
     });
-  });
-  handleListConversation = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/conversation';
+  }, [userId]);
+  useEffect(() => {
+    setIsLoading(true);
+    getAllUsers();
+  }, [chat]);
+
+  getAllUsers = () => {
     const method = 'POST';
-    const id = userId;
-    console.log('User id là: ', id);
-    fetch(url, {
+    fetch(BASE_URL, {
       method,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: id,
+        user_id: '634255ff21fbe65180fa2f07',
       }),
     })
-      .then(res => res.text())
+      .then(res => res.json())
       .then(resJson => {
-        const currentUser = resJson;
-        console.log(currentUser.conversations);
-        console.log(userId);
-        // setData(data);
-        alert(resJson);
+        const currentUser = resJson.conversations;
+        setChat(currentUser);
+        console.log('chat nè bà già ', chat);
       })
       .catch(resJson => {
-        alert(resJson);
-        // alert('okkk');
         console.log(resJson);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
-  useEffect(() => {
-    handleListConversation();
-  }, []);
-  const [chat, setChat] = useState([
-    {
-      title: 'Cloud của tôi',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat,
-      time: '5 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'DevOps Vietnam Community',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat1,
-      time: '7 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: '[ĐTN 21] BCS Các lớp K.CNTT',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat2,
-      time: '11 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'T5_4_6_LTTBDDNC_22_23_N2',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '1 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'DHDTMT17ATT-Hệ thống máy tính DHDTMT17ATT-Hệ thống máy tính',
-      content:
-        '[File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '23 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'T3_7_9_LT_KTTKPM_22_23_NEW',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '5 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'Mẹeee',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat4,
-      time: '5 giờ',
-      numberOfChat: 5,
-    },
-    {
-      title: 'Mẹeee',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat4,
-      time: '5 giờ',
-      numberOfChat: 0,
-    },
-    {
-      title: 'Mẹeee',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat4,
-      time: '5 giờ',
-      numberOfChat: 100,
-    },
-  ]);
 
   return (
     <View style={{flex: 1}}>
@@ -131,16 +64,13 @@ function ChatActivity(props) {
         onPressLeftIcon={() => {
           alert('Left icon');
         }}
-        onPressRightIcon={() => {
-          handleListConversation();
-        }}></UIHeader>
-      <Text style={{color: 'white'}}>{userId}</Text>
+        onPressRightIcon={() => {}}></UIHeader>
       <FlatList
         data={chat}
         renderItem={({item, index}) => (
           <ItemChat
             chat={item}
-            key={item.title}
+            key={item._id}
             index={index}
             onPress={() => {
               //alert(`name is: ${item.title}`);
@@ -150,6 +80,14 @@ function ChatActivity(props) {
         )}
         keyExtractor={eachChat => eachChat.title}
       />
+      {/* <FlatList
+        style={{flex: 1}}
+        keyExtractor={item => item.id}
+        data={chat}
+        renderItem={({item}) => (
+          <Text style={{color: 'white'}}>AAAAAAAAAAAAAAA</Text>
+        )}
+      /> */}
     </View>
   );
 }

@@ -45,7 +45,7 @@ function ListFriend(props) {
       title: 'D',
       data: [
         {
-          name: 'D',
+          name: 'DR',
           image: images.item_chat,
         },
       ],
@@ -54,7 +54,7 @@ function ListFriend(props) {
       title: 'E',
       data: [
         {
-          name: 'Cloud của tôi',
+          name: 'Cloud của tôi12',
           image: images.item_chat,
         },
       ],
@@ -63,7 +63,7 @@ function ListFriend(props) {
       title: 'F',
       data: [
         {
-          name: 'Cloud của tôi',
+          name: 'Cloud của tôi3',
           image: images.item_chat,
         },
       ],
@@ -72,7 +72,16 @@ function ListFriend(props) {
       title: 'G',
       data: [
         {
-          name: 'Cloud của tôi',
+          name: 'Cloud của tôi4',
+          image: images.item_chat,
+        },
+      ],
+    },
+    {
+      title: 'H',
+      data: [
+        {
+          name: 'Cloud của tôi9',
           image: images.item_chat,
         },
       ],
@@ -81,20 +90,11 @@ function ListFriend(props) {
       title: 'J',
       data: [
         {
-          name: 'Cloud của tôi',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'F',
-      data: [
-        {
-          name: 'Cloud của tôi',
+          name: 'Cloud của tôi2',
           image: images.item_chat,
         },
         {
-          name: 'Cloud của tôi',
+          name: 'Cloud của tôi1',
           image: images.item_chat,
         },
       ],
@@ -102,7 +102,7 @@ function ListFriend(props) {
   ]);
 
   return (
-    <ScrollView>
+    <ScrollView horizontal={false} style={{flex: 1}}>
       <UIHeader
         leftIconName={''}
         rightIconName={''}
@@ -219,6 +219,7 @@ function ListFriend(props) {
               </Text>
             )}
             keyExtractor={(item, index) => `basicListEntry-${item.title}`}
+            key={(item, index) => `basicListEntry-${item.title}`}
           />
         </View>
       </View>

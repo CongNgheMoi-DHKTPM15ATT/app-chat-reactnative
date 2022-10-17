@@ -8,8 +8,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {images} from '../../../constants';
-function ItemChat(props) {
-  let {receiver, content, image, time, numberOfChat, last_message} = props.chat;
+function ItemGroup(props) {
+  let {title, content, image, time, numberOfChat} = props.chat;
   const {onPress} = props;
   const {index} = props;
   return (
@@ -20,7 +20,7 @@ function ItemChat(props) {
       }}>
       <View style={{flexDirection: 'row', padding: 15}}>
         <Image
-          source={{uri: receiver.avatar}}
+          source={image}
           style={{height: 50, width: 50, borderRadius: 100}}></Image>
         <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
@@ -34,7 +34,7 @@ function ItemChat(props) {
                 fontSize: 13,
                 width: 230,
               }}>
-              {receiver.nick_name}
+              {title}
             </Text>
             <View style={{flex: 1}}></View>
             <Image
@@ -64,7 +64,7 @@ function ItemChat(props) {
                 opacity: numberOfChat > 0 ? 1 : 0.5,
                 width: 250,
               }}>
-              {last_message.content}
+              {content}
             </Text>
             {numberOfChat > 0 && (
               <View
@@ -107,4 +107,4 @@ function ItemChat(props) {
     </TouchableOpacity>
   );
 }
-export default ItemChat;
+export default ItemGroup;
