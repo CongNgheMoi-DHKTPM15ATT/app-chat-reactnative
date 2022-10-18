@@ -10,12 +10,15 @@ import {
 import {images} from '../../constants';
 import {screenWidth, screenHeight} from '../../utils/Device';
 function ItemMess(props) {
-  let {url, isSender, messenger, timeSend, showUrl} = props.item;
+  let {content, sender, url, isSender, messenger, timeSend, showUrl} =
+    props.item;
+  props.item;
   const {onPress} = props;
   const {index} = props;
-  return isSender == false ? (
+  const {title} = props;
+  return sender.nick_name == title ? (
     <TouchableOpacity
-      //   onPress={onPress}
+      onPress={onPress}
       style={{
         flexDirection: 'row',
         marginTop: 5,
@@ -45,7 +48,7 @@ function ItemMess(props) {
               backgroundColor: '#202124',
               borderRadius: 10,
             }}>
-            {messenger}
+            {content}
           </Text>
         </View>
         <View style={{width: 20}}></View>
@@ -54,7 +57,7 @@ function ItemMess(props) {
   ) : (
     //Nay la nguoi nhan sender
     <TouchableOpacity
-      //   onPress={onPress}
+      onPress={onPress}
       style={{
         flexDirection: 'row',
         marginTop: 5,
@@ -77,7 +80,7 @@ function ItemMess(props) {
                 backgroundColor: '#202124',
                 borderRadius: 10,
               }}>
-              {messenger}
+              {content}
             </Text>
           </View>
         </View>

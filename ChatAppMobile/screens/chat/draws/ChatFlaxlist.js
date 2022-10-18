@@ -48,7 +48,6 @@ function ChatActivity(props) {
       .then(resJson => {
         const currentUser = resJson.conversations;
         setChat(currentUser);
-        console.log('chat nè bà già ', chat);
       })
       .catch(resJson => {
         console.log(resJson);
@@ -80,14 +79,6 @@ function ChatActivity(props) {
         )}
         keyExtractor={eachChat => eachChat.title}
       />
-      {/* <FlatList
-        style={{flex: 1}}
-        keyExtractor={item => item.id}
-        data={chat}
-        renderItem={({item}) => (
-          <Text style={{color: 'white'}}>AAAAAAAAAAAAAAA</Text>
-        )}
-      /> */}
     </View>
   );
 }

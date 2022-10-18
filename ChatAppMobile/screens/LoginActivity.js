@@ -46,7 +46,6 @@ function LoginActivity(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.data;
-        console.log(resJson.data);
         alert(resJson.message);
         AsyncStorage.setItem('avatar', currentUser.avatar);
         AsyncStorage.setItem('phone', currentUser.phone);
@@ -61,39 +60,7 @@ function LoginActivity(props) {
       });
     // alert(phone + ' ' + pass);
   };
-  // handleListConversation = () => {
-  //   const url = 'https://halo-chat.herokuapp.com/api/conversation';
-  //   const method = 'POST';
-  //   const id = userId;
-  //   console.log('User id là: ', id);
-  //   fetch(url, {
-  //     method,
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       user_id: userId,
-  //     }),
-  //   })
-  //     .then(res => res.json())
-  //     .then(resJson => {
-  //       const currentUser = resJson.conversations;
-  //       console.log(currentUser.conversations);
-  //       AsyncStorage.setItem('data', JSON.stringify(currentUser));
-  //       // alert(currentUser.conversations);
-  //     })
-  //     .catch(resJson => {
-  //       alert(resJson);
-  //       // alert('okkk');
-  //       console.log(resJson);
 
-  //       // AsyncStorage.setItem('avatar', resJson.receiver.nick_name);
-  //       // AsyncStorage.setItem('phone', resJson.receiver.avatar);
-  //       // AsyncStorage.setItem('user_name', currentUser.last_message.content);
-  //       // AsyncStorage.setItem('user_name', currentUser.last_message.createdAt);
-  //     });
-  // };
   return (
     <ImageBackground source={images.background_login} style={{flex: 1}}>
       <View

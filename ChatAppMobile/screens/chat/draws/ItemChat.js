@@ -18,6 +18,7 @@ function ItemChat(props) {
     numberOfChat,
     last_message,
     seen_last_messages,
+    _id,
   } = props.chat;
   var formattedDate = moment(last_message.createdAt)
     .utc()
