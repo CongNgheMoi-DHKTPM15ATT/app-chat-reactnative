@@ -43,7 +43,7 @@ function ChatScreen(props) {
         setChatHistory(currentUser);
         currentUser.sort(function (a, b) {
           return (
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            new new Date(b.createdAt).getTime() - Date(a.createdAt).getTime()
           );
         });
       })
@@ -68,10 +68,11 @@ function ChatScreen(props) {
         onPressVideoRightIcon={() => {}}></UIHeaderChat>
       <FlatList
         // style={{flexDirection: 'column-reverse'}}
+        // .reverse()
+        inverted
         data={chatHistory}
         renderItem={({item, index}) => (
           <ItemMess
-            style={{flexDirection: 'column-reverse'}}
             title={receiver.nick_name}
             chat={item}
             index={index}
