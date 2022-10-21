@@ -26,7 +26,7 @@ function ItemMess(props) {
       }}>
       {showUrl == true ? (
         <Image
-          source={{uri: url}}
+          source={{uri: receiver.avatar}}
           style={{
             height: 50,
             width: 50,
@@ -87,7 +87,7 @@ function ItemMess(props) {
       </View>
       {showUrl == true ? (
         <Image
-          source={{uri: url}}
+          source={{uri: sender.avatar}}
           style={{
             height: 50,
             width: 50,

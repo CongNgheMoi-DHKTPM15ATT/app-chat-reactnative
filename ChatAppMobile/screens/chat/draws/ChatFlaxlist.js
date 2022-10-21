@@ -41,12 +41,13 @@ function ChatActivity(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: '634255ff21fbe65180fa2f07',
+        user_id: userId,
       }),
     })
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.conversations;
+        console.log(currentUser);
         setChat(currentUser);
       })
       .catch(resJson => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {
   Text,
   View,
@@ -11,12 +11,15 @@ import {
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
+import socket from '../../utils/Socket';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ChatScreen(props) {
   const BASE_URL = 'https://halo-chat.herokuapp.com/api/messages';
   const [isLoading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
+  const [user, setUser] = useState('');
   let {receiver, _id, content, image, time, numberOfChat} =
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
@@ -24,7 +27,17 @@ function ChatScreen(props) {
     setIsLoading(true);
     getMessagesByUserId();
   }, [chatHistory]);
-
+  //kiểm tra user
+  const getUsername = async () => {
+    try {
+      const value = await AsyncStorage.getItem('user_name');
+      if (value !== null) {
+        setUser(value);
+      }
+    } catch (e) {
+      console.error('Error while loading username!');
+    }
+  };
   getMessagesByUserId = () => {
     const method = 'POST';
     fetch(BASE_URL, {
@@ -52,6 +65,40 @@ function ChatScreen(props) {
       })
       .finally(() => setIsLoading(false));
   };
+  //gửi tin nhắn nè mấy bà
+  // const handleSendMessage = async (typeText) => {
+  //   try {
+  //     const params = {
+  //       sender_id: _id,
+  //       conversation_id: chatAcount.conversation_id,
+  //       text: typeText,
+  //     };
+  //     const response = await messageAPI.sendMessage(params);
+  //     socket.emit("send", {
+  //       senderId: _id,
+  //       receiverId: chatAcount.receiver_id,
+  //       nick_name: chatAcount.user_nick_name,
+  //       text: typeText,
+  //     });
+  //     _setListMessage((_listMessage) => [typeText, ..._listMessage]);
+  //   } catch (error) {
+  //     console.log("Failed to call API send message" + error);
+  //   }
+  // };
+  useEffect(() => {
+    socket.initializeSocket();
+  }, []);
+  useEffect(() => {
+    socket.on('getMessage'),
+      msg => {
+        console.log('message recives in reactApp', msg);
+      };
+  }, []);
+  const handleSendMessage = () => {
+    socket.emit('send', typeText);
+    return;
+  };
+
   return (
     <View style={{flex: 1}}>
       <UIHeaderChat
@@ -119,6 +166,7 @@ function ChatScreen(props) {
               return;
             }
             setTypeText('');
+            handleSendMessage();
           }}>
           {typeText.trim().length > 0 ? (
             <Image

@@ -16,8 +16,8 @@ function LoginActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
   //state to store email/pass
-  const [phone, setPhone] = useState('nguyenhainam_01');
-  const [pass, setPass] = useState('123456');
+  const [phone, setPhone] = useState('');
+  const [pass, setPass] = useState('');
   const [sercuPass, setSercuPass] = useState(true);
   const [userId, setUser_id] = useState('');
   const isValidationOk = () =>
@@ -29,7 +29,9 @@ function LoginActivity(props) {
   const {navigate, goBack} = navigation;
   const [account, setAccount] = useState([]);
   handleLogin = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/auth/login';
+    // const url = 'https://halo-chat.herokuapp.com/api/auth/login';
+    // http://localhost:8080/api/auth/login
+    const url = 'http://192.168.1.104:8080/api/auth/login';
     const method = 'POST';
     fetch(url, {
       method,
@@ -39,7 +41,7 @@ function LoginActivity(props) {
       },
       body: JSON.stringify({
         //mot sua lại dang nhap bang sdt
-        user_name: phone,
+        phone: phone,
         password: pass,
       }),
     })
@@ -80,14 +82,14 @@ function LoginActivity(props) {
         </Text>
         <TextInput
           onChangeText={text => {
-            // if(isValidEmail(text)==false){
-            //   setEmail('Email not is correct format')
-            // }else{
-            //   setEmail('')
-            // }
-            // setErrorPhone(
-            //   isValidPhone(text) == true ? '' : 'Phone not is correct format',
-            // );
+            if (isValidPhone(text) == false) {
+              setPhone('Phone not is correct format');
+            } else {
+              setPhone('');
+            }
+            setErrorPhone(
+              isValidPhone(text) == true ? '' : 'Phone not is correct format',
+            );
             setPhone(text);
           }}
           placeholder="Your Phone"
@@ -176,7 +178,7 @@ function LoginActivity(props) {
           Forget password?
         </Text>
         <TouchableOpacity
-          disabled={isValidationOk() == true}
+          disabled={isValidationOk() == false}
           onPress={() => {
             // navigate('UITag');
             this.handleLogin();
