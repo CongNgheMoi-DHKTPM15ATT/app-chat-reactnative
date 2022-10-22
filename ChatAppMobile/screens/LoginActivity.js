@@ -16,8 +16,8 @@ function LoginActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
   //state to store email/pass
-  const [phone, setPhone] = useState('0932904529');
-  const [pass, setPass] = useState('123');
+  const [phone, setPhone] = useState('');
+  const [pass, setPass] = useState('');
   const [sercuPass, setSercuPass] = useState(true);
   const [userId, setUser_id] = useState('');
   const isValidationOk = () =>

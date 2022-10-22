@@ -72,17 +72,18 @@ function ChatScreen(props) {
       })
       .finally(() => setIsLoading(false));
   };
-  //gửi tin nhắn nè mấy bà
+  // ket nois socket
   useEffect(() => {
     socket.initializeSocket();
   });
-  // useEffect(() => {
-  //   socket.on('getMessage'),
-  //     msg => {
-  //       console.log('message recives in reactApp', msg);
-  //       debugger;
-  //     };
-  // });
+  // ham nhan tin nhan tu socket
+  useEffect(() => {
+    socket.on('getMessage'),
+      msg => {
+        console.log('message recives in reactApp', msg);
+      };
+  });
+  //gửi tin nhắn nè mấy bà
   const handleSendMessage = async () => {
     const response = await sendMessage();
     socket.emit('send', {
