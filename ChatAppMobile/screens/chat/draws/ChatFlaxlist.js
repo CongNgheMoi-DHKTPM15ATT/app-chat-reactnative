@@ -26,11 +26,11 @@ function ChatActivity(props) {
     AsyncStorage.getItem('user_id').then(result => {
       setUser_id(result);
     });
-  }, [userId]);
+  });
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     getAllUsers();
-  }, [chat]);
+  });
 
   getAllUsers = () => {
     const method = 'POST';
@@ -73,7 +73,7 @@ function ChatActivity(props) {
             key={item._id}
             index={index}
             onPress={() => {
-              //alert(`name is: ${item.title}`);
+              alert(`name is: ${item._id}`);
               navigate('Messenger', {users: item});
             }}
           />

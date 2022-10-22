@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
@@ -20,24 +21,29 @@ function ChatScreen(props) {
   const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [user, setUser] = useState('');
+  const [userId, setUserId] = useState('');
   let {receiver, _id, content, image, time, numberOfChat} =
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
   useEffect(() => {
     setIsLoading(true);
     getMessagesByUserId();
+    getUsername();
   }, [chatHistory]);
   //kiểm tra user
   const getUsername = async () => {
     try {
       const value = await AsyncStorage.getItem('user_name');
-      if (value !== null) {
+      const userId = await AsyncStorage.getItem('user_id');
+      if (value !== null || userId !== null) {
         setUser(value);
+        setUserId(userId);
       }
     } catch (e) {
       console.error('Error while loading username!');
     }
   };
+  // ham lay mess tu conversation_id
   getMessagesByUserId = () => {
     const method = 'POST';
     fetch(BASE_URL, {
@@ -54,9 +60,10 @@ function ChatScreen(props) {
       .then(resJson => {
         const currentUser = resJson.messages;
         setChatHistory(currentUser);
+        console.log(currentUser);
         currentUser.sort(function (a, b) {
           return (
-            new new Date(b.createdAt).getTime() - Date(a.createdAt).getTime()
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
           );
         });
       })
@@ -66,37 +73,48 @@ function ChatScreen(props) {
       .finally(() => setIsLoading(false));
   };
   //gửi tin nhắn nè mấy bà
-  // const handleSendMessage = async (typeText) => {
-  //   try {
-  //     const params = {
-  //       sender_id: _id,
-  //       conversation_id: chatAcount.conversation_id,
-  //       text: typeText,
-  //     };
-  //     const response = await messageAPI.sendMessage(params);
-  //     socket.emit("send", {
-  //       senderId: _id,
-  //       receiverId: chatAcount.receiver_id,
-  //       nick_name: chatAcount.user_nick_name,
-  //       text: typeText,
-  //     });
-  //     _setListMessage((_listMessage) => [typeText, ..._listMessage]);
-  //   } catch (error) {
-  //     console.log("Failed to call API send message" + error);
-  //   }
-  // };
   useEffect(() => {
     socket.initializeSocket();
-  }, []);
-  useEffect(() => {
-    socket.on('getMessage'),
-      msg => {
-        console.log('message recives in reactApp', msg);
-      };
-  }, []);
-  const handleSendMessage = () => {
-    socket.emit('send', typeText);
+  });
+  // useEffect(() => {
+  //   socket.on('getMessage'),
+  //     msg => {
+  //       console.log('message recives in reactApp', msg);
+  //       debugger;
+  //     };
+  // });
+  const handleSendMessage = async () => {
+    const response = await sendMessage();
+    socket.emit('send', {
+      senderId: userId,
+      receiverId: receiver._id,
+      nick_name: receiver.nick_name,
+      text: typeText,
+    });
+    // setChatHistory(_listMessage => [response, ..._listMessage]);
     return;
+  };
+  sendMessage = () => {
+    const url = 'http://192.168.1.104:8080/api/messages/send';
+    const method = 'POST';
+    fetch(url, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender_id: userId,
+        conversation_id: _id,
+        text: typeText,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson.data;
+        // getMessagesByUserId();
+        // setChatHistory(currentUser);
+      });
   };
 
   return (
@@ -113,29 +131,37 @@ function ChatScreen(props) {
         onPressRightIcon={() => {}}
         onPressPhoneRightIcon={() => {}}
         onPressVideoRightIcon={() => {}}></UIHeaderChat>
-      <FlatList
-        // style={{flexDirection: 'column-reverse'}}
-        // .reverse()
-        inverted
-        data={chatHistory}
-        renderItem={({item, index}) => (
-          <ItemMess
-            title={receiver.nick_name}
-            chat={item}
-            index={index}
-            onPress={() => {
-              alert(`name is: ${item.content}`);
-            }}
-            item={item}
-            key={`${item.createdAt}`}
-          />
-        )}
-        keyExtractor={eachChat => eachChat.timeSend}
-      />
+
+      <ScrollView
+        ref={ref => {
+          this.scrollView = ref;
+        }}
+        onContentSizeChange={() =>
+          this.scrollView.scrollToEnd({animated: true})
+        }>
+        <FlatList
+          // .reverse()
+          data={chatHistory}
+          // inverted
+          renderItem={({item, index}) => (
+            <ItemMess
+              title={receiver.nick_name}
+              chat={item}
+              index={index}
+              onPress={() => {
+                alert(`name is: ${item.content}`);
+              }}
+              item={item}
+              // key={`${item.createdAt}`}
+            />
+          )}
+          // keyExtractor={eachChat => eachChat.timeSend}
+        />
+      </ScrollView>
 
       <View
         style={{
-          height: 50,
+          height: 40,
           position: 'absolute',
           flexDirection: 'row',
           bottom: 0,
@@ -152,7 +178,7 @@ function ChatScreen(props) {
           }}
           value={typeText}
           style={{
-            height: 60,
+            height: 40,
             flex: 1,
             marginEnd: 8,
             borderRadius: 5,
@@ -166,6 +192,7 @@ function ChatScreen(props) {
               return;
             }
             setTypeText('');
+
             handleSendMessage();
           }}>
           {typeText.trim().length > 0 ? (
