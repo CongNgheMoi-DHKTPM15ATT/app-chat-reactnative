@@ -73,7 +73,7 @@ function ChatActivity(props) {
             key={item._id}
             index={index}
             onPress={() => {
-              alert(`name is: ${item._id}`);
+              // alert(`name is: ${item._id}`);
               navigate('Messenger', {users: item});
             }}
           />

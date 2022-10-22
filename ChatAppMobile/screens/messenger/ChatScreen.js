@@ -8,16 +8,28 @@ import {
   FlatList,
   TextInput,
   ScrollView,
+  Button,
+  StyleSheet,
+  BackHandler,
+  Keyboard,
 } from 'react-native';
+import EmojiModal from 'react-native-emoji-modal';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
 import socket from '../../utils/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function ChatScreen(props) {
+import {NavigationContainer} from '@react-navigation/native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+const Tab = createMaterialTopTabNavigator();
+import EmojiContext from '../../components/context';
+import emojisData from '../../data/emojis.json';
+import EmojisTab from '../../components/EmojisTab';
+export default function ChatScreen(props) {
   const BASE_URL = 'https://halo-chat.herokuapp.com/api/messages';
   const [isLoading, setIsLoading] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [showEmojis, setShowEmojis] = useState(false);
+  const [emoji, setEmoji] = useState('');
   const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [user, setUser] = useState('');
@@ -25,6 +37,25 @@ function ChatScreen(props) {
   let {receiver, _id, content, image, time, numberOfChat} =
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      if (showEmojis) {
+        setShowEmojis(false);
+      }
+    });
+
+    Keyboard.addListener('keyboardWillShow', () => {
+      if (showEmojis) {
+        setShowEmojis(false);
+      }
+    });
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', () => {});
+      Keyboard.removeAllListeners('keyboardWillShow', () => {});
+    };
+  }, []);
+
   useEffect(() => {
     setIsLoading(true);
     getMessagesByUserId();
@@ -63,7 +94,7 @@ function ChatScreen(props) {
         console.log(currentUser);
         currentUser.sort(function (a, b) {
           return (
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
         });
       })
@@ -133,43 +164,52 @@ function ChatScreen(props) {
         onPressPhoneRightIcon={() => {}}
         onPressVideoRightIcon={() => {}}></UIHeaderChat>
 
-      <ScrollView
+      {/* <ScrollView
         ref={ref => {
           this.scrollView = ref;
         }}
         onContentSizeChange={() =>
           this.scrollView.scrollToEnd({animated: true})
-        }>
-        <FlatList
-          // .reverse()
-          data={chatHistory}
-          // inverted
-          renderItem={({item, index}) => (
-            <ItemMess
-              title={receiver.nick_name}
-              chat={item}
-              index={index}
-              onPress={() => {
-                alert(`name is: ${item.content}`);
-              }}
-              item={item}
-              // key={`${item.createdAt}`}
-            />
-          )}
-          // keyExtractor={eachChat => eachChat.timeSend}
-        />
-      </ScrollView>
+        }> */}
+      <FlatList
+        // .reverse()
+        data={chatHistory}
+        inverted
+        renderItem={({item, index}) => (
+          <ItemMess
+            title={receiver.nick_name}
+            chat={item}
+            index={index}
+            onPress={() => {
+              alert(`name is: ${item.content}`);
+            }}
+            item={item}
+            // key={`${item.createdAt}`}
+          />
+        )}
+        // keyExtractor={eachChat => eachChat.timeSend}
+      />
+      {/* </ScrollView> */}
 
       <View
         style={{
-          height: 40,
-          position: 'absolute',
+          height: 50,
           flexDirection: 'row',
           bottom: 0,
           left: 0,
           backgroundColor: '#202124',
           right: 0,
         }}>
+        <Image
+          source={require('../../assets/emoji.png')}
+          style={{
+            height: 30,
+            width: 30,
+            marginLeft: 10,
+            marginBottom: 10,
+            marginVertical: 10,
+          }}></Image>
+        {/* <EmojiModal onEmojiSelected={emoji => {}} /> */}
         <TextInput
           placeholderTextColor={'white'}
           autoCorrect={false}
@@ -179,12 +219,12 @@ function ChatScreen(props) {
           }}
           value={typeText}
           style={{
-            height: 40,
+            height: 50,
             flex: 1,
             marginEnd: 8,
             borderRadius: 5,
             color: 'white',
-            paddingStart: 60,
+            paddingStart: 20,
           }}
         />
         <TouchableOpacity
@@ -212,4 +252,3 @@ function ChatScreen(props) {
     </View>
   );
 }
-export default ChatScreen;
