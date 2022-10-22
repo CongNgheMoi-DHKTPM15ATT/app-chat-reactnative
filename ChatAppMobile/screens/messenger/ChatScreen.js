@@ -13,48 +13,35 @@ import {
   BackHandler,
   Keyboard,
 } from 'react-native';
+import EmojiPicker from 'rn-emoji-keyboard';
 import EmojiModal from 'react-native-emoji-modal';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
 import socket from '../../utils/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-const Tab = createMaterialTopTabNavigator();
-import EmojiContext from '../../components/context';
-import emojisData from '../../data/emojis.json';
-import EmojisTab from '../../components/EmojisTab';
 export default function ChatScreen(props) {
   const BASE_URL = 'https://halo-chat.herokuapp.com/api/messages';
   const [isLoading, setIsLoading] = useState(false);
-  const [showEmojis, setShowEmojis] = useState(false);
-  const [emoji, setEmoji] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
+  const [emoji, setEmoji] = useState([]);
   const [user, setUser] = useState('');
   const [userId, setUserId] = useState('');
   let {receiver, _id, content, image, time, numberOfChat} =
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      if (showEmojis) {
-        setShowEmojis(false);
+  const handlePick = (emojiObject: EmojiType) => {
+    setTypeText(emojiObject.emoji);
+    console.log(emojiObject);
+    /* example emojiObject = { 
+        "emoji": "❤️",
+        "name": "red heart",
+        "slug": "red_heart",
       }
-    });
-
-    Keyboard.addListener('keyboardWillShow', () => {
-      if (showEmojis) {
-        setShowEmojis(false);
-      }
-    });
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', () => {});
-      Keyboard.removeAllListeners('keyboardWillShow', () => {});
-    };
-  }, []);
+    */
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -200,15 +187,17 @@ export default function ChatScreen(props) {
           backgroundColor: '#202124',
           right: 0,
         }}>
-        <Image
-          source={require('../../assets/emoji.png')}
-          style={{
-            height: 30,
-            width: 30,
-            marginLeft: 10,
-            marginBottom: 10,
-            marginVertical: 10,
-          }}></Image>
+        <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+          <Image
+            source={require('../../assets/emoji.png')}
+            style={{
+              height: 30,
+              width: 30,
+              marginLeft: 10,
+              marginBottom: 10,
+              marginVertical: 10,
+            }}></Image>
+        </TouchableOpacity>
         {/* <EmojiModal onEmojiSelected={emoji => {}} /> */}
         <TextInput
           placeholderTextColor={'white'}
@@ -248,7 +237,15 @@ export default function ChatScreen(props) {
             <View></View>
           )}
         </TouchableOpacity>
+        {/* <EmojiModal onEmojiSelected={emoji => {}} /> */}
       </View>
+      <EmojiPicker
+        onEmojiSelected={handlePick}
+        open={isOpen}
+        value={typeText}
+        onChange={setTypeText}
+        onClose={() => setIsOpen(false)}
+      />
     </View>
   );
 }
