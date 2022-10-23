@@ -22,6 +22,7 @@ function UIHeader(props) {
     rightIconName,
     onPressLeftIcon,
     onPressRightIcon,
+    onChangeText,
   } = props;
   return (
     <View
@@ -45,9 +46,7 @@ function UIHeader(props) {
         placeholderTextColor={'white'}
         autoCorrect={false}
         placeholder="Tìm kiếm"
-        // onChangeText={text => {
-        //   setSearchText(text);
-        // }}
+        onChangeText={onChangeText}
         style={{
           height: 60,
           flex: 1,

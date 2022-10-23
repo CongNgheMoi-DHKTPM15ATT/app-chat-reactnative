@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
+import ImageView from 'react-native-image-view';
 import {images} from '../../constants';
 import {screenWidth, screenHeight} from '../../utils/Device';
 function ItemMess(props) {
@@ -100,12 +101,15 @@ function ItemMess(props) {
                 {content}
               </Text>
             ) : (
-              <View style={{backgroundColor: 'white'}}>
-                <Image
-                  source={{
-                    uri: `${content}`,
-                  }}
-                  style={{height: 150, width: 200}}></Image>
+              <View style={{backgroundColor: 'white', flex: 1}}>
+                <TouchableOpacity>
+                  <Image
+                    source={{
+                      uri: `${content}`,
+                    }}
+                    style={{height: 200, left: 0, right: 0}}
+                    resizeMode="contain"></Image>
+                </TouchableOpacity>
               </View>
             )}
           </View>
