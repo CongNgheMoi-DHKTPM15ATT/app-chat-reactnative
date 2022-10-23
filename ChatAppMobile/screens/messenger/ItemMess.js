@@ -10,8 +10,16 @@ import {
 import {images} from '../../constants';
 import {screenWidth, screenHeight} from '../../utils/Device';
 function ItemMess(props) {
-  let {content, sender, url, isSender, messenger, timeSend, showUrl} =
-    props.item;
+  let {
+    content,
+    sender,
+    url,
+    isSender,
+    messenger,
+    timeSend,
+    showUrl,
+    content_type,
+  } = props.item;
   props.item;
   const {onPress} = props;
   const {index} = props;
@@ -40,16 +48,24 @@ function ItemMess(props) {
       )}
       <View style={{width: screenWidth * 0.7, flexDirection: 'row'}}>
         <View>
-          <Text
-            style={{
-              color: 'white',
-              paddingVertical: 5,
-              paddingHorizontal: 7,
-              backgroundColor: '#202124',
-              borderRadius: 10,
-            }}>
-            {content}
-          </Text>
+          {content_type != 'image' ? (
+            <Text
+              style={{
+                color: 'white',
+                paddingVertical: 5,
+                paddingHorizontal: 7,
+                backgroundColor: '#202124',
+                borderRadius: 10,
+              }}>
+              {content}
+            </Text>
+          ) : (
+            <Image
+              source={{
+                uri: 'https://thu-viddeo-public.s3.amazonaws.com/1666502176242-rn_image_picker_lib_temp_6ff1b873-c54f-46f1-a011-b4c6e5819f4b.jpg',
+              }}
+              style={{height: 100, width: 100}}></Image>
+          )}
         </View>
         <View style={{width: 20}}></View>
       </View>
@@ -72,16 +88,26 @@ function ItemMess(props) {
         <View>
           <View style={{width: 40}}></View>
           <View>
-            <Text
-              style={{
-                color: 'white',
-                paddingVertical: 5,
-                paddingHorizontal: 7,
-                backgroundColor: '#202124',
-                borderRadius: 10,
-              }}>
-              {content}
-            </Text>
+            {content_type != 'image' ? (
+              <Text
+                style={{
+                  color: 'white',
+                  paddingVertical: 5,
+                  paddingHorizontal: 7,
+                  backgroundColor: '#202124',
+                  borderRadius: 10,
+                }}>
+                {content}
+              </Text>
+            ) : (
+              <View style={{backgroundColor: 'white'}}>
+                <Image
+                  source={{
+                    uri: `${content}`,
+                  }}
+                  style={{height: 150, width: 200}}></Image>
+              </View>
+            )}
           </View>
         </View>
       </View>

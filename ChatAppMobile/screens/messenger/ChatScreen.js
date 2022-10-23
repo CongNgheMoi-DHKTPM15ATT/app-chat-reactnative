@@ -13,48 +13,50 @@ import {
   BackHandler,
   Keyboard,
 } from 'react-native';
-import EmojiModal from 'react-native-emoji-modal';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import EmojiPicker from 'rn-emoji-keyboard';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import ItemMess from './ItemMess';
 import socket from '../../utils/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-const Tab = createMaterialTopTabNavigator();
-import EmojiContext from '../../components/context';
-import emojisData from '../../data/emojis.json';
-import EmojisTab from '../../components/EmojisTab';
+const options = {
+  title: 'Select Image',
+  type: 'library',
+  options: {
+    maxHeight: 200,
+    maxWidth: 200,
+    selectionLimit: 1,
+    mediaType: 'photo',
+    includeBase64: false,
+  },
+};
 export default function ChatScreen(props) {
   const BASE_URL = 'https://halo-chat.herokuapp.com/api/messages';
+  // https://codejava-app-anime.herokuapp.com/upload
+  const SERVER_URL = 'https://codejava-app-anime.herokuapp.com/upload';
   const [isLoading, setIsLoading] = useState(false);
-  const [showEmojis, setShowEmojis] = useState(false);
-  const [emoji, setEmoji] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const [typeText, setTypeText] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
+  const [emoji, setEmoji] = useState([]);
   const [user, setUser] = useState('');
   const [userId, setUserId] = useState('');
-  let {receiver, _id, content, image, time, numberOfChat} =
+  const [contentType, setContentType] = useState('');
+  let {receiver, _id, content, image, time, numberOfChat, content_type} =
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      if (showEmojis) {
-        setShowEmojis(false);
+  const [photo, setPhoto] = React.useState(null);
+  const handlePick = (emojiObject: EmojiType) => {
+    setTypeText(emojiObject.emoji);
+    console.log(emojiObject);
+    /* example emojiObject = { 
+        "emoji": "❤️",
+        "name": "red heart",
+        "slug": "red_heart",
       }
-    });
-
-    Keyboard.addListener('keyboardWillShow', () => {
-      if (showEmojis) {
-        setShowEmojis(false);
-      }
-    });
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', () => {});
-      Keyboard.removeAllListeners('keyboardWillShow', () => {});
-    };
-  }, []);
+    */
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -121,6 +123,7 @@ export default function ChatScreen(props) {
       senderId: userId,
       receiverId: receiver._id,
       nick_name: receiver.nick_name,
+      content_type: contentType,
       text: typeText,
     });
     // setChatHistory(_listMessage => [response, ..._listMessage]);
@@ -129,6 +132,9 @@ export default function ChatScreen(props) {
   sendMessage = () => {
     const url = 'http://192.168.1.104:8080/api/messages/send';
     const method = 'POST';
+    if (contentType != null) {
+      setContentType('text');
+    }
     fetch(url, {
       method,
       headers: {
@@ -138,6 +144,7 @@ export default function ChatScreen(props) {
       body: JSON.stringify({
         sender_id: userId,
         conversation_id: _id,
+        content_type: contentType,
         text: typeText,
       }),
     })
@@ -147,6 +154,33 @@ export default function ChatScreen(props) {
         // getMessagesByUserId();
         // setChatHistory(currentUser);
       });
+  };
+
+  //get image form library
+  const handleChoosePhoto = async () => {
+    const images = await launchImageLibrary(options);
+    console.log(images.assets[0]);
+    const formData = new FormData();
+    formData.append('img', {
+      uri: images.assets[0].uri,
+      type: images.assets[0].type,
+      name: images.assets[0].fileName,
+    });
+    let res = await fetch('https://codejava-app-anime.herokuapp.com/upload', {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    let resJson = await res.json();
+    console.log(
+      '-------------------------------------------------------------------------------------------------',
+    );
+    // console.log(resJson.pathVideo);
+    setTypeText(resJson.pathVideo);
+    setContentType('image');
+    handleSendMessage();
   };
 
   return (
@@ -200,15 +234,17 @@ export default function ChatScreen(props) {
           backgroundColor: '#202124',
           right: 0,
         }}>
-        <Image
-          source={require('../../assets/emoji.png')}
-          style={{
-            height: 30,
-            width: 30,
-            marginLeft: 10,
-            marginBottom: 10,
-            marginVertical: 10,
-          }}></Image>
+        <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+          <Image
+            source={require('../../assets/emoji.png')}
+            style={{
+              height: 30,
+              width: 30,
+              marginLeft: 10,
+              marginBottom: 10,
+              marginVertical: 10,
+            }}></Image>
+        </TouchableOpacity>
         {/* <EmojiModal onEmojiSelected={emoji => {}} /> */}
         <TextInput
           placeholderTextColor={'white'}
@@ -248,7 +284,39 @@ export default function ChatScreen(props) {
             <View></View>
           )}
         </TouchableOpacity>
+        <View
+          style={{
+            height: 250,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}></View>
+        {photo && (
+          <>
+            <Image
+              source={{uri: photo.uri}}
+              style={{width: 1000, height: 1000}}
+            />
+            <TouchableOpacity onPress={handleUploadPhoto}>
+              <Image
+                source={require('../../assets/lirbary.png')}
+                style={{height: 35, width: 35, margin: 3}}></Image>
+            </TouchableOpacity>
+          </>
+        )}
+        <TouchableOpacity onPress={handleChoosePhoto}>
+          <Image
+            source={require('../../assets/lirbary.png')}
+            style={{height: 35, width: 35, margin: 3}}></Image>
+        </TouchableOpacity>
+        {/* <EmojiModal onEmojiSelected={emoji => {}} /> */}
       </View>
+      <EmojiPicker
+        onEmojiSelected={handlePick}
+        open={isOpen}
+        value={typeText}
+        onChange={setTypeText}
+        onClose={() => setIsOpen(false)}
+      />
     </View>
   );
 }
