@@ -32,7 +32,7 @@ const options = {
   },
 };
 export default function ChatScreen(props) {
-  const BASE_URL = 'https://halo-chat.herokuapp.com/api/messages';
+  const BASE_URL = 'http://192.168.1.104:8080/api/messages';
   // https://codejava-app-anime.herokuapp.com/upload
   const SERVER_URL = 'https://codejava-app-anime.herokuapp.com/upload';
   const [isLoading, setIsLoading] = useState(false);
@@ -127,6 +127,7 @@ export default function ChatScreen(props) {
       text: typeText,
     });
     // setChatHistory(_listMessage => [response, ..._listMessage]);
+    setTypeText('');
     return;
   };
   sendMessage = () => {
@@ -177,7 +178,7 @@ export default function ChatScreen(props) {
     console.log(
       '-------------------------------------------------------------------------------------------------',
     );
-    // console.log(resJson.pathVideo);
+    console.log(resJson.pathVideo);
     setTypeText(resJson.pathVideo);
     setContentType('image');
     handleSendMessage();
@@ -194,9 +195,16 @@ export default function ChatScreen(props) {
         onPressLeftIcon={() => {
           goBack();
         }}
-        onPressRightIcon={() => {}}
-        onPressPhoneRightIcon={() => {}}
-        onPressVideoRightIcon={() => {}}></UIHeaderChat>
+        onPressRightIcon={() => {
+          alert('ok');
+        }}
+        onPressPhoneRightIcon={() => {
+          navigate('CallScreen');
+          // alert('ok');
+        }}
+        onPressVideoRightIcon={() => {
+          alert('ok');
+        }}></UIHeaderChat>
 
       {/* <ScrollView
         ref={ref => {
@@ -214,9 +222,6 @@ export default function ChatScreen(props) {
             title={receiver.nick_name}
             chat={item}
             index={index}
-            onPress={() => {
-              alert(`name is: ${item.content}`);
-            }}
             item={item}
             // key={`${item.createdAt}`}
           />

@@ -6,10 +6,13 @@ import {
   ImageBackground,
   TouchableOpacity,
   TouchableHighlight,
+  Modal,
 } from 'react-native';
 import ImageView from 'react-native-image-view';
 import {images} from '../../constants';
 import {screenWidth, screenHeight} from '../../utils/Device';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MessengerModel from '../../model/MessengerModel';
 function ItemMess(props) {
   let {
     content,
@@ -20,33 +23,42 @@ function ItemMess(props) {
     timeSend,
     showUrl,
     content_type,
+    _id,
   } = props.item;
-  props.item;
-  const {onPress} = props;
+  const {onPress, onLongPress} = props;
   const {index} = props;
   const {title} = props;
+  const [modalOpen, setModal] = useState(false);
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.setItem('account-send', sender.user_id);
+    AsyncStorage.setItem('name-send', title);
+    // AsyncStorage.setItem('account-receiver', receiver._id);
+  });
   return sender.nick_name == title ? (
     <TouchableOpacity
-      onPress={onPress}
+      onLongPress={() => {
+        setModal(true);
+      }}
       style={{
         flexDirection: 'row',
         marginTop: 5,
         alignItems: 'center',
       }}>
-      {showUrl == true ? (
-        <Image
-          source={{uri: receiver.avatar}}
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius: 100,
-            marginRight: 15,
-            marginStart: 10,
-            resizeMode: 'cover',
-          }}></Image>
-      ) : (
+      {/* {showUrl == true ? ( */}
+      <Image
+        source={{uri: sender.avatar}}
+        style={{
+          height: 50,
+          width: 50,
+          borderRadius: 100,
+          marginRight: 15,
+          marginStart: 10,
+          resizeMode: 'cover',
+        }}></Image>
+      {/* ) : (
         <View style={{width: 40, height: 40}}></View>
-      )}
+      )} */}
       <View style={{width: screenWidth * 0.7, flexDirection: 'row'}}>
         <View>
           {content_type != 'image' ? (
@@ -61,11 +73,16 @@ function ItemMess(props) {
               {content}
             </Text>
           ) : (
-            <Image
-              source={{
-                uri: 'https://thu-viddeo-public.s3.amazonaws.com/1666502176242-rn_image_picker_lib_temp_6ff1b873-c54f-46f1-a011-b4c6e5819f4b.jpg',
-              }}
-              style={{height: 100, width: 100}}></Image>
+            <View style={{backgroundColor: 'white', flex: 1}}>
+              <TouchableOpacity>
+                <Image
+                  source={{
+                    uri: `${content}`,
+                  }}
+                  style={{height: 200, left: 0, right: 0}}
+                  resizeMode="contain"></Image>
+              </TouchableOpacity>
+            </View>
           )}
         </View>
         <View style={{width: 20}}></View>
@@ -74,7 +91,9 @@ function ItemMess(props) {
   ) : (
     //Nay la nguoi nhan sender
     <TouchableOpacity
-      onPress={onPress}
+      onLongPress={() => {
+        setModal(true);
+      }}
       style={{
         flexDirection: 'row',
         marginTop: 5,
@@ -107,7 +126,7 @@ function ItemMess(props) {
                     source={{
                       uri: `${content}`,
                     }}
-                    style={{height: 200, left: 0, right: 0}}
+                    style={{height: 150, width: 350, left: 0, right: 0}}
                     resizeMode="contain"></Image>
                 </TouchableOpacity>
               </View>
@@ -115,20 +134,36 @@ function ItemMess(props) {
           </View>
         </View>
       </View>
-      {showUrl == true ? (
-        <Image
-          source={{uri: sender.avatar}}
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius: 100,
-            marginRight: 15,
-            marginStart: 10,
-            resizeMode: 'cover',
-          }}></Image>
-      ) : (
+      {/* {showUrl == true ? ( */}
+      <Image
+        source={{uri: sender.avatar}}
+        style={{
+          height: 50,
+          width: 50,
+          borderRadius: 100,
+          marginRight: 15,
+          marginStart: 10,
+          resizeMode: 'cover',
+        }}></Image>
+      {/* ) : (
         <View style={{width: 40, height: 40}}></View>
-      )}
+      )} */}
+      <Modal
+        style={{
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpen}
+        animationType="fade">
+        <MessengerModel
+          data={_id}
+          onPress={() => {
+            setModal(false);
+          }}
+          onPressDelete={() => {
+            alert(`${_id}`);
+          }}></MessengerModel>
+      </Modal>
     </TouchableOpacity>
   );
 }

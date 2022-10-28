@@ -35,4 +35,10 @@ export default {
   back: require('../assets/outline_arrow_back_white_24dp.png'),
   phone2: require('../assets/outline_call_white_24dp.png'),
   video_call: require('../assets/outline_videocam_white_24dp.png'),
+  bg_call: require('../assets/bg_call.jpg'),
+  phone_call: require('../assets/phone_call.png'),
+  mic_call: require('../assets/mic.png'),
+  volume_call: require('../assets/volumn.png'),
+  phone_start: require('../assets/call_start.png'),
+  close: require('../assets/close.png'),
 };

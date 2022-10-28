@@ -49,18 +49,35 @@ function ItemChat(props) {
           style={{height: 50, width: 50, borderRadius: 100}}></Image>
         <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={{
-                color: 'white',
-                paddingHorizontal: 15,
-                paddingVertical: 5,
-                fontSize: 13,
-                width: 230,
-              }}>
-              {receiver.nick_name}
-            </Text>
+            {receiver.members == null ? (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  fontSize: 13,
+                  width: 230,
+                }}>
+                {receiver.nick_name}
+              </Text>
+            ) : (
+              <View>
+                {receiver.members.map(members => (
+                  <Text
+                    style={{
+                      color: 'white',
+                      paddingHorizontal: 15,
+                      paddingVertical: 5,
+                      fontSize: 13,
+                      width: 230,
+                    }}>
+                    {receiver.nick_name}
+                  </Text>
+                ))}
+              </View>
+            )}
             <View style={{flex: 1}}></View>
             <Image
               source={images.notification}
@@ -69,15 +86,19 @@ function ItemChat(props) {
                 width: 15,
               }}
             />
-            <Text
-              style={{
-                color: 'white',
-                paddingHorizontal: 2,
-                opacity: 0.5,
-                fontSize: 10,
-              }}>
-              {getTimeOnChat()}
-            </Text>
+            {last_message == null ? (
+              <Text
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 2,
+                  opacity: 0.5,
+                  fontSize: 10,
+                }}>
+                {getTimeOnChat()}
+              </Text>
+            ) : (
+              <View></View>
+            )}
           </View>
           <View style={{width: 250, flexDirection: 'row'}}>
             <Text

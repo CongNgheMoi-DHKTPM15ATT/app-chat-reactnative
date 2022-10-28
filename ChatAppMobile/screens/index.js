@@ -8,6 +8,8 @@ import MyProfile from './profile/MyProfile';
 import ChatScreen from './messenger/ChatScreen';
 import LoginActivity from './LoginActivity';
 import RegisterActivity from './RegisterActivity';
+import CallScreen from './messenger/CallScreen';
+import IncommingCall from './messenger/IncommingCall';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -19,4 +21,6 @@ export {
   ChatScreen,
   LoginActivity,
   RegisterActivity,
+  CallScreen,
+  IncommingCall,
 };
