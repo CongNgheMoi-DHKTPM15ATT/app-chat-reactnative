@@ -58,14 +58,10 @@ function ChatActivity(props) {
   //search local
   const [searchText, setSearchText] = useState('');
   const filterSearch = () =>
-    chat.filter(
-      eachFood =>
-        eachFood.receiver.nick_name
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        eachFood.receiver.members.nick_name
-          .toLowerCase()
-          .includes(searchText.toLowerCase()),
+    chat.filter(eachFood =>
+      eachFood.receiver.nick_name
+        .toLowerCase()
+        .includes(searchText.toLowerCase()),
     );
   return (
     <View style={{flex: 1}}>
@@ -79,27 +75,27 @@ function ChatActivity(props) {
           setSearchText(text);
         }}
         onPressRightIcon={() => {}}></UIHeader>
-      {/* {filterSearch().length > 0 ? ( */}
-      <FlatList
-        data={chat}
-        renderItem={({item, index}) => (
-          <ItemChat
-            chat={item}
-            key={item._id}
-            index={index}
-            onPress={() => {
-              // alert(`name is: ${item._id}`);
-              navigate('Messenger', {users: item});
-            }}
-          />
-        )}
-        keyExtractor={eachChat => eachChat.title}
-      />
-      {/* ) : (
+      {filterSearch().length > 0 ? (
+        <FlatList
+          data={filterSearch()}
+          renderItem={({item, index}) => (
+            <ItemChat
+              chat={item}
+              key={item._id}
+              index={index}
+              onPress={() => {
+                // alert(`name is: ${item._id}`);
+                navigate('Messenger', {users: item});
+              }}
+            />
+          )}
+          keyExtractor={eachChat => eachChat.title}
+        />
+      ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{color: 'white', fontSize: 30}}>No data</Text>
         </View>
-      )} */}
+      )}
     </View>
   );
 }

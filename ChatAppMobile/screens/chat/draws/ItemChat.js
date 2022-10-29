@@ -64,18 +64,18 @@ function ItemChat(props) {
               </Text>
             ) : (
               <View>
-                {receiver.members.map(members => (
-                  <Text
-                    style={{
-                      color: 'white',
-                      paddingHorizontal: 15,
-                      paddingVertical: 5,
-                      fontSize: 13,
-                      width: 230,
-                    }}>
-                    {receiver.nick_name}
-                  </Text>
-                ))}
+                {/* {receiver.members.map(members => ( */}
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    fontSize: 13,
+                    width: 230,
+                  }}>
+                  {receiver.nick_name}
+                </Text>
+                {/* ))} */}
               </View>
             )}
             <View style={{flex: 1}}></View>
