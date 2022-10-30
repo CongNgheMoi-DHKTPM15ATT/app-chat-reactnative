@@ -34,6 +34,7 @@ function CallScreen(props) {
   const [onVol, setOnVol] = useState(true);
   const [onCam, setOnCam] = useState(true);
   const [stream, setStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
   const [username, setUsername] = useState('');
   const [activeUsers, setActiveUsers] = useState([]);
   onDenline = () => {
@@ -77,7 +78,6 @@ function CallScreen(props) {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-
       <SafeAreaView style={styles.body}>
         <Text
           style={{
@@ -93,7 +93,9 @@ function CallScreen(props) {
           <View
             key={index}
             style={{height: 100, width: 200, flexDirection: 'column'}}>
-            <RTCView style={styles.stream} />
+            {remoteStream && (
+              <RTCView streamURL={remoteStream.toURL()} style={styles.stream} />
+            )}
             <Text
               style={{
                 color: 'black',

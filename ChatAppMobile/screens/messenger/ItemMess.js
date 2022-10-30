@@ -29,12 +29,34 @@ function ItemMess(props) {
   const {index} = props;
   const {title} = props;
   const [modalOpen, setModal] = useState(false);
+  const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
   useEffect(() => {
     //get user_name
     AsyncStorage.setItem('account-send', sender.user_id);
     AsyncStorage.setItem('name-send', title);
     // AsyncStorage.setItem('account-receiver', receiver._id);
   });
+
+  //ham xoa tin nhan
+  const removeMess = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id: _id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {})
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
   return sender.nick_name == title ? (
     <TouchableOpacity
       onLongPress={() => {
@@ -161,7 +183,7 @@ function ItemMess(props) {
             setModal(false);
           }}
           onPressDelete={() => {
-            alert(`${_id}`);
+            removeMess();
           }}></MessengerModel>
       </Modal>
     </TouchableOpacity>
