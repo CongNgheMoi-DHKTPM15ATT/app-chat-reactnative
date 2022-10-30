@@ -12,53 +12,49 @@ import {
 import ItemGroup from '../../phonebook/draws/ItemGroup';
 import {images} from '../../../constants';
 import {UIHeader} from '../../../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ListGroup(props) {
   const [isActive, setIsActive] = useState(false);
-  const [chat, setChat] = useState([
-    {
-      title: 'Cloud của tôi',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat,
-      time: '5 giờ',
-    },
-    {
-      title: 'DevOps Vietnam Community',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat1,
-      time: '7 giờ',
-    },
-    {
-      title: '[ĐTN 21] BCS Các lớp K.CNTT',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat2,
-      time: '11 giờ',
-    },
-    {
-      title: 'T5_4_6_LTTBDDNC_22_23_N2',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '1 giờ',
-    },
-    {
-      title: 'DHDTMT17ATT-Hệ thống máy tính',
-      content:
-        '[File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx [File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '23 giờ',
-    },
-    {
-      title: 'T3_7_9_LT_KTTKPM_22_23_NEW',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat3,
-      time: '5 giờ',
-    },
-    {
-      title: 'Mẹeee',
-      content: '[File] bai tap html.docx',
-      image: images.item_chat4,
-      time: '5 giờ',
-    },
-  ]);
+  const [userId, setUser_id] = useState('');
+  const [chat, setChat] = useState([]);
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
+  const BASE_URL = 'http://192.168.1.104:8080/api/conversation';
+
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
+  useEffect(() => {
+    // setIsLoading(true);
+    getAllUsers();
+  });
+
+  getAllUsers = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson.conversations;
+        console.log(currentUser);
+        setChat(currentUser);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => setIsLoading(false));
+  };
   return (
     <ScrollView horizontal={false} style={{flex: 1}}>
       <UIHeader
@@ -308,7 +304,8 @@ function ListGroup(props) {
               <ItemGroup
                 chat={item}
                 onPress={() => {
-                  alert(`name is: ${item.title}`);
+                  // alert(`name is: ${item._id}`);
+                  navigate('Messenger', {users: item});
                 }}
               />
             )}

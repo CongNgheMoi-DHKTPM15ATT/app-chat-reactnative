@@ -8,8 +8,34 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {images} from '../../../constants';
+import moment from 'moment-feiertage';
 function ItemGroup(props) {
-  let {title, content, image, time, numberOfChat} = props.chat;
+  let {
+    receiver,
+    content,
+    image,
+    time,
+    numberOfChat,
+    last_message,
+    seen_last_messages,
+    is_group,
+    _id,
+  } = props.chat;
+  var formattedDate = moment(last_message.createdAt)
+    .utc()
+    .format('MM/DD/YY h:mm a');
+  getTimeOnChat = () => {
+    if (new Date().toLocaleString() !== formattedDate) {
+      console.log(new Date());
+      return (formattedDate = moment(last_message.createdAt)
+        .utc()
+        .format('MM/DD/YY'));
+    } else {
+      return (formattedDate = moment(last_message.createdAt)
+        .utc()
+        .format('h:mm a'));
+    }
+  };
   const {onPress} = props;
   const {index} = props;
   return (
@@ -20,22 +46,39 @@ function ItemGroup(props) {
       }}>
       <View style={{flexDirection: 'row', padding: 15}}>
         <Image
-          source={image}
+          source={{uri: receiver.avatar}}
           style={{height: 50, width: 50, borderRadius: 100}}></Image>
         <View style={{flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={{
-                color: 'white',
-                paddingHorizontal: 15,
-                paddingVertical: 5,
-                fontSize: 13,
-                width: 230,
-              }}>
-              {title}
-            </Text>
+            {receiver.members == null ? (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  fontSize: 13,
+                  width: 230,
+                }}>
+                {receiver.nick_name}
+              </Text>
+            ) : (
+              <View>
+                {/* {receiver.members.map(members => ( */}
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    fontSize: 13,
+                    width: 230,
+                  }}>
+                  {receiver.nick_name}
+                </Text>
+                {/* ))} */}
+              </View>
+            )}
             <View style={{flex: 1}}></View>
             <Image
               source={images.notification}
@@ -44,15 +87,19 @@ function ItemGroup(props) {
                 width: 15,
               }}
             />
-            <Text
-              style={{
-                color: 'white',
-                paddingHorizontal: 5,
-                opacity: 0.5,
-                fontSize: 12,
-              }}>
-              {time}
-            </Text>
+            {last_message == null ? (
+              <Text
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 2,
+                  opacity: 0.5,
+                  fontSize: 10,
+                }}>
+                {getTimeOnChat()}
+              </Text>
+            ) : (
+              <View></View>
+            )}
           </View>
           <View style={{width: 250, flexDirection: 'row'}}>
             <Text
@@ -61,10 +108,10 @@ function ItemGroup(props) {
               style={{
                 color: 'white',
                 paddingHorizontal: 15,
-                opacity: numberOfChat > 0 ? 1 : 0.5,
+                opacity: {seen_last_messages} ? 1 : 0.5,
                 width: 250,
               }}>
-              {content}
+              {last_message.content}
             </Text>
             {numberOfChat > 0 && (
               <View
