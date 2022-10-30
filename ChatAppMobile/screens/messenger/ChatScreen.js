@@ -47,6 +47,7 @@ export default function ChatScreen(props) {
     props.route.params.users;
   const {navigate, goBack} = props.navigation;
   const [photo, setPhoto] = React.useState(null);
+  const [activeUser, setActiveUser] = useState([]);
   const handlePick = (emojiObject: EmojiType) => {
     setTypeText(emojiObject.emoji);
     console.log(emojiObject);
@@ -108,7 +109,11 @@ export default function ChatScreen(props) {
   // ket nois socket
   useEffect(() => {
     socket.initializeSocket();
-  });
+    // socket.on('all-users', user => {
+    //   console.log('Active');
+    //   console.log(user);
+    // });
+  }, []);
   // ham nhan tin nhan tu socket
   useEffect(() => {
     socket.on('getMessage'),
@@ -183,6 +188,9 @@ export default function ChatScreen(props) {
     setContentType('image');
     handleSendMessage();
   };
+  const joinRoom = () => {
+    socket.emit('join-room', {roomId: _id, userName: receiver.nick_name});
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -199,6 +207,7 @@ export default function ChatScreen(props) {
           alert('ok');
         }}
         onPressPhoneRightIcon={() => {
+          joinRoom();
           navigate('CallScreen');
           // alert('ok');
         }}
