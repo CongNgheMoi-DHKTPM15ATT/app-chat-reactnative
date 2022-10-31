@@ -26,12 +26,16 @@ function UIHeaderChat(props) {
     videoRightIconName,
     onPressPhoneRightIcon,
     onPressVideoRightIcon,
+    color,
   } = props;
   return (
     <View
       style={{
         height: 55,
-        backgroundColor: '#202124',
+        opacity: color != undefined ? 0.8 : 1,
+        backgroundColor:
+          color != undefined ? 'rgba(52, 52, 52, 0.8)' : '#202124',
+
         flexDirection: 'row',
       }}>
       {leftIconName != undefined ? (
@@ -48,7 +52,7 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{height: 50, width: 50, backgroundColor: 'red'}}> </View>
+        <View></View>
       )}
       <Text
         // onChangeText={text => {
@@ -81,7 +85,7 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{height: 50, width: 50, backgroundColor: 'red'}}> </View>
+        <View></View>
       )}
       {videoRightIconName != undefined ? (
         <TouchableOpacity onPress={onPressVideoRightIcon}>
@@ -95,7 +99,7 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{height: 50, width: 50, backgroundColor: 'red'}}> </View>
+        <View></View>
       )}
       {rightIconName != undefined ? (
         <TouchableOpacity onPress={onPressRightIcon}>
@@ -108,7 +112,7 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{height: 50, width: 50, backgroundColor: 'red'}}> </View>
+        <View></View>
       )}
     </View>
   );

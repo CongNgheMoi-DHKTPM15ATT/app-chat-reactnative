@@ -8,11 +8,13 @@ import {
   FlatList,
   SectionList,
   ScrollView,
+  Modal,
 } from 'react-native';
 import {UIHeader} from '../../../components';
 import {images} from '../../../constants';
 import ItemFriend from './ItemFriend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SearchPhone from '../../../model/SearchPhone';
 function ListFriend(props) {
   const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
   const Conven_URL = 'http://192.168.1.104:8080/api/messages';
@@ -21,6 +23,8 @@ function ListFriend(props) {
   const [chat, setChat] = useState([]);
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+
+  const [modalOpen, setModal] = useState(false);
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
@@ -85,12 +89,12 @@ function ListFriend(props) {
     <ScrollView horizontal={false} style={{flex: 1}}>
       <UIHeader
         leftIconName={''}
-        rightIconName={''}
+        rightIconAddFriend={''}
         onPressLeftIcon={() => {
           alert('Left icon');
         }}
         onPressRightIcon={() => {
-          alert('Right icon of list friend');
+          setModal(true);
         }}></UIHeader>
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View
@@ -201,6 +205,22 @@ function ListFriend(props) {
           />
         </View>
       </View>
+      <Modal
+        style={{
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpen}
+        animationType="fade">
+        <SearchPhone
+          data={userId}
+          onPress={() => {
+            setModal(false);
+          }}
+          onPressDelete={() => {
+            removeMess();
+          }}></SearchPhone>
+      </Modal>
     </ScrollView>
   );
 }

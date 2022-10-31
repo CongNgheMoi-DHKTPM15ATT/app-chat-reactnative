@@ -25,6 +25,7 @@ import {
   LoginActivity,
   RegisterActivity,
   CallScreen,
+  ProfileDetail,
 } from '../screens';
 import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
@@ -43,6 +44,7 @@ function App(props) {
         <Stack.Screen name={'Messenger'} component={ChatScreen} />
         <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
         <Stack.Screen name={'CallScreen'} component={CallScreen} />
+        <Stack.Screen name={'ProfileDetail'} component={ProfileDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

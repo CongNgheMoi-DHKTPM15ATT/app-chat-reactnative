@@ -23,6 +23,7 @@ function UIHeader(props) {
     onPressLeftIcon,
     onPressRightIcon,
     onChangeText,
+    rightIconAddFriend,
   } = props;
   return (
     <View
@@ -67,7 +68,20 @@ function UIHeader(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{height: 50, width: 50, backgroundColor: 'red'}}> </View>
+        <View></View>
+      )}
+      {rightIconAddFriend != undefined ? (
+        <TouchableOpacity onPress={onPressRightIcon}>
+          <Image
+            source={images.addfriend}
+            style={{
+              height: 25,
+              width: 25,
+              margin: 15,
+            }}></Image>
+        </TouchableOpacity>
+      ) : (
+        <View></View>
       )}
     </View>
   );

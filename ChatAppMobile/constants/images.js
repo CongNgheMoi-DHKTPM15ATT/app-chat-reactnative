@@ -41,4 +41,8 @@ export default {
   volume_call: require('../assets/volumn.png'),
   phone_start: require('../assets/call_start.png'),
   close: require('../assets/close.png'),
+  addfriend: require('../assets/addfriend.png'),
+  loupe: require('../assets/loupe.png'),
+  hanhne: require('../assets/hanhne.jpg'),
+  dihanh: require('../assets/dihanh.jpg'),
 };

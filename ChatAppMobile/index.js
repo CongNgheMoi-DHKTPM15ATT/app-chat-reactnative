@@ -13,6 +13,7 @@ import {
   ChatScreen,
   CallScreen,
   IncommingCall,
+  ProfileDetail,
 } from './screens';
 import App from './navigation/App';
 import {name as appName} from './app.json';

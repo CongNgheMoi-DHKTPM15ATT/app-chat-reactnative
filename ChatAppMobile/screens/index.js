@@ -10,6 +10,7 @@ import LoginActivity from './LoginActivity';
 import RegisterActivity from './RegisterActivity';
 import CallScreen from './messenger/CallScreen';
 import IncommingCall from './messenger/IncommingCall';
+import ProfileDetail from './profile/ProfileDetail';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -23,4 +24,5 @@ export {
   RegisterActivity,
   CallScreen,
   IncommingCall,
+  ProfileDetail,
 };
