@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import {images} from '../../../constants';
 function ItemFriend(props) {
-  const {name, image} = props.data;
+  const {user_name, _id, friends, avatar} = props.data;
+  const {onPress} = props;
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         height: 80,
         backgroundColor: '#252526',
@@ -19,7 +21,7 @@ function ItemFriend(props) {
         alignItems: 'center',
       }}>
       <Image
-        source={images.item_friend}
+        source={{uri: avatar}}
         style={{
           height: 50,
           width: 50,
@@ -28,11 +30,14 @@ function ItemFriend(props) {
         }}
       />
       <Text
+        numberOfLines={1}
+        ellipsizeMode="tail"
         style={{
-          fontSize: 18,
+          fontSize: 16,
           color: 'white',
+          width: 150,
         }}>
-        {name}
+        {user_name}
       </Text>
       <View style={{flex: 1}}></View>
       <Image
@@ -46,7 +51,7 @@ function ItemFriend(props) {
           backgroundColor: '#252526',
           marginEnd: 30,
         }}></Image>
-    </View>
+    </TouchableOpacity>
   );
 }
 export default ItemFriend;

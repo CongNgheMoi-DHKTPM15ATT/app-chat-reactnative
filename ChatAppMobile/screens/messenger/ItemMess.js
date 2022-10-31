@@ -32,7 +32,7 @@ function ItemMess(props) {
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
   useEffect(() => {
     //get user_name
-    AsyncStorage.setItem('account-send', sender.user_id);
+    AsyncStorage.setItem('account-send', sender != null ? sender.user_id : '');
     AsyncStorage.setItem('name-send', title);
     // AsyncStorage.setItem('account-receiver', receiver._id);
   });
@@ -57,7 +57,8 @@ function ItemMess(props) {
       })
       .finally();
   };
-  return sender.nick_name == title ? (
+
+  return sender == null || sender.nick_name == title ? (
     <TouchableOpacity
       onLongPress={() => {
         setModal(true);
@@ -69,7 +70,7 @@ function ItemMess(props) {
       }}>
       {/* {showUrl == true ? ( */}
       <Image
-        source={{uri: sender.avatar}}
+        source={{uri: sender != null ? sender.avatar : ''}}
         style={{
           height: 50,
           width: 50,

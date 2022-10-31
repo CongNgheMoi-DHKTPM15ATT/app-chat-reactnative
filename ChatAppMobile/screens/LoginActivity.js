@@ -16,8 +16,8 @@ function LoginActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
   //state to store email/pass
-  const [phone, setPhone] = useState('');
-  const [pass, setPass] = useState('');
+  const [phone, setPhone] = useState('0333007630');
+  const [pass, setPass] = useState('123');
   const [sercuPass, setSercuPass] = useState(true);
   const [userId, setUser_id] = useState('');
   const isValidationOk = () =>
@@ -28,12 +28,12 @@ function LoginActivity(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [account, setAccount] = useState([]);
-  handleLogin = () => {
+  handleLogin = async () => {
     // const url = 'https://halo-chat.herokuapp.com/api/auth/login';
     // http://localhost:8080/api/auth/login
     const url = 'http://192.168.1.104:8080/api/auth/login';
     const method = 'POST';
-    fetch(url, {
+    await fetch(url, {
       method,
       headers: {
         Accept: 'application/json',

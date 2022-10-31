@@ -12,95 +12,75 @@ import {
 import {UIHeader} from '../../../components';
 import {images} from '../../../constants';
 import ItemFriend from './ItemFriend';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ListFriend(props) {
-  const [friends, setFriend] = useState([
-    {
-      title: 'A',
-      data: [
-        {
-          name: 'A iuuu',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'B',
-      data: [
-        {
-          name: 'Bu',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'C',
-      data: [
-        {
-          name: 'Cc',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'D',
-      data: [
-        {
-          name: 'DR',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'E',
-      data: [
-        {
-          name: 'Cloud của tôi12',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'F',
-      data: [
-        {
-          name: 'Cloud của tôi3',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'G',
-      data: [
-        {
-          name: 'Cloud của tôi4',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'H',
-      data: [
-        {
-          name: 'Cloud của tôi9',
-          image: images.item_chat,
-        },
-      ],
-    },
-    {
-      title: 'J',
-      data: [
-        {
-          name: 'Cloud của tôi2',
-          image: images.item_chat,
-        },
-        {
-          name: 'Cloud của tôi1',
-          image: images.item_chat,
-        },
-      ],
-    },
-  ]);
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  const Conven_URL = 'http://192.168.1.104:8080/api/messages';
+  const [userId, setUser_id] = useState('');
+  const [friends, setFriend] = useState([]);
+  const [chat, setChat] = useState([]);
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
 
+  useEffect(() => {
+    getAllUsers();
+  });
+
+  getAllUsers = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        status: 'FRIENDED',
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson;
+        console.log('day ne ba da: ', currentUser);
+        setFriend(currentUser);
+        // console.log(friends);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
+
+  const getMessById = id => {
+    const method = 'POST';
+    fetch(Conven_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        conversation_id: id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson.conversations;
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', currentUser);
+        setChat(currentUser);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => setIsLoading(false));
+  };
   return (
     <ScrollView horizontal={false} style={{flex: 1}}>
       <UIHeader
@@ -204,22 +184,20 @@ function ListFriend(props) {
             style={{height: 1, backgroundColor: 'gray', opacity: 0.2}}></View>
         </View>
         <View style={{flex: 60}}>
-          <SectionList
-            sections={friends}
-            renderItem={({item}) => <ItemFriend data={item} />}
-            renderSectionHeader={({section}) => (
-              <Text
-                style={{
-                  backgroundColor: '#252526',
-                  fontSize: 13,
-                  color: 'white',
-                  paddingHorizontal: 15,
-                }}>
-                {section.title}
-              </Text>
+          <FlatList
+            data={friends}
+            renderItem={({item, index}) => (
+              <ItemFriend
+                data={item}
+                onPress={() => {
+                  // alert(`name is: ${item._id}`);
+                  getMessById(item._id);
+                  navigate('Messenger', {users: chat});
+                }}
+              />
             )}
-            keyExtractor={(item, index) => `basicListEntry-${item.title}`}
-            key={(item, index) => `basicListEntry-${item.title}`}
+            keyExtractor={eachChat => eachChat._id}
+            key={eachChat => eachChat._id}
           />
         </View>
       </View>
