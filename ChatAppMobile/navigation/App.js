@@ -29,11 +29,13 @@ import {
 } from '../screens';
 import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
+import SearchPhone from '../model/SearchPhone';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
     <NavigationContainer theme={DarkTheme}>
       <Stack.Navigator
+        useLegacyImplementation={true}
         initialRouteName="LoadingActivity"
         screenOptions={{
           headerShown: false,
@@ -45,6 +47,7 @@ function App(props) {
         <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
         <Stack.Screen name={'CallScreen'} component={CallScreen} />
         <Stack.Screen name={'ProfileDetail'} component={ProfileDetail} />
+        <Stack.Screen name={'SearchPhone'} component={SearchPhone} />
       </Stack.Navigator>
     </NavigationContainer>
   );

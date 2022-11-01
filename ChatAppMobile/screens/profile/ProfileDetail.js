@@ -40,7 +40,7 @@ function ProfileDetail(props) {
           goBack();
         }}
         onPressRightIcon={() => {
-          alert('ok');
+          alert('okkkkkkk');
         }}
         onPressPhoneRightIcon={() => {
           joinRoom();
@@ -107,7 +107,7 @@ function ProfileDetail(props) {
               padding: 0,
               textAlign: 'center',
             }}>
-            {username} chưa có hoạt dộng nào. Hãy trò chuyện để hiểu nhau hơn
+            {username} chưa có hoạt động nào. Hãy trò chuyện để hiểu nhau hơn
           </Text>
         </View>
       </View>
