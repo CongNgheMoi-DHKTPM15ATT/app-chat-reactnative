@@ -6,11 +6,13 @@ import {
   ImageBackground,
   TouchableOpacity,
   FlatList,
+  Modal,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {images} from '../../../constants';
 import ItemChat from './ItemChat';
 import {UIHeader} from '../../../components';
+import AppOption from '../../../model/AppOption';
 function ChatActivity(props) {
   const [isActive, setIsActive] = useState(false);
   const {navigation, route} = props;
@@ -18,6 +20,7 @@ function ChatActivity(props) {
   const [userId, setUser_id] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [chat, setChat] = useState([]);
+  const [modalOpen, setModal] = useState(false);
   // https://halo-chat.herokuapp.com/api/conversation
   // const BASE_URL = 'http://192.168.43.91:8080/api/conversation';
   const BASE_URL = 'http://192.168.1.104:8080/api/conversation';
@@ -75,7 +78,9 @@ function ChatActivity(props) {
         onChangeText={text => {
           setSearchText(text);
         }}
-        onPressRightIcon={() => {}}></UIHeader>
+        onPressRightIcon={() => {
+          setModal(true);
+        }}></UIHeader>
       {filterSearch().length > 0 ? (
         <FlatList
           data={filterSearch()}
@@ -97,6 +102,21 @@ function ChatActivity(props) {
           <Text style={{color: 'white', fontSize: 30}}>No data</Text>
         </View>
       )}
+      <Modal
+        style={{
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpen}
+        animationType="fade">
+        <AppOption
+          onPress={() => {
+            setModal(false);
+          }}
+          onPressDelete={() => {
+            removeMess();
+          }}></AppOption>
+      </Modal>
     </View>
   );
 }
