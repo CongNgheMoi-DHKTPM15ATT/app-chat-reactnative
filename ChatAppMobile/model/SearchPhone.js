@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
+import EmojiPicker from 'rn-emoji-keyboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {images, fontSizes, colors} from '../constants';
 import {useNavigation} from '@react-navigation/native';

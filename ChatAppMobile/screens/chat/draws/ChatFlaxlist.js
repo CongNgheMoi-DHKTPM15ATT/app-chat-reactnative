@@ -110,6 +110,10 @@ function ChatActivity(props) {
         visible={modalOpen}
         animationType="fade">
         <AppOption
+          onPressAddGroup={() => {
+            navigation.navigate('AddGroup');
+            setModal(false);
+          }}
           onPress={() => {
             goBack();
           }}

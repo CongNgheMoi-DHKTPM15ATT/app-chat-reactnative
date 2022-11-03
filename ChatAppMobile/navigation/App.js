@@ -30,6 +30,7 @@ import {
 import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
 import SearchPhone from '../model/SearchPhone';
+import AddGroup from '../model/AddGroup';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -48,6 +49,7 @@ function App(props) {
         <Stack.Screen name={'CallScreen'} component={CallScreen} />
         <Stack.Screen name={'ProfileDetail'} component={ProfileDetail} />
         <Stack.Screen name={'SearchPhone'} component={SearchPhone} />
+        <Stack.Screen name={'AddGroup'} component={AddGroup} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -43,7 +43,7 @@ export default {
   close: require('../assets/close.png'),
   addfriend: require('../assets/addfriend.png'),
   loupe: require('../assets/loupe.png'),
-  hanhne: require('../assets/hanhne.jpg'),
-  dihanh: require('../assets/dihanh.jpg'),
+  check: require('../assets/verify.png'),
+  camera: require('../assets/camera.png'),
   adduser: require('../assets/add-user.png'),
 };

@@ -1,0 +1,250 @@
+import React, {useState, useEffect} from 'react';
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  TouchableHighlight,
+  Dimensions,
+  Modal,
+  TextInput,
+  FlatList,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {images, fontSizes, colors} from '../constants';
+import EmojiPicker from 'rn-emoji-keyboard';
+import {useNavigation} from '@react-navigation/native';
+import {ItemChat, ItemFriend} from '../screens';
+import ItemUser from '../screens/chat/draws/ItemUser';
+function AddGroup(props) {
+  var screen = Dimensions.get('window');
+  const [isOpen, setIsOpen] = useState(false);
+  const {onPress, data, onPressDelete} = props;
+  const navigation = useNavigation();
+  const [phone, setPhone] = useState('');
+  const [nameGroup, setNameGroup] = useState('');
+  const [userId, setUser_id] = useState('');
+  const [profile, setProfile] = useState([]);
+  const [chat, setChat] = useState([]);
+  // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+  const handlePick = (emojiObject: EmojiType) => {
+    setNameGroup(emojiObject.emoji);
+    console.log(emojiObject);
+    /* example emojiObject = { 
+        "emoji": "❤️",
+        "name": "red heart",
+        "slug": "red_heart",
+      }
+    */
+  };
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
+
+  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  useEffect(() => {
+    // setIsLoading(true);
+    getAllUsers();
+  }, []);
+
+  getAllUsers = () => {
+    const method = 'POST';
+    fetch(BASE_URL_Con, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        status: 'FRIENDED',
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson;
+        console.log('day ne ba da: ', currentUser);
+        setChat(currentUser);
+        // console.log(friends);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
+  //search local
+  const filterSearch = () =>
+    chat.filter(eachFood =>
+      eachFood.user_name.toLowerCase().includes(phone.toLowerCase()),
+    );
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'black',
+        flexDirection: 'column',
+      }}>
+      <Text style={{color: 'white', marginHorizontal: 15, marginVertical: 5}}>
+        Nhóm mới: 0
+      </Text>
+      <Text
+        style={{
+          color: 'white',
+          marginHorizontal: 15,
+          marginVertical: 5,
+          opacity: 0.5,
+        }}>
+        Đã chọn
+      </Text>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{
+          justifyContent: 'flex-end',
+          marginLeft: 330,
+          position: 'absolute',
+          flexDirection: 'row',
+        }}>
+        <Image source={images.close} style={{height: 24, width: 24}}></Image>
+      </TouchableOpacity>
+      <View style={{flexDirection: 'column'}}>
+        <View
+          style={{
+            height: 70,
+            flexDirection: 'row',
+            bottom: 0,
+            left: 0,
+            backgroundColor: '#202124',
+            right: 0,
+          }}>
+          <TouchableOpacity
+            onPress={onPress}
+            style={{
+              justifyContent: 'flex-start',
+              position: 'absolute',
+              flexDirection: 'row',
+              marginTop: 20,
+              margin: 20,
+            }}>
+            <Image
+              source={images.camera}
+              style={{height: 30, width: 30}}></Image>
+          </TouchableOpacity>
+          <TextInput
+            onChangeText={text => {
+              setNameGroup(text);
+            }}
+            placeholder="Đặt tên nhóm"
+            placeholderTextColor={'gray'}
+            value={nameGroup}
+            style={{
+              paddingLeft: 70,
+              color: 'white',
+              fontSize: 16,
+              width: 270,
+            }}></TextInput>
+
+          {nameGroup.trim().length > 0 ? (
+            <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+              <Image
+                source={require('../assets/emoji.png')}
+                style={{
+                  height: 30,
+                  width: 30,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginTop: 20,
+                  marginVertical: 10,
+                }}></Image>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
+          <TouchableOpacity
+            onPress={() => {
+              if (nameGroup.trim().length == 0) {
+                return;
+              }
+            }}>
+            {nameGroup.trim().length > 0 ? (
+              <Image
+                source={images.check}
+                style={{
+                  height: 25,
+                  width: 25,
+                  margin: 15,
+                  marginTop: 20,
+                  marginLeft: 1,
+                }}></Image>
+            ) : (
+              <View></View>
+            )}
+          </TouchableOpacity>
+
+          <EmojiPicker
+            onEmojiSelected={handlePick}
+            open={isOpen}
+            value={nameGroup}
+            onChange={setNameGroup}
+            onClose={() => setIsOpen(false)}
+          />
+        </View>
+        <View
+          style={{
+            height: 40,
+            flexDirection: 'row',
+            bottom: 0,
+            left: 0,
+            backgroundColor: '#202124',
+            borderRadius: 5,
+            margin: 10,
+            right: 0,
+          }}>
+          <Image
+            source={images.icon_search}
+            style={{height: 30, width: 30, margin: 5}}></Image>
+          <TextInput
+            onChangeText={text => {
+              setPhone(text);
+            }}
+            placeholder="Tìm tên hoặc số điện thoại"
+            placeholderTextColor={'gray'}
+            value={phone}
+            style={{
+              paddingLeft: 10,
+              color: 'white',
+              fontSize: 16,
+              width: 270,
+            }}></TextInput>
+        </View>
+        {filterSearch().length > 0 ? (
+          <FlatList
+            data={filterSearch()}
+            renderItem={({item, index}) => (
+              <ItemUser
+                data={item}
+                onPress={() => {
+                  // alert(`name is: ${item._id}`);
+                  getMessById(item._id);
+                  navigate('Messenger', {users: chat});
+                }}
+              />
+            )}
+            keyExtractor={eachChat => eachChat._id}
+            key={eachChat => eachChat._id}
+          />
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: 'white', fontSize: 30}}>No data</Text>
+          </View>
+        )}
+      </View>
+    </View>
+  );
+}
+export default AddGroup;
