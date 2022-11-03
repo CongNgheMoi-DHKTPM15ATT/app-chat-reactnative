@@ -111,10 +111,11 @@ function ChatActivity(props) {
         animationType="fade">
         <AppOption
           onPress={() => {
-            setModal(false);
+            goBack();
           }}
-          onPressDelete={() => {
-            removeMess();
+          onPressAddFriend={() => {
+            navigation.navigate('SearchPhone');
+            setModal(false);
           }}></AppOption>
       </Modal>
     </View>

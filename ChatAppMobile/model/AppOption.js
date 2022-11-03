@@ -15,7 +15,7 @@ import {images, fontSizes, colors} from '../constants';
 import {useNavigation} from '@react-navigation/native';
 function AppOption(props) {
   var screen = Dimensions.get('window');
-  const {onPress, data, onPressDelete} = props;
+  const {onPress, onPressAddGroup, onPressGroupCall, onPressAddFriend} = props;
   const navigation = useNavigation();
   const [phone, setPhone] = useState('');
   const [userId, setUser_id] = useState('');
@@ -43,7 +43,7 @@ function AppOption(props) {
         <Image source={images.close} style={{height: 24, width: 24}}></Image>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPressAddGroup}
         style={{flexDirection: 'row', padding: 10}}>
         <Image source={images.group} style={{height: 24, width: 24}}></Image>
         <Text style={{color: 'white', marginHorizontal: 15, marginVertical: 5}}>
@@ -51,7 +51,7 @@ function AppOption(props) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPressAddFriend}
         style={{flexDirection: 'row', padding: 10}}>
         <Image source={images.adduser} style={{height: 24, width: 24}}></Image>
         <Text style={{color: 'white', marginHorizontal: 15, marginVertical: 5}}>
@@ -59,7 +59,7 @@ function AppOption(props) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPressGroupCall}
         style={{flexDirection: 'row', padding: 10}}>
         <Image source={images.video} style={{height: 24, width: 24}}></Image>
         <Text style={{color: 'white', marginHorizontal: 15, marginVertical: 5}}>
