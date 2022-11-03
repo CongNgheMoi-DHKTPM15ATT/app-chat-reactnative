@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
+// const SOCKET_URL = 'http://192.168.43.91:8080';
 const SOCKET_URL = 'http://192.168.1.104:8080';
+
 class WSService {
   initializeSocket = async () => {
     try {

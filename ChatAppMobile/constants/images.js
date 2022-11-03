@@ -45,4 +45,5 @@ export default {
   loupe: require('../assets/loupe.png'),
   hanhne: require('../assets/hanhne.jpg'),
   dihanh: require('../assets/dihanh.jpg'),
+  adduser: require('../assets/add-user.png'),
 };

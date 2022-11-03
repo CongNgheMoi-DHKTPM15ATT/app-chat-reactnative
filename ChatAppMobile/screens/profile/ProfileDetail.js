@@ -16,20 +16,32 @@ import {UIHeaderChat} from '../../components';
 function ProfileDetail(props) {
   const {navigate, goBack} = props.navigation;
   const [username, setUsername] = useState('');
-  const [avatar, setAvatar] = useState('');
+  // const [conversation, setConversation] = useState('');
+  // const [avatar, setAvatar] = useState('');
   const [background, setBackground] = useState('');
-  useEffect(() => {
-    //get user_name
-    AsyncStorage.getItem('user_name_search').then(result => {
-      setUsername(result);
-    });
-    AsyncStorage.getItem('avatar_search').then(result => {
-      setAvatar(result);
-    });
-    AsyncStorage.getItem('avatar_search').then(result => {
-      setBackground(result);
-    });
-  });
+  // const [status, setStatus] = useState('');
+  let {_id, user_name, phone, avatar, conversation, status} =
+    props.route.params.user;
+
+  // useEffect(() => {
+  //   //get user_name
+  //   AsyncStorage.getItem('user_name_search').then(result => {
+  //     setUsername(result);
+  //   });
+  //   AsyncStorage.getItem('avatar_search').then(result => {
+  //     setAvatar(result);
+  //   });
+  //   AsyncStorage.getItem('avatar_search').then(result => {
+  //     setBackground(result);
+  //   });
+  //   AsyncStorage.getItem('conversation').then(result => {
+  //     setConversation(result);
+  //   });
+  //   AsyncStorage.getItem('status_search').then(result => {
+  //     setStatus(result);
+  //     console.log('abcd: ', result);
+  //   });
+  // });
   return (
     <ScrollView style={{flex: 100, backgroundColor: 'black'}}>
       <UIHeaderChat
@@ -63,7 +75,7 @@ function ProfileDetail(props) {
             borderColor: 'black',
           }}>
           <Image
-            source={{uri: background}}
+            source={{uri: avatar}}
             style={{
               position: 'absolute',
               height: 300,
@@ -94,21 +106,37 @@ function ProfileDetail(props) {
               fontWeight: 'bold',
               padding: 0,
             }}>
-            {username}
+            {user_name}
           </Text>
-          <Text
-            style={{
-              paddingTop: 400,
-              position: 'absolute',
-              alignSelf: 'center',
-              margin: 15,
-              fontSize: 15,
-              color: 'white',
-              padding: 0,
-              textAlign: 'center',
-            }}>
-            {username} chưa có hoạt động nào. Hãy trò chuyện để hiểu nhau hơn
-          </Text>
+          {status == 'FRIENDED' ? (
+            <Text
+              style={{
+                paddingTop: 400,
+                position: 'absolute',
+                alignSelf: 'center',
+                margin: 15,
+                fontSize: 15,
+                color: 'white',
+                padding: 0,
+                textAlign: 'center',
+              }}>
+              {user_name} chưa có hoạt động nào. Hãy trò chuyện để hiểu nhau hơn
+            </Text>
+          ) : (
+            <Text
+              style={{
+                paddingTop: 400,
+                position: 'absolute',
+                alignSelf: 'center',
+                margin: 15,
+                fontSize: 15,
+                color: 'white',
+                padding: 0,
+                textAlign: 'center',
+              }}>
+              Cập nhật giới thiệu bản thân
+            </Text>
+          )}
         </View>
       </View>
       <View style={{flex: 30}}>
@@ -118,35 +146,85 @@ function ProfileDetail(props) {
               height: '100%',
               width: '50%',
             }}>
-            <TouchableOpacity
-              style={{
-                marginLeft: 230,
-                marginTop: 530,
-                borderColor: 'white',
-                borderWidth: 0.5,
-                height: 35,
-                width: '60%',
-                borderRadius: 100,
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}>
-              <Image
-                source={images.mess}
+            {status == null ? (
+              <TouchableOpacity
                 style={{
-                  height: 20,
-                  width: 20,
-                  marginHorizontal: 6,
-                  marginTop: 5,
-                }}></Image>
-              <Text
-                style={{
-                  color: 'white',
-                  marginRight: 10,
-                  alignSelf: 'center',
+                  marginLeft: 230,
+                  marginTop: 530,
+                  height: 35,
+                  width: '60%',
+                  borderRadius: 100,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
                 }}>
-                Nhắn tin
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    color: 'white',
+                    marginRight: 10,
+                    alignSelf: 'center',
+                  }}></Text>
+              </TouchableOpacity>
+            ) : status == 'FRIENDED' ? (
+              <TouchableOpacity
+                style={{
+                  marginLeft: 230,
+                  marginTop: 530,
+                  borderColor: 'white',
+                  borderWidth: 0.5,
+                  height: 35,
+                  width: '60%',
+                  borderRadius: 100,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={images.mess}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    marginHorizontal: 6,
+                    marginTop: 5,
+                  }}></Image>
+                <Text
+                  style={{
+                    color: 'white',
+                    marginRight: 10,
+                    alignSelf: 'center',
+                  }}>
+                  Nhắn tin
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  marginLeft: 230,
+                  marginTop: 530,
+                  borderColor: 'white',
+                  borderWidth: 0.5,
+                  height: 35,
+                  width: '60%',
+                  borderRadius: 100,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Image
+                  source={images.adduser}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    marginHorizontal: 6,
+                    marginTop: 5,
+                  }}></Image>
+                <Text
+                  style={{
+                    color: 'white',
+                    marginRight: 10,
+                    alignSelf: 'center',
+                  }}>
+                  Kết bạn
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>

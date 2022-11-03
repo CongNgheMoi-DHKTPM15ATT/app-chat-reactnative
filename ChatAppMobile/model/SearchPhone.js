@@ -20,7 +20,9 @@ function SearchPhone(props) {
   const [phone, setPhone] = useState('');
   const [userId, setUser_id] = useState('');
   const [profile, setProfile] = useState([]);
+  // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
   const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
@@ -43,11 +45,15 @@ function SearchPhone(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson[0];
+        AsyncStorage.setItem('status_search', currentUser.status);
         AsyncStorage.setItem('avatar_search', currentUser.avatar);
         AsyncStorage.setItem('phone_search', currentUser.phone);
         AsyncStorage.setItem('user_name_search', currentUser.user_name);
         AsyncStorage.setItem('user_id_search', currentUser._id);
-        navigation.navigate('ProfileDetail');
+        AsyncStorage.setItem('conversation', currentUser.conversation);
+
+        console.log('abc: ', currentUser.status);
+        navigation.navigate('ProfileDetail', {user: currentUser});
       })
       .catch(resJson => {
         console.log(resJson);
@@ -90,7 +96,7 @@ function SearchPhone(props) {
           placeholder="Thêm bạn bằng số điện thoại"
           placeholderTextColor={colors.primary}
           value={phone}
-          style={{paddingLeft: 15}}></TextInput>
+          style={{paddingLeft: 15, color: 'white', fontSize: 16}}></TextInput>
         <TouchableOpacity
           onPress={() => {
             setPhone('');
@@ -102,7 +108,7 @@ function SearchPhone(props) {
                 height: 25,
                 width: 25,
                 margin: 15,
-                marginLeft: 85,
+                marginLeft: 55,
               }}></Image>
           ) : (
             <View></View>

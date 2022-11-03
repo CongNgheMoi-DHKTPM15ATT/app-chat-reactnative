@@ -28,12 +28,13 @@ function LoginActivity(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [account, setAccount] = useState([]);
-  handleLogin = async () => {
+  handleLogin = () => {
     // const url = 'https://halo-chat.herokuapp.com/api/auth/login';
     // http://localhost:8080/api/auth/login
+    // const url = 'http://192.168.43.91:8080/api/auth/login';
     const url = 'http://192.168.1.104:8080/api/auth/login';
     const method = 'POST';
-    await fetch(url, {
+    fetch(url, {
       method,
       headers: {
         Accept: 'application/json',

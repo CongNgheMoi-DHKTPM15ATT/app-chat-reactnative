@@ -19,6 +19,7 @@ function ChatActivity(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [chat, setChat] = useState([]);
   // https://halo-chat.herokuapp.com/api/conversation
+  // const BASE_URL = 'http://192.168.43.91:8080/api/conversation';
   const BASE_URL = 'http://192.168.1.104:8080/api/conversation';
 
   useEffect(() => {
