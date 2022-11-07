@@ -10,13 +10,17 @@ import {
   Modal,
   TextInput,
   FlatList,
+  ScrollView,
+  Keyboard,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {images, fontSizes, colors} from '../constants';
 import EmojiPicker from 'rn-emoji-keyboard';
 import {useNavigation} from '@react-navigation/native';
 import {ItemChat, ItemFriend} from '../screens';
 import ItemUser from '../screens/chat/draws/ItemUser';
+import Task from '../screens/chat/draws/Task';
 function AddGroup(props) {
   var screen = Dimensions.get('window');
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +31,8 @@ function AddGroup(props) {
   const [userId, setUser_id] = useState('');
   const [profile, setProfile] = useState([]);
   const [chat, setChat] = useState([]);
+  const [value, setValue] = useState(false);
+
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
   const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
   const handlePick = (emojiObject: EmojiType) => {
@@ -44,13 +50,12 @@ function AddGroup(props) {
     AsyncStorage.getItem('user_id').then(result => {
       setUser_id(result);
     });
-  });
-
-  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  }, []);
   useEffect(() => {
-    // setIsLoading(true);
     getAllUsers();
   }, []);
+  // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
+  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
   getAllUsers = () => {
     const method = 'POST';
@@ -77,13 +82,38 @@ function AddGroup(props) {
       })
       .finally();
   };
+
   //search local
   const filterSearch = () =>
     chat.filter(eachFood =>
       eachFood.user_name.toLowerCase().includes(phone.toLowerCase()),
     );
+  const onChecked = id => {
+    // const data = chat;
+    // const index = data.findIndex(x => x._id === id);
+    // data[index].checked = !data[index].checked;
+    // setValue(true);
+    // setChat(data);
+    console.log('éc éc l1: ', id);
+    let cloneProduct = chat.map(eachProduct => {
+      if (id == eachProduct._id) {
+        return {
+          //Rest function ...eachProduct còn lại cua mang, object // Spread function ...eachProduct thua huong product luc dau + them status
+          ...eachProduct,
+          check:
+            eachProduct.check == false || eachProduct.check == undefined
+              ? true
+              : false,
+        };
+      }
+      return eachProduct;
+    });
+    // sua doi
+    setChat(cloneProduct);
+    console.log('éc éc: ', chat);
+  };
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         backgroundColor: 'black',
@@ -169,6 +199,7 @@ function AddGroup(props) {
               if (nameGroup.trim().length == 0) {
                 return;
               }
+              AsyncStorage.setItem('name_group', nameGroup);
             }}>
             {nameGroup.trim().length > 0 ? (
               <Image
@@ -221,30 +252,48 @@ function AddGroup(props) {
               width: 270,
             }}></TextInput>
         </View>
-        {filterSearch().length > 0 ? (
-          <FlatList
-            data={filterSearch()}
-            renderItem={({item, index}) => (
-              <ItemUser
-                data={item}
-                onPress={() => {
-                  // alert(`name is: ${item._id}`);
-                  getMessById(item._id);
-                  navigate('Messenger', {users: chat});
+        {chat.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                onChecked(item._id);
+              }}
+              style={{
+                height: 80,
+                backgroundColor: '#252526',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              key={index}>
+              <Image
+                source={{uri: item.avatar}}
+                style={{
+                  height: 50,
+                  width: 50,
+                  borderRadius: 100,
+                  margin: 15,
                 }}
               />
-            )}
-            keyExtractor={eachChat => eachChat._id}
-            key={eachChat => eachChat._id}
-          />
-        ) : (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{color: 'white', fontSize: 30}}>No data</Text>
-          </View>
-        )}
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={{
+                  fontSize: 16,
+                  color: 'white',
+                  width: 150,
+                }}>
+                {item.user_name}
+              </Text>
+              <View style={{flex: 1}}></View>
+              <CheckBox
+                value={item.check}
+                onValueChange={val => setValue(val)}
+              />
+            </TouchableOpacity>
+          );
+        })}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 export default AddGroup;

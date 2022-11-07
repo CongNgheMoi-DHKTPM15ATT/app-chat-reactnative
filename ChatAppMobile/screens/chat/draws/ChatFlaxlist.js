@@ -115,7 +115,7 @@ function ChatActivity(props) {
             setModal(false);
           }}
           onPress={() => {
-            goBack();
+            setModal(false);
           }}
           onPressAddFriend={() => {
             navigation.navigate('SearchPhone');
