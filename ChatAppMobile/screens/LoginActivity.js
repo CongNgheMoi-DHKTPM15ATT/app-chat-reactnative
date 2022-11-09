@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {images, fontSizes, colors} from '../constants';
 import {isValidPhone, isValidPass} from '../utils/Validation';
 import {
@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  Animated,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // const axios = require('axios').default;

@@ -32,6 +32,7 @@ function AddGroup(props) {
   const [profile, setProfile] = useState([]);
   const [chat, setChat] = useState([]);
   const [value, setValue] = useState(false);
+  const [taskItems, setTaskItems] = useState([]);
 
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
   const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
@@ -54,6 +55,10 @@ function AddGroup(props) {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  useEffect(() => {
+    console.log('éc éc', chat);
+  }, [chat]);
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
   const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
@@ -89,28 +94,39 @@ function AddGroup(props) {
       eachFood.user_name.toLowerCase().includes(phone.toLowerCase()),
     );
   const onChecked = id => {
-    // const data = chat;
-    // const index = data.findIndex(x => x._id === id);
-    // data[index].checked = !data[index].checked;
-    // setValue(true);
-    // setChat(data);
-    console.log('éc éc l1: ', id);
-    let cloneProduct = chat.map(eachProduct => {
-      if (id == eachProduct._id) {
+    let cloneChat = chat.map(eachChat => {
+      if (id == eachChat._id) {
         return {
-          //Rest function ...eachProduct còn lại cua mang, object // Spread function ...eachProduct thua huong product luc dau + them status
           ...eachProduct,
           check:
-            eachProduct.check == false || eachProduct.check == undefined
+            eachChat.check == false || eachChat.check == undefined
               ? true
               : false,
         };
       }
-      return eachProduct;
+      return eachChat;
     });
     // sua doi
-    setChat(cloneProduct);
-    console.log('éc éc: ', chat);
+    setChat(cloneChat);
+    // getSelectChat();
+  };
+  const getSelectChat = () => {
+    var keys = chat.map(t => {
+      t.user_name;
+    });
+    var checks = chat.map(t => {
+      t.check;
+    });
+    console.log('555: ', checks);
+    let Selected = [];
+    for (let i = 0; i < checks.length; i++) {
+      if (checks[i] == true) {
+        console.log('33: ', Selected.push(keys[i]));
+        // setTaskItems(current => [...current, keys[i]]);
+      }
+      console.log('444: ', checks[i]);
+    }
+    alert('a: ', taskItems);
   };
   return (
     <ScrollView
@@ -287,11 +303,42 @@ function AddGroup(props) {
               <View style={{flex: 1}}></View>
               <CheckBox
                 value={item.check}
-                onValueChange={val => setValue(val)}
+                onValueChange={() => {
+                  onChecked(item._id);
+                }}
               />
             </TouchableOpacity>
           );
         })}
+      </View>
+      <View
+        style={{
+          height: 70,
+          flexDirection: 'row',
+          marginTop: 50,
+          backgroundColor: '#202124',
+          justifyContent: 'flex-end',
+        }}>
+        {/* <FlatList
+          data={taskItems}
+          renderItem={({item, index}) => <Task text={item} />}
+          keyExtractor={eachChat => eachChat._id}
+          key={eachChat => eachChat._id}
+        /> */}
+        <TouchableOpacity
+          onPress={() => {
+            getSelectChat();
+          }}>
+          <Image
+            source={images.check}
+            style={{
+              height: 25,
+              width: 25,
+              margin: 15,
+              marginTop: 20,
+              marginLeft: 1,
+            }}></Image>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
