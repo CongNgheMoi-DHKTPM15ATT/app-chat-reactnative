@@ -97,7 +97,7 @@ function AddGroup(props) {
     let cloneChat = chat.map(eachChat => {
       if (id == eachChat._id) {
         return {
-          ...eachProduct,
+          ...eachChat,
           check:
             eachChat.check == false || eachChat.check == undefined
               ? true
