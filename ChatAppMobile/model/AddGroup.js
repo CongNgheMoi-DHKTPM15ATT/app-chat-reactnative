@@ -64,10 +64,12 @@ function AddGroup(props) {
         Select.push({avatar: chat[i].avatar, _id: chat[i]._id});
       }
       console.log('éc éc', Select);
-      setTaskItems(Select);
+      setTaskItems(Select, ...taskItems);
     }
   }, [chat]);
-
+  useEffect(() => {
+    console.log('éc éc éc', taskItems);
+  }, [taskItems]);
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
   const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
@@ -312,6 +314,7 @@ function AddGroup(props) {
           justifyContent: 'flex-end',
         }}>
         <FlatList
+          horizontal
           data={taskItems}
           renderItem={({item, index}) => <Task text={item} />}
           keyExtractor={eachChat => eachChat._id}
