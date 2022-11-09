@@ -54,19 +54,18 @@ function AddGroup(props) {
   });
   useEffect(() => {
     getAllUsers();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     // console.log('éc éc', chat);
     let Select = [];
     for (let i = 0; i < chat.length; i++) {
       if (chat[i].check === true) {
-        Select.push({avatar: chat[i].avatar});
+        Select.push({avatar: chat[i].avatar, _id: chat[i]._id});
       }
       console.log('éc éc', Select);
+      setTaskItems(Select);
     }
-
-    alert(Select);
   }, [chat]);
 
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
@@ -312,12 +311,12 @@ function AddGroup(props) {
           backgroundColor: '#202124',
           justifyContent: 'flex-end',
         }}>
-        {/* <FlatList
+        <FlatList
           data={taskItems}
           renderItem={({item, index}) => <Task text={item} />}
           keyExtractor={eachChat => eachChat._id}
           key={eachChat => eachChat._id}
-        /> */}
+        />
         <TouchableOpacity onPress={() => {}}>
           <Image
             source={images.check}
