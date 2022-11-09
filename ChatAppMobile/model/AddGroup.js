@@ -51,14 +51,24 @@ function AddGroup(props) {
     AsyncStorage.getItem('user_id').then(result => {
       setUser_id(result);
     });
-  }, []);
+  });
   useEffect(() => {
     getAllUsers();
   }, []);
 
   useEffect(() => {
-    console.log('éc éc', chat);
+    // console.log('éc éc', chat);
+    let Select = [];
+    for (let i = 0; i < chat.length; i++) {
+      if (chat[i].check === true) {
+        Select.push({avatar: chat[i].avatar});
+      }
+      console.log('éc éc', Select);
+    }
+
+    alert(Select);
   }, [chat]);
+
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
   const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
@@ -110,24 +120,7 @@ function AddGroup(props) {
     setChat(cloneChat);
     // getSelectChat();
   };
-  const getSelectChat = () => {
-    var keys = chat.map(t => {
-      t.user_name;
-    });
-    var checks = chat.map(t => {
-      t.check;
-    });
-    console.log('555: ', checks);
-    let Selected = [];
-    for (let i = 0; i < checks.length; i++) {
-      if (checks[i] == true) {
-        console.log('33: ', Selected.push(keys[i]));
-        // setTaskItems(current => [...current, keys[i]]);
-      }
-      console.log('444: ', checks[i]);
-    }
-    alert('a: ', taskItems);
-  };
+
   return (
     <ScrollView
       style={{
@@ -325,10 +318,7 @@ function AddGroup(props) {
           keyExtractor={eachChat => eachChat._id}
           key={eachChat => eachChat._id}
         /> */}
-        <TouchableOpacity
-          onPress={() => {
-            getSelectChat();
-          }}>
+        <TouchableOpacity onPress={() => {}}>
           <Image
             source={images.check}
             style={{
