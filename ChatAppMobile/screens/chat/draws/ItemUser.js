@@ -15,8 +15,8 @@ function ItemUser(props) {
   const [nameGroup, setNameGroup] = useState('');
   const [userId, setUser_id] = useState('');
   const [taskItems, setTaskItems] = useState([]);
-  // const BASE_URL = 'http://192.168.1.104:8080/api/conversaion/create-group';
-  const BASE_URL = 'http://192.168.43.91:8080/api/conversaion/create-group';
+  const BASE_URL = 'http://192.168.1.104:8080/api/conversaion/create-group';
+  // const BASE_URL = 'http://192.168.43.91:8080/api/conversaion/create-group';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('name_group').then(result => {

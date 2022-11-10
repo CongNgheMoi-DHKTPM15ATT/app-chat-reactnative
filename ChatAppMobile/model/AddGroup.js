@@ -34,8 +34,8 @@ function AddGroup(props) {
   const [value, setValue] = useState(false);
   const [taskItems, setTaskItems] = useState([]);
 
-  // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
+  // const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
   const handlePick = (emojiObject: EmojiType) => {
     setNameGroup(emojiObject.emoji);
     console.log(emojiObject);
@@ -70,8 +70,8 @@ function AddGroup(props) {
   useEffect(() => {
     console.log('éc éc éc', taskItems);
   }, [taskItems]);
-  // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
-  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
+  // const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
   getAllUsers = () => {
     const method = 'POST';
@@ -121,7 +121,10 @@ function AddGroup(props) {
     setChat(cloneChat);
     // getSelectChat();
   };
-
+  const onPickToGroup = taskItems => {
+    let _id = taskItems.map(t => t._id);
+    alert(_id);
+  };
   return (
     <ScrollView
       style={{
@@ -262,7 +265,8 @@ function AddGroup(props) {
               width: 270,
             }}></TextInput>
         </View>
-        {chat.map((item, index) => {
+
+        {filterSearch().map((item, index) => {
           return (
             <TouchableOpacity
               onPress={() => {
@@ -305,33 +309,45 @@ function AddGroup(props) {
           );
         })}
       </View>
-      <View
-        style={{
-          height: 70,
-          flexDirection: 'row',
-          marginTop: 50,
-          backgroundColor: '#202124',
-          justifyContent: 'flex-end',
-        }}>
-        <FlatList
-          horizontal
-          data={taskItems}
-          renderItem={({item, index}) => <Task text={item} />}
-          keyExtractor={eachChat => eachChat._id}
-          key={eachChat => eachChat._id}
-        />
-        <TouchableOpacity onPress={() => {}}>
-          <Image
-            source={images.check}
-            style={{
-              height: 25,
-              width: 25,
-              margin: 15,
-              marginTop: 20,
-              marginLeft: 1,
-            }}></Image>
-        </TouchableOpacity>
-      </View>
+      {taskItems.length > 0 ? (
+        <View
+          style={{
+            height: 70,
+            flexDirection: 'row',
+            marginTop: 50,
+            backgroundColor: '#202124',
+            justifyContent: 'flex-end',
+          }}>
+          <FlatList
+            horizontal
+            data={taskItems}
+            renderItem={({item, index}) => <Task text={item} />}
+            keyExtractor={eachChat => eachChat._id}
+            key={eachChat => eachChat._id}
+          />
+
+          {taskItems.length > 0 ? (
+            <TouchableOpacity
+              onPress={() => {
+                onPickToGroup(taskItems);
+              }}>
+              <Image
+                source={images.check}
+                style={{
+                  height: 25,
+                  width: 25,
+                  margin: 15,
+                  marginTop: 20,
+                  marginLeft: 1,
+                }}></Image>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
+        </View>
+      ) : (
+        <View></View>
+      )}
     </ScrollView>
   );
 }

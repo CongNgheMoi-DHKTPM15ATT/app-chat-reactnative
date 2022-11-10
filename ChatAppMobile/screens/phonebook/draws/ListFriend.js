@@ -16,11 +16,11 @@ import ItemFriend from './ItemFriend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchPhone from '../../../model/SearchPhone';
 function ListFriend(props) {
-  // const BASE_URL = 'http://192.168.43.91:8080/api/user/get-friends-pending';
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/get-friends-pending';
+  // const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
-  // const Conven_URL = 'http://192.168.43.91:8080/api/messages';
-  const Conven_URL = 'http://192.168.1.104:8080/api/messages';
+  const Conven_URL = 'http://192.168.43.91:8080/api/messages';
+  // const Conven_URL = 'http://192.168.1.104:8080/api/messages';
 
   const [userId, setUser_id] = useState('');
   const [friends, setFriend] = useState([]);

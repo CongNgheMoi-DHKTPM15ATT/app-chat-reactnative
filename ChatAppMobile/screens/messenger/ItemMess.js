@@ -29,8 +29,8 @@ function ItemMess(props) {
   const {index} = props;
   const {title} = props;
   const [modalOpen, setModal] = useState(false);
-  // const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
+  const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
+  // const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
 
   useEffect(() => {
     //get user_name

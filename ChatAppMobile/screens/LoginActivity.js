@@ -32,8 +32,8 @@ function LoginActivity(props) {
   handleLogin = () => {
     // const url = 'https://halo-chat.herokuapp.com/api/auth/login';
     // http://localhost:8080/api/auth/login
-    // const url = 'http://192.168.43.91:8080/api/auth/login';
-    const url = 'http://192.168.1.104:8080/api/auth/login';
+    const url = 'http://192.168.43.91:8080/api/auth/login';
+    // const url = 'http://192.168.1.104:8080/api/auth/login';
     const method = 'POST';
     fetch(url, {
       method,
