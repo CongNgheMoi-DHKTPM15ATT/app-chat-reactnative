@@ -169,7 +169,7 @@ export default function ChatScreen(props) {
   //get image form library
   const handleChoosePhoto = async () => {
     const images = await launchImageLibrary(options);
-    console.log(images.assets[0]);
+    // console.log(images.assets[0]);
     const formData = new FormData();
     formData.append('img', {
       uri: images.assets[0].uri,
@@ -184,10 +184,10 @@ export default function ChatScreen(props) {
       },
     });
     let resJson = await res.json();
-    console.log(
-      '-------------------------------------------------------------------------------------------------',
-    );
-    console.log(resJson.pathVideo);
+    // console.log(
+    //   '-------------------------------------------------------------------------------------------------',
+    // );
+    // console.log(resJson.pathVideo);
     setTypeText(resJson.pathVideo);
     setContentType('image');
     handleSendMessage();
@@ -200,6 +200,7 @@ export default function ChatScreen(props) {
     <View style={{flex: 1}}>
       <UIHeaderChat
         title={receiver.nick_name}
+        numOfMember={receiver.members}
         leftIconName={'search'}
         rightIconName={'back'}
         phoneRightIconName={'phone'}

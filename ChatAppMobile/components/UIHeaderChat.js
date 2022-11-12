@@ -27,6 +27,7 @@ function UIHeaderChat(props) {
     onPressPhoneRightIcon,
     onPressVideoRightIcon,
     color,
+    numOfMember,
   } = props;
   return (
     <View
@@ -54,25 +55,48 @@ function UIHeaderChat(props) {
       ) : (
         <View></View>
       )}
-      <Text
-        // onChangeText={text => {
-        //   setSearchText(text);
-        // }}
-        numberOfLines={1}
-        ellipsizeMode="tail"
-        style={{
-          height: 60,
-          flex: 1,
-          marginEnd: 35,
-          marginStart: 50,
-          borderRadius: 5,
-          color: 'white',
-          paddingVertical: 15,
-          marginLeft: 5,
-          fontSize: 18,
-        }}>
-        {title}
-      </Text>
+      <View style={{flexDirection: 'column'}}>
+        <Text
+          // onChangeText={text => {
+          //   setSearchText(text);
+          // }}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={{
+            height: 30,
+            flex: 1,
+            marginEnd: 35,
+            marginStart: 50,
+            borderRadius: 5,
+            color: 'white',
+            paddingVertical: numOfMember != null || numOfMember > 1 ? 5 : 15,
+            marginLeft: 5,
+            fontSize: 18,
+          }}>
+          {title}
+        </Text>
+        {numOfMember != null || numOfMember > 1 ? (
+          <Text
+            // onChangeText={text => {
+            //   setSearchText(text);
+            // }}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={{
+              flex: 1,
+              marginEnd: 35,
+              marginStart: 50,
+              borderRadius: 5,
+              color: 'white',
+              marginLeft: 5,
+              fontSize: 10,
+            }}>
+            Số thành viên: {numOfMember.length}
+          </Text>
+        ) : (
+          <View></View>
+        )}
+      </View>
       {phoneRightIconName != undefined ? (
         <TouchableOpacity onPress={onPressPhoneRightIcon}>
           <Image

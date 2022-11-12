@@ -57,7 +57,7 @@ function ItemMess(props) {
       .catch(resJson => {
         console.log(resJson);
       })
-      .finally();
+      .finally(() => setModal(false));
   };
 
   return sender == null || sender.nick_name == title ? (
