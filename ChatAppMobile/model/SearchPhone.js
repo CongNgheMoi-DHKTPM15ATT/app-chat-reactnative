@@ -21,8 +21,8 @@ function SearchPhone(props) {
   const [phone, setPhone] = useState('');
   const [userId, setUser_id] = useState('');
   const [profile, setProfile] = useState([]);
-  const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  // const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+  // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
 
   useEffect(() => {
     //get user_name

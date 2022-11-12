@@ -25,7 +25,8 @@ function AddGroup(props) {
   var screen = Dimensions.get('window');
   const [isOpen, setIsOpen] = useState(false);
   const {onPress, data, onPressDelete} = props;
-  const navigation = useNavigation();
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
   const [phone, setPhone] = useState('');
   const [nameGroup, setNameGroup] = useState('');
   const [userId, setUser_id] = useState('');
@@ -34,8 +35,10 @@ function AddGroup(props) {
   const [value, setValue] = useState(false);
   const [taskItems, setTaskItems] = useState([]);
 
-  const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  // const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+  // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
+  // const GROUP_URL = 'http://192.168.43.91:8080/api/conversation/create-group';
+  const GROUP_URL = 'http://192.168.1.104:8080/api/conversation/create-group';
   const handlePick = (emojiObject: EmojiType) => {
     setNameGroup(emojiObject.emoji);
     console.log(emojiObject);
@@ -70,8 +73,8 @@ function AddGroup(props) {
   useEffect(() => {
     console.log('éc éc éc', taskItems);
   }, [taskItems]);
-  const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
-  // const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
+  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
   getAllUsers = () => {
     const method = 'POST';
@@ -121,9 +124,39 @@ function AddGroup(props) {
     setChat(cloneChat);
     // getSelectChat();
   };
+  //create group
+  // {
+  //   "user_id": [
+  //     "635cd13ef94a4a2396c4ebfb",
+  //     "635cd1f7f94a4a2396c4ec5b",
+  //     "635cdcb2a7ff15907316f5c6"
+  //   ],
+  //   "group_name": "ANH_THU",
+  //   "admin_id": "635cd100f94a4a2396c4ebf7"
+  // }
+  //
   const onPickToGroup = taskItems => {
-    let _id = taskItems.map(t => t._id);
-    alert(_id);
+    let listUserId = [];
+    let _id = taskItems.map(t => listUserId.push(t._id));
+    const method = 'POST';
+    fetch(GROUP_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: listUserId,
+        group_name: nameGroup,
+        admin_id: userId,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {})
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => navigate('UITag'));
   };
   return (
     <ScrollView

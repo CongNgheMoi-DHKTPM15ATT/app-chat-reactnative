@@ -50,6 +50,7 @@ function App(props) {
         <Stack.Screen name={'ProfileDetail'} component={ProfileDetail} />
         <Stack.Screen name={'SearchPhone'} component={SearchPhone} />
         <Stack.Screen name={'AddGroup'} component={AddGroup} />
+        <Stack.Screen name={'ChatFlaxlist'} component={ChatFlaxlist} />
       </Stack.Navigator>
     </NavigationContainer>
   );
