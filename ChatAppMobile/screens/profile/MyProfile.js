@@ -13,8 +13,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UIHeader} from '../../components';
 import {images} from '../../constants';
 function MyProfile(props) {
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('');
+  const [userId, setUser_id] = useState('');
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/id';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_name').then(result => {
@@ -23,7 +27,31 @@ function MyProfile(props) {
     AsyncStorage.getItem('avatar').then(result => {
       setAvatar(result);
     });
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
   });
+  handleMyProfile = id => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id: id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        navigate('ProfileDetail', {user: resJson});
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
   return (
     <ScrollView style={{flex: 1}}>
       <UIHeader
@@ -36,7 +64,9 @@ function MyProfile(props) {
           alert('Right icon');
         }}></UIHeader>
       <View style={{flex: 13, backgroundColor: '#202124'}}>
-        <View style={{flexDirection: 'row', margin: 15}}>
+        <TouchableOpacity
+          onPress={() => handleMyProfile(userId)}
+          style={{flexDirection: 'row', margin: 15}}>
           <Image
             source={{
               uri: avatar,
@@ -66,7 +96,7 @@ function MyProfile(props) {
             source={images.update}
             style={{height: 25, width: 25, margin: 10}}
           />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={{height: 10, backgroundColor: 'black'}}></View>
       <View

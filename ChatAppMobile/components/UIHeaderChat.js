@@ -137,6 +137,7 @@ function UIHeaderChat(props) {
               height: 30,
               width: 30,
               margin: 10,
+              marginLeft: 70,
             }}></Image>
         </TouchableOpacity>
       ) : (

@@ -21,14 +21,11 @@ import ItemMess from './ItemMess';
 import socket from '../../utils/Socket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const options = {
-  title: 'Select Image',
+  title: `Select Image or Video\n(mixed)`,
   type: 'library',
   options: {
-    maxHeight: 200,
-    maxWidth: 200,
-    selectionLimit: 1,
-    mediaType: 'photo',
-    includeBase64: false,
+    selectionLimit: 0,
+    mediaType: 'mixed',
   },
 };
 export default function ChatScreen(props) {
@@ -80,7 +77,7 @@ export default function ChatScreen(props) {
     }
   };
   // ham lay mess tu conversation_id
-  getMessagesByUserId = () => {
+  const getMessagesByUserId = () => {
     const method = 'POST';
     fetch(BASE_URL, {
       method,
@@ -137,7 +134,7 @@ export default function ChatScreen(props) {
     setTypeText('');
     return;
   };
-  sendMessage = () => {
+  const sendMessage = () => {
     // const url = 'http://192.168.43.91:8080/api/messages/send';
     const url = 'http://192.168.1.104:8080/api/messages/send';
 

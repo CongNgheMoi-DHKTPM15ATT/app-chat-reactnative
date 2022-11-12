@@ -6,14 +6,72 @@ import {
   ImageBackground,
   TouchableOpacity,
   FlatList,
+  Modal,
 } from 'react-native';
 import {images} from '../../../constants';
+import UserModel from '../../../model/UserModel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ItemFriend(props) {
   const {user_name, _id, friends, avatar} = props.data;
   const {onPress} = props;
+  const [modalOpenUser, setModalUser] = useState(false);
+  const [userId, setUser_id] = useState('');
+  const REMOVE_URL = 'http://192.168.1.104:8080/api/user/remove-friend';
+  const BLOCK_URL = 'http://192.168.1.104:8080/api/user/block-friend';
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
+  handleRemoveFriend = async () => {
+    const method = 'POST';
+    fetch(REMOVE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        receiver_id: _id,
+        status: 'NOFRIEND',
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {})
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
+  handleBlockFriend = async () => {
+    const method = 'POST';
+    fetch(BLOCK_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        receiver_id: _id,
+        status: 'BLOCK',
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {})
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
   return (
     <TouchableOpacity
       onPress={onPress}
+      onLongPress={() => {
+        setModalUser(true);
+      }}
       style={{
         height: 80,
         backgroundColor: '#252526',
@@ -51,6 +109,26 @@ function ItemFriend(props) {
           backgroundColor: '#252526',
           marginEnd: 30,
         }}></Image>
+      <Modal
+        style={{
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpenUser}
+        animationType="fade">
+        <UserModel
+          data={avatar}
+          idUser={_id}
+          onPress={() => {
+            setModalUser(false);
+          }}
+          onPressRemove={() => {
+            handleRemoveFriend();
+          }}
+          onPressBlock={() => {
+            handleBlockFriend();
+          }}></UserModel>
+      </Modal>
     </TouchableOpacity>
   );
 }

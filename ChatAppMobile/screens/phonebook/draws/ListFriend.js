@@ -15,6 +15,8 @@ import {images} from '../../../constants';
 import ItemFriend from './ItemFriend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchPhone from '../../../model/SearchPhone';
+import MessengerModel from '../../../model/MessengerModel';
+import UserModel from '../../../model/UserModel';
 function ListFriend(props) {
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/get-friends-pending';
   const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
@@ -29,6 +31,7 @@ function ListFriend(props) {
   const {navigate, goBack} = navigation;
 
   const [modalOpen, setModal] = useState(false);
+
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
@@ -81,7 +84,7 @@ function ListFriend(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.conversations;
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', currentUser);
+        // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', currentUser);
         setChat(currentUser);
       })
       .catch(resJson => {
@@ -201,11 +204,12 @@ function ListFriend(props) {
             renderItem={({item, index}) => (
               <ItemFriend
                 data={item}
-                onPress={() => {
-                  // alert(`name is: ${item._id}`);
-                  getMessById(item._id);
-                  navigate('Messenger', {users: chat});
-                }}
+
+                // onPress={() => {
+                //   // alert(`name is: ${item._id}`);
+                //   getMessById(item._id);
+                //   navigate('Messenger', {users: chat});
+                // }}
               />
             )}
             keyExtractor={eachChat => eachChat._id}
@@ -221,7 +225,7 @@ function ListFriend(props) {
         visible={modalOpen}
         animationType="fade">
         <SearchPhone
-          data={userId}
+          data={friends}
           onPress={() => {
             setModal(false);
           }}

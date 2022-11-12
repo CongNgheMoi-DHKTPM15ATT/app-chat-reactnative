@@ -53,7 +53,7 @@ function SearchPhone(props) {
         AsyncStorage.setItem('user_id_search', currentUser._id);
         AsyncStorage.setItem('conversation', currentUser.conversation);
 
-        console.log('abc: ', currentUser.status);
+        // console.log('abc: ', currentUser.status);
         navigation.navigate('ProfileDetail', {user: currentUser});
       })
       .catch(resJson => {

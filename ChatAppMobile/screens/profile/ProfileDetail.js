@@ -9,11 +9,38 @@ import {
   SectionList,
   ScrollView,
   Animated,
+  TouchableHighlight,
+  Modal,
+  Platform,
+  requestCameraPermission,
+  PermissionsAndroid,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UIHeader} from '../../components';
 import {images} from '../../constants';
 import {UIHeaderChat} from '../../components';
+import UpdateModel from '../../model/UpdateModel';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+const options = {
+  title: 'Select Image',
+  type: 'library',
+  options: {
+    maxHeight: 200,
+    maxWidth: 200,
+    selectionLimit: 0,
+    mediaType: 'photo',
+    includeBase64: false,
+  },
+};
+const optionsCam = {
+  title: 'Take Image',
+  type: 'capture',
+  options: {
+    saveToPhotos: true,
+    mediaType: 'photo',
+    includeBase64: false,
+  },
+};
 function ProfileDetail(props) {
   const BASE_URL = 'http://192.168.1.104:8080/api/user/send-friend-request';
   const {navigate, goBack} = props.navigation;
@@ -22,7 +49,7 @@ function ProfileDetail(props) {
   // const [avatar, setAvatar] = useState('');
   const [background, setBackground] = useState('');
   // const [status, setStatus] = useState('');
-
+  const [modalOpen, setModal] = useState(false);
   let {_id, user_name, phone, avatar, conversation, status} =
     props.route.params.user;
 
@@ -52,6 +79,59 @@ function ProfileDetail(props) {
         console.log(resJson);
       })
       .finally(() => navigate('UITag'));
+  };
+  handlerSetModel = () => {
+    setModal(true);
+  };
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const images = await launchCamera(optionsCam);
+        console.log('à thế à', images.assets[0]);
+        const formData = new FormData();
+        formData.append('img', {
+          uri: images.assets[0].uri,
+          type: images.assets[0].type,
+          name: images.assets[0].fileName,
+        });
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  const handleChooseFormLir = async () => {
+    const images = await launchImageLibrary(options);
+    // console.log(images.assets[0]);
+    const formData = new FormData();
+    formData.append('img', {
+      uri: images.assets[0].uri,
+      type: images.assets[0].type,
+      name: images.assets[0].fileName,
+    });
+    // let res = await fetch('https://codejava-app-anime.herokuapp.com/upload', {
+    //   method: 'PUT',
+    //   body: formData,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // });
+    // let resJson = await res.json();
+    // console.log(
+    //   '-------------------------------------------------------------------------------------------------',
+    // );
+    // console.log(resJson.pathVideo);
   };
   return (
     <View style={{flex: 100, backgroundColor: 'black'}}>
@@ -87,11 +167,9 @@ function ProfileDetail(props) {
             flex: 1,
             height: '100%',
             width: '100%',
-            alignItems: 'center',
           }}>
           <View
             style={{
-              backgroundColor: 'white',
               borderColor: 'black',
             }}>
             {/* <View style={styles.bannerContainer}> */}
@@ -100,23 +178,59 @@ function ProfileDetail(props) {
               source={{uri: avatar}}
             />
             {/* </View> */}
-            <Image
-              source={{uri: avatar}}
-              style={{
-                zIndex: 3,
-                position: 'absolute',
-                marginTop: 230,
-                height: 120,
-                width: 120,
-                borderRadius: 100,
-                borderColor: 'black',
-                borderWidth: 2,
-                alignSelf: 'center',
-              }}></Image>
+            {status === 'FRIENDED' ? (
+              <Image
+                source={{uri: avatar}}
+                style={{
+                  zIndex: 3,
+                  position: 'absolute',
+                  marginTop: 230,
+                  height: 120,
+                  width: 120,
+                  borderRadius: 100,
+                  borderColor: 'black',
+                  borderWidth: 2,
+                  alignSelf: 'center',
+                }}></Image>
+            ) : status === null ? (
+              <TouchableOpacity>
+                <Image
+                  source={{uri: avatar}}
+                  style={{
+                    zIndex: 3,
+                    position: 'absolute',
+                    marginTop: 230,
+                    height: 120,
+                    width: 120,
+                    borderRadius: 100,
+                    borderColor: 'black',
+                    borderWidth: 2,
+                    alignSelf: 'center',
+                  }}></Image>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => handlerSetModel()}
+                style={{zIndex: 2}}>
+                <Image
+                  source={{uri: avatar}}
+                  style={{
+                    zIndex: 3,
+                    position: 'absolute',
+                    marginTop: -60,
+                    height: 120,
+                    width: 120,
+                    borderRadius: 100,
+                    borderColor: 'black',
+                    borderWidth: 2,
+                    alignSelf: 'center',
+                  }}></Image>
+              </TouchableOpacity>
+            )}
             <Text
               style={{
                 paddingHorizontal: 100,
-                paddingTop: 350,
+                paddingTop: 380,
                 position: 'absolute',
                 alignSelf: 'center',
                 fontSize: 20,
@@ -129,7 +243,7 @@ function ProfileDetail(props) {
             {status == 'FRIENDED' ? (
               <Text
                 style={{
-                  paddingTop: 400,
+                  paddingTop: 420,
                   position: 'absolute',
                   alignSelf: 'center',
                   margin: 15,
@@ -141,10 +255,10 @@ function ProfileDetail(props) {
                 {user_name} chưa có hoạt động nào. Hãy trò chuyện để hiểu nhau
                 hơn
               </Text>
-            ) : status == null ? (
+            ) : status === null ? (
               <Text
                 style={{
-                  paddingTop: 400,
+                  paddingTop: 420,
                   position: 'absolute',
                   alignSelf: 'center',
                   margin: 15,
@@ -158,7 +272,7 @@ function ProfileDetail(props) {
             ) : (
               <Text
                 style={{
-                  paddingTop: 400,
+                  paddingTop: 420,
                   position: 'absolute',
                   alignSelf: 'center',
                   margin: 15,
@@ -176,10 +290,10 @@ function ProfileDetail(props) {
           <View style={{flexDirection: 'row', height: '100%', width: '100%'}}>
             <View
               style={{
-                height: '100%',
                 width: '50%',
+                zIndex: -1,
               }}>
-              {status == null ? (
+              {status === null ? (
                 <TouchableOpacity
                   onPress={() => {
                     handleRequestAddFriend(_id);
@@ -269,7 +383,7 @@ function ProfileDetail(props) {
                       marginRight: 10,
                       alignSelf: 'center',
                     }}>
-                    Kết bạn
+                    Đăng lên nhật ký
                   </Text>
                 </TouchableOpacity>
               )}
@@ -277,6 +391,32 @@ function ProfileDetail(props) {
           </View>
         </View>
       </Animated.ScrollView>
+      <Modal
+        style={{
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpen}
+        animationType="fade">
+        <UpdateModel
+          data={avatar}
+          idUser={_id}
+          onPress={() => {
+            setModal(false);
+          }}
+          onPressCamera={() => {
+            requestCameraPermission();
+          }}
+          onPressChoose={() => {
+            handleBlockFriend();
+          }}
+          onPressChooseFormLir={() => {
+            handleChooseFormLir();
+          }}
+          onPressView={() => {
+            handleBlockFriend();
+          }}></UpdateModel>
+      </Modal>
     </View>
   );
 }
@@ -286,10 +426,12 @@ const styles = {
     paddingTop: 1000,
     alignItems: 'center',
     overflow: 'hidden',
+    zIndex: -1,
   },
   banner: scrollA => ({
     height: 300,
-    width: '200%',
+    width: '100%',
+    zIndex: -1,
     transform: [
       {
         translateY: scrollA.interpolate({

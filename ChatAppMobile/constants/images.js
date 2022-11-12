@@ -46,4 +46,5 @@ export default {
   check: require('../assets/verify.png'),
   camera: require('../assets/camera.png'),
   adduser: require('../assets/add-user.png'),
+  updateimage: require('../assets/updateimage.png'),
 };
