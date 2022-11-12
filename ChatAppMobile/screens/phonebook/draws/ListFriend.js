@@ -107,7 +107,11 @@ function ListFriend(props) {
             backgroundColor: '#252526',
             flexDirection: 'column',
           }}>
-          <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigate('AcceptActivity');
+            }}
+            style={{flexDirection: 'row'}}>
             <Image
               source={images.addfriend}
               style={{
@@ -122,7 +126,7 @@ function ListFriend(props) {
             <Text style={{color: 'white', fontSize: 16, margin: 15}}>
               Lời mời kết bạn
             </Text>
-          </View>
+          </TouchableOpacity>
           <View style={{flexDirection: 'row', marginBottom: 15}}>
             <Image
               source={images.listfriend}

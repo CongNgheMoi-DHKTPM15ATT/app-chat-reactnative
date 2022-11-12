@@ -71,16 +71,29 @@ function ItemMess(props) {
         alignItems: 'center',
       }}>
       {/* {showUrl == true ? ( */}
-      <Image
-        source={{uri: sender != null ? sender.avatar : ''}}
-        style={{
-          height: 50,
-          width: 50,
-          borderRadius: 100,
-          marginRight: 15,
-          marginStart: 10,
-          resizeMode: 'cover',
-        }}></Image>
+      {content_type == 'notification' ? (
+        <View
+          style={{
+            height: 50,
+            width: 20,
+            borderRadius: 100,
+            marginRight: 15,
+            marginStart: 10,
+            resizeMode: 'cover',
+          }}></View>
+      ) : (
+        <Image
+          source={{uri: sender != null ? sender.avatar : ''}}
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius: 100,
+            marginRight: 15,
+            marginStart: 10,
+            resizeMode: 'cover',
+          }}></Image>
+      )}
+
       {/* ) : (
         <View style={{width: 40, height: 40}}></View>
       )} */}
@@ -160,16 +173,25 @@ function ItemMess(props) {
         </View>
       </View>
       {/* {showUrl == true ? ( */}
-      <Image
-        source={{uri: sender.avatar}}
-        style={{
-          height: 50,
-          width: 50,
-          borderRadius: 100,
-          marginRight: 15,
-          marginStart: 10,
-          resizeMode: 'cover',
-        }}></Image>
+      {content_type == 'notification' ? (
+        <View
+          style={{
+            height: 50,
+            borderRadius: 100,
+            resizeMode: 'cover',
+          }}></View>
+      ) : (
+        <Image
+          source={{uri: sender != null ? sender.avatar : ''}}
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius: 100,
+            marginRight: 15,
+            marginStart: 10,
+            resizeMode: 'cover',
+          }}></Image>
+      )}
       {/* ) : (
         <View style={{width: 40, height: 40}}></View>
       )} */}

@@ -11,6 +11,7 @@ import RegisterActivity from './RegisterActivity';
 import CallScreen from './messenger/CallScreen';
 import IncommingCall from './messenger/IncommingCall';
 import ProfileDetail from './profile/ProfileDetail';
+import AcceptActivity from './friendaccept/draw/AcceptActivity';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -25,4 +26,5 @@ export {
   CallScreen,
   IncommingCall,
   ProfileDetail,
+  AcceptActivity,
 };

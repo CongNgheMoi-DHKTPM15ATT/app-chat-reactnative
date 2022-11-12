@@ -55,7 +55,11 @@ function UIHeaderChat(props) {
       ) : (
         <View></View>
       )}
-      <View style={{flexDirection: 'column'}}>
+      <View
+        style={{
+          flexDirection: 'column',
+          width: 200,
+        }}>
         <Text
           // onChangeText={text => {
           //   setSearchText(text);

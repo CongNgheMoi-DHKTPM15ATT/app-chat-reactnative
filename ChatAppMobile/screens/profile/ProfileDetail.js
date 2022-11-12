@@ -15,34 +15,44 @@ import {UIHeader} from '../../components';
 import {images} from '../../constants';
 import {UIHeaderChat} from '../../components';
 function ProfileDetail(props) {
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/send-friend-request';
   const {navigate, goBack} = props.navigation;
-  const [username, setUsername] = useState('');
+  const [userId, setUser_id] = useState('');
   // const [conversation, setConversation] = useState('');
   // const [avatar, setAvatar] = useState('');
   const [background, setBackground] = useState('');
   // const [status, setStatus] = useState('');
+
   let {_id, user_name, phone, avatar, conversation, status} =
     props.route.params.user;
+
   const scrollA = useRef(new Animated.Value(0)).current;
-  // useEffect(() => {
-  //   //get user_name
-  //   AsyncStorage.getItem('user_name_search').then(result => {
-  //     setUsername(result);
-  //   });
-  //   AsyncStorage.getItem('avatar_search').then(result => {
-  //     setAvatar(result);
-  //   });
-  //   AsyncStorage.getItem('avatar_search').then(result => {
-  //     setBackground(result);
-  //   });
-  //   AsyncStorage.getItem('conversation').then(result => {
-  //     setConversation(result);
-  //   });
-  //   AsyncStorage.getItem('status_search').then(result => {
-  //     setStatus(result);
-  //     console.log('abcd: ', result);
-  //   });
-  // });
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_id').then(result => {
+      setUser_id(result);
+    });
+  });
+  handleRequestAddFriend = id => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        receiver_id: id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {})
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => navigate('UITag'));
+  };
   return (
     <View style={{flex: 100, backgroundColor: 'black'}}>
       <Animated.ScrollView
@@ -131,6 +141,20 @@ function ProfileDetail(props) {
                 {user_name} chưa có hoạt động nào. Hãy trò chuyện để hiểu nhau
                 hơn
               </Text>
+            ) : status == null ? (
+              <Text
+                style={{
+                  paddingTop: 400,
+                  position: 'absolute',
+                  alignSelf: 'center',
+                  margin: 15,
+                  fontSize: 15,
+                  color: 'white',
+                  padding: 0,
+                  textAlign: 'center',
+                }}>
+                Kết bạn để tìm hiểu nhau hơn
+              </Text>
             ) : (
               <Text
                 style={{
@@ -157,21 +181,36 @@ function ProfileDetail(props) {
               }}>
               {status == null ? (
                 <TouchableOpacity
+                  onPress={() => {
+                    handleRequestAddFriend(_id);
+                  }}
                   style={{
                     marginLeft: 230,
                     marginTop: 530,
+                    borderColor: 'white',
+                    borderWidth: 0.5,
                     height: 35,
                     width: '60%',
                     borderRadius: 100,
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
+                  <Image
+                    source={images.adduser}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      marginHorizontal: 6,
+                      marginTop: 5,
+                    }}></Image>
                   <Text
                     style={{
                       color: 'white',
                       marginRight: 10,
                       alignSelf: 'center',
-                    }}></Text>
+                    }}>
+                    Kết bạn
+                  </Text>
                 </TouchableOpacity>
               ) : status == 'FRIENDED' ? (
                 <TouchableOpacity
@@ -217,7 +256,7 @@ function ProfileDetail(props) {
                     flexDirection: 'row',
                   }}>
                   <Image
-                    source={images.adduser}
+                    source={images.mess}
                     style={{
                       height: 20,
                       width: 20,

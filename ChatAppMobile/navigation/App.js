@@ -26,6 +26,7 @@ import {
   RegisterActivity,
   CallScreen,
   ProfileDetail,
+  AcceptActivity,
 } from '../screens';
 import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
@@ -51,6 +52,7 @@ function App(props) {
         <Stack.Screen name={'SearchPhone'} component={SearchPhone} />
         <Stack.Screen name={'AddGroup'} component={AddGroup} />
         <Stack.Screen name={'ChatFlaxlist'} component={ChatFlaxlist} />
+        <Stack.Screen name={'AcceptActivity'} component={AcceptActivity} />
       </Stack.Navigator>
     </NavigationContainer>
   );
