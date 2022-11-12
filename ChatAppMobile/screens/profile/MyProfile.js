@@ -31,6 +31,11 @@ function MyProfile(props) {
       setUser_id(result);
     });
   });
+
+  useEffect(() => {
+    //get user_name
+    setAvatar(avatar);
+  }, [avatar]);
   handleMyProfile = id => {
     const method = 'POST';
     fetch(BASE_URL, {

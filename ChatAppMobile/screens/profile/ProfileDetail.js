@@ -60,6 +60,7 @@ function ProfileDetail(props) {
       setUser_id(result);
     });
   });
+
   handleRequestAddFriend = id => {
     const method = 'POST';
     fetch(BASE_URL, {
@@ -97,13 +98,39 @@ function ProfileDetail(props) {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         const images = await launchCamera(optionsCam);
-        console.log('à thế à', images.assets[0]);
         const formData = new FormData();
         formData.append('img', {
           uri: images.assets[0].uri,
           type: images.assets[0].type,
           name: images.assets[0].fileName,
         });
+        await fetch('https://codejava-app-anime.herokuapp.com/upload', {
+          method: 'PUT',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+          .then(res => res.json())
+          .then(async resJson => {
+            await fetch('http://192.168.1.104:8080/api/user/update', {
+              method: 'POST',
+              body: JSON.stringify({
+                _id: _id,
+                data: {
+                  avatar: resJson.pathVideo,
+                },
+              }),
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+            });
+          })
+          .catch(resJson => {
+            console.log(resJson);
+          })
+          .finally();
       } else {
         console.log('Camera permission denied');
       }
@@ -120,18 +147,33 @@ function ProfileDetail(props) {
       type: images.assets[0].type,
       name: images.assets[0].fileName,
     });
-    // let res = await fetch('https://codejava-app-anime.herokuapp.com/upload', {
-    //   method: 'PUT',
-    //   body: formData,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
-    // let resJson = await res.json();
-    // console.log(
-    //   '-------------------------------------------------------------------------------------------------',
-    // );
-    // console.log(resJson.pathVideo);
+    await fetch('https://codejava-app-anime.herokuapp.com/upload', {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then(res => res.json())
+      .then(async resJson => {
+        await fetch('http://192.168.1.104:8080/api/user/update', {
+          method: 'POST',
+          body: JSON.stringify({
+            _id: _id,
+            data: {
+              avatar: resJson.pathVideo,
+            },
+          }),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
   };
   return (
     <View style={{flex: 100, backgroundColor: 'black'}}>
