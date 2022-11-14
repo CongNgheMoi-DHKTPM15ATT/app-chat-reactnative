@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function ListGroup(props) {
   const [isActive, setIsActive] = useState(false);
   const [userId, setUser_id] = useState('');
+  const [lenghChat, setlenghChat] = useState('');
   const [chat, setChat] = useState([]);
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
@@ -74,7 +75,11 @@ function ListGroup(props) {
             backgroundColor: '#252526',
             flexDirection: 'column',
           }}>
-          <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('AddGroup');
+            }}
+            style={{flexDirection: 'row'}}>
             <Image
               source={images.group}
               style={{
@@ -90,7 +95,7 @@ function ListGroup(props) {
             <Text style={{color: 'white', fontSize: 15, margin: 20}}>
               Tạo nhóm mới
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={{flex: 20, backgroundColor: '#252526'}}>
           <View style={{height: 7, backgroundColor: 'black'}}></View>

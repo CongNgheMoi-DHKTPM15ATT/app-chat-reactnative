@@ -121,7 +121,7 @@ export default function ChatScreen(props) {
       };
   });
   //gửi tin nhắn nè mấy bà
-  const handleSendMessage = async () => {
+  handleSendMessage = async () => {
     const response = await sendMessage();
     socket.emit('send', {
       senderId: userId,
@@ -134,7 +134,7 @@ export default function ChatScreen(props) {
     setTypeText('');
     return;
   };
-  const sendMessage = () => {
+  sendMessage = () => {
     // const url = 'http://192.168.43.91:8080/api/messages/send';
     const url = 'http://192.168.1.104:8080/api/messages/send';
 
@@ -164,7 +164,7 @@ export default function ChatScreen(props) {
   };
 
   //get image form library
-  const handleChoosePhoto = async () => {
+  handleChoosePhoto = async () => {
     const images = await launchImageLibrary(options);
     // console.log(images.assets[0]);
     const formData = new FormData();

@@ -19,6 +19,7 @@ function MyProfile(props) {
   const [avatar, setAvatar] = useState('');
   const [userId, setUser_id] = useState('');
   const BASE_URL = 'http://192.168.1.104:8080/api/user/id';
+  const USER_URL = 'http://192.168.1.104:8080/api/user/id';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_name').then(result => {
@@ -31,11 +32,6 @@ function MyProfile(props) {
       setUser_id(result);
     });
   });
-
-  useEffect(() => {
-    //get user_name
-    setAvatar(avatar);
-  }, [avatar]);
   handleMyProfile = id => {
     const method = 'POST';
     fetch(BASE_URL, {

@@ -38,7 +38,7 @@ function ItemGroup(props) {
   };
   const {onPress} = props;
   const {index} = props;
-  return (
+  return is_group == true ? (
     <TouchableOpacity
       onPress={onPress}
       style={{
@@ -152,6 +152,8 @@ function ItemGroup(props) {
           marginStart: 80,
         }}></View>
     </TouchableOpacity>
+  ) : (
+    <View></View>
   );
 }
 export default ItemGroup;

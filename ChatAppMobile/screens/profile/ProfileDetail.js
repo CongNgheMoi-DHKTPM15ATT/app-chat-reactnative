@@ -125,7 +125,7 @@ function ProfileDetail(props) {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-            });
+            }).then(resJson => AsyncStorage.setItem('avatar', resJson.avatar));
           })
           .catch(resJson => {
             console.log(resJson);

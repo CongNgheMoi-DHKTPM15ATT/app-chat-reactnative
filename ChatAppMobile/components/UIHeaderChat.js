@@ -113,7 +113,13 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View></View>
+        <View
+          style={{
+            height: 23,
+            width: 23,
+            marginRight: 10,
+            marginTop: 13,
+          }}></View>
       )}
       {videoRightIconName != undefined ? (
         <TouchableOpacity onPress={onPressVideoRightIcon}>
@@ -127,7 +133,13 @@ function UIHeaderChat(props) {
             }}></Image>
         </TouchableOpacity>
       ) : (
-        <View></View>
+        <View
+          style={{
+            height: 25,
+            width: 25,
+            marginLeft: 5,
+            marginTop: 13,
+          }}></View>
       )}
       {rightIconName != undefined ? (
         <TouchableOpacity onPress={onPressRightIcon}>
@@ -137,7 +149,7 @@ function UIHeaderChat(props) {
               height: 30,
               width: 30,
               margin: 10,
-              marginLeft: 70,
+              marginLeft: 10,
             }}></Image>
         </TouchableOpacity>
       ) : (

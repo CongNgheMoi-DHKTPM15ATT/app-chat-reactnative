@@ -13,10 +13,12 @@ import {images} from '../../constants';
 import {screenWidth, screenHeight} from '../../utils/Device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MessengerModel from '../../model/MessengerModel';
+import moment from 'moment-feiertage';
 function ItemMess(props) {
   let {
     content,
     sender,
+    createdAt,
     url,
     isSender,
     messenger,
@@ -31,7 +33,23 @@ function ItemMess(props) {
   const [modalOpen, setModal] = useState(false);
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
-
+  var formattedDate = moment(createdAt).utc().format('MM/DD/YY h:mm a');
+  var formattedDateOfCreateAt = moment(createdAt).utc().format('MM/DD/YY');
+  getTimeOnChat = () => {
+    if (new Date().toISOString() !== createdAt) {
+      console.log(new Date());
+      if (formattedDateOfCreateAt == formattedDateOfCreateAt) {
+        return (formattedDateOfCreateAt = moment(createdAt)
+          .utc()
+          .format('h:mm a '));
+      } else
+        return (formattedDate = moment(createdAt)
+          .utc()
+          .format('h:mm a MM/DD/YY'));
+    } else {
+      return (formattedDate = moment(createdAt).utc().format('h:mm a'));
+    }
+  };
   useEffect(() => {
     //get user_name
     AsyncStorage.setItem('account-send', sender != null ? sender.user_id : '');
@@ -97,6 +115,16 @@ function ItemMess(props) {
       {/* ) : (
         <View style={{width: 40, height: 40}}></View>
       )} */}
+      <Text
+        style={{
+          color: 'white',
+          paddingVertical: 5,
+          fontSize: 5,
+          width: 60,
+          borderRadius: 10,
+        }}>
+        {getTimeOnChat()}
+      </Text>
       <View style={{width: screenWidth * 0.7, flexDirection: 'row'}}>
         <View>
           {content_type != 'image' ? (
@@ -144,7 +172,18 @@ function ItemMess(props) {
           justifyContent: 'flex-end',
         }}>
         <View>
-          <View style={{width: 40}}></View>
+          <View style={{width: 80}}>
+            <Text
+              style={{
+                color: 'white',
+                paddingVertical: 5,
+                paddingHorizontal: 7,
+                borderRadius: 10,
+                fontSize: 10,
+              }}>
+              {getTimeOnChat()}
+            </Text>
+          </View>
           <View>
             {content_type != 'image' ? (
               <Text

@@ -24,7 +24,7 @@ function ItemChat(props) {
     .utc()
     .format('MM/DD/YY h:mm a');
   getTimeOnChat = () => {
-    if (new Date().toLocaleString() !== formattedDate) {
+    if (new Date().toISOString() !== last_message.createdAt) {
       console.log(new Date());
       return (formattedDate = moment(last_message.createdAt)
         .utc()
@@ -86,7 +86,7 @@ function ItemChat(props) {
                 width: 15,
               }}
             />
-            {last_message == null ? (
+            {last_message != null ? (
               <Text
                 style={{
                   color: 'white',
@@ -101,17 +101,31 @@ function ItemChat(props) {
             )}
           </View>
           <View style={{width: 250, flexDirection: 'row'}}>
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={{
-                color: 'white',
-                paddingHorizontal: 15,
-                opacity: {seen_last_messages} ? 1 : 0.5,
-                width: 250,
-              }}>
-              {last_message.content}
-            </Text>
+            {last_message.content_type != 'image' ? (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 15,
+                  opacity: {seen_last_messages} ? 1 : 0.5,
+                  width: 250,
+                }}>
+                {last_message.content}
+              </Text>
+            ) : (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 15,
+                  opacity: {seen_last_messages} ? 1 : 0.5,
+                  width: 250,
+                }}>
+                Hình ảnh
+              </Text>
+            )}
             {numberOfChat > 0 && (
               <View
                 style={{
