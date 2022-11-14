@@ -206,7 +206,8 @@ export default function ChatScreen(props) {
           goBack();
         }}
         onPressRightIcon={() => {
-          alert('ok');
+          navigate('SettingChat');
+          ////////////////// xu ly
         }}
         onPressPhoneRightIcon={() => {
           joinRoom();

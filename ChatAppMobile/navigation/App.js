@@ -32,6 +32,7 @@ import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
 import SearchPhone from '../model/SearchPhone';
 import AddGroup from '../model/AddGroup';
+import SettingChat from '../screens/setting/SettingChat';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -53,6 +54,7 @@ function App(props) {
         <Stack.Screen name={'AddGroup'} component={AddGroup} />
         <Stack.Screen name={'ChatFlaxlist'} component={ChatFlaxlist} />
         <Stack.Screen name={'AcceptActivity'} component={AcceptActivity} />
+        <Stack.Screen name={'SettingChat'} component={SettingChat} />
       </Stack.Navigator>
     </NavigationContainer>
   );
