@@ -17,8 +17,35 @@ function SettingChat(props) {
   const [isActive, setIsActive] = useState(false);
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
-  const [images, setImages] = useState([]);
-  //   useEffect(() => {});
+  const [imagesMess, setImagesMess] = useState([]);
+  let _id = props.route.params.id;
+  const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
+  useEffect(() => {
+    getImage();
+  }, []);
+  const getImage = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        conversation_id: _id,
+        content_type: 'image',
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson;
+        setImagesMess(currentUser);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
   return (
     <View style={{flex: 1}}>
       <UIHeaderChat
@@ -187,6 +214,8 @@ function SettingChat(props) {
               </Text>
               <View style={{flexDirection: 'row'}}>
                 <FlatList
+                  horizontal={true}
+                  data={imagesMess}
                   renderItem={({item, index}) => (
                     <ItemImage
                       data={item}
@@ -201,6 +230,19 @@ function SettingChat(props) {
                   keyExtractor={eachChat => eachChat._id}
                   key={eachChat => eachChat._id}
                 />
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    height: 50,
+                    width: 50,
+                    backgroundColor: 'gray',
+                    marginHorizontal: 5,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={images.camera}
+                    style={{height: 24, width: 24}}></Image>
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableOpacity>

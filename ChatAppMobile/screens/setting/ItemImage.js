@@ -13,12 +13,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 function ItemImage(props) {
-  const [isActive, setIsActive] = useState(false);
-  const {navigation, route} = props;
-  const {navigate, goBack} = navigation;
+  let {_id, content} = props.data;
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, flexDirection: 'row'}}>
       <TouchableOpacity
         style={{
           padding: 10,
@@ -28,7 +26,7 @@ function ItemImage(props) {
           marginHorizontal: 5,
           alignItems: 'center',
         }}>
-        <Image source={images.camera} style={{height: 24, width: 24}}></Image>
+        <Image source={{uri: content}} style={{height: 24, width: 24}}></Image>
       </TouchableOpacity>
     </View>
   );
