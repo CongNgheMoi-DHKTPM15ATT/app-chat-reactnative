@@ -64,7 +64,7 @@ function ItemMess(props) {
   useEffect(() => {
     handleImage = () => {
       let image = [];
-      let video = [];
+
       if (content_type == 'image') {
         let replaceString = content.replaceAll('&%&', ' ');
         let myArray = replaceString.split(' ');
@@ -74,9 +74,13 @@ function ItemMess(props) {
         //   let arr = str.split('.');
         //   arr.map(mp4 => {
         //     if (mp4 == 'mp4') {
-        //       video.push({avatar: t});
-        //       console.log('aray', video);
-        //       setVideoContent(video, ...videoContent);
+        //       // video.push({avatar: t});
+        //       // console.log('aray', video);
+        //       // setVideoContent(video, ...videoContent);
+        //       return {
+        //         ...myArray,
+        //         'content-type': 'video',
+        //       };
         //     }
         //   });
         // });
@@ -88,9 +92,6 @@ function ItemMess(props) {
     };
     handleImage();
   }, []);
-  useEffect(() => {
-    console.log('aray', imageContent);
-  }, [imageContent]);
   //ham xoa tin nhan
   const removeMess = () => {
     const method = 'POST';
