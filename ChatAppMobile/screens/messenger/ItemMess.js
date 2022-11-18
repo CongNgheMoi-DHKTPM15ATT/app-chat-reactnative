@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Modal,
+  FlatList,
+  StyleSheet,
 } from 'react-native';
 import ImageView from 'react-native-image-view';
 import {images} from '../../constants';
@@ -14,6 +16,8 @@ import {screenWidth, screenHeight} from '../../utils/Device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MessengerModel from '../../model/MessengerModel';
 import moment from 'moment-feiertage';
+import Video from 'react-native-video';
+import ItemImage from '../messenger/ItemImage';
 function ItemMess(props) {
   let {
     content,
@@ -31,6 +35,8 @@ function ItemMess(props) {
   const {index} = props;
   const {title} = props;
   const [modalOpen, setModal] = useState(false);
+  const [imageContent, setImageContent] = useState([]);
+  const [videoContent, setVideoContent] = useState([]);
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
   var formattedDate = moment(createdAt).utc().format('MM/DD/YY h:mm a');
@@ -54,9 +60,37 @@ function ItemMess(props) {
     //get user_name
     AsyncStorage.setItem('account-send', sender != null ? sender.user_id : '');
     AsyncStorage.setItem('name-send', title);
-    // AsyncStorage.setItem('account-receiver', receiver._id);
   });
+  useEffect(() => {
+    handleImage = () => {
+      let image = [];
+      let video = [];
+      if (content_type == 'image') {
+        let replaceString = content.replaceAll('&%&', ' ');
+        let myArray = replaceString.split(' ');
+        // myArray.map(t => {
+        //   let str = t;
+        //   // console.log('ok l', t);
+        //   let arr = str.split('.');
+        //   arr.map(mp4 => {
+        //     if (mp4 == 'mp4') {
+        //       video.push({avatar: t});
+        //       console.log('aray', video);
+        //       setVideoContent(video, ...videoContent);
+        //     }
+        //   });
+        // });
 
+        image.push({avatar: myArray});
+
+        setImageContent(image, ...imageContent);
+      }
+    };
+    handleImage();
+  }, []);
+  useEffect(() => {
+    console.log('aray', imageContent);
+  }, [imageContent]);
   //ham xoa tin nhan
   const removeMess = () => {
     const method = 'POST';
@@ -89,6 +123,7 @@ function ItemMess(props) {
         alignItems: 'center',
       }}>
       {/* {showUrl == true ? ( */}
+
       {content_type == 'notification' ? (
         <View
           style={{
@@ -115,16 +150,7 @@ function ItemMess(props) {
       {/* ) : (
         <View style={{width: 40, height: 40}}></View>
       )} */}
-      <Text
-        style={{
-          color: 'white',
-          paddingVertical: 5,
-          fontSize: 5,
-          width: 60,
-          borderRadius: 10,
-        }}>
-        {getTimeOnChat()}
-      </Text>
+
       <View style={{width: screenWidth * 0.7, flexDirection: 'row'}}>
         <View>
           {content_type != 'image' ? (
@@ -138,21 +164,40 @@ function ItemMess(props) {
               }}>
               {content}
             </Text>
+          ) : imageContent.length !== null ? (
+            <FlatList
+              data={imageContent}
+              keyExtractor={item => item.name}
+              renderItem={({item, index}) => (
+                <ItemImage item={item} index={index} />
+              )}
+            />
           ) : (
             <View style={{backgroundColor: 'white', flex: 1}}>
               <TouchableOpacity>
                 <Image
                   source={{
-                    uri: `${content}`,
+                    uri: content,
                   }}
-                  style={{height: 200, left: 0, right: 0}}
+                  style={{height: 150, width: 300, left: 0, right: 0}}
                   resizeMode="contain"></Image>
+                <Text>AA</Text>
               </TouchableOpacity>
             </View>
           )}
         </View>
         <View style={{width: 20}}></View>
       </View>
+      <Text
+        style={{
+          color: 'white',
+          paddingVertical: 5,
+          fontSize: 5,
+          width: 60,
+          borderRadius: 10,
+        }}>
+        {getTimeOnChat()}
+      </Text>
     </TouchableOpacity>
   ) : (
     //Nay la nguoi nhan sender
@@ -172,18 +217,16 @@ function ItemMess(props) {
           justifyContent: 'flex-end',
         }}>
         <View>
-          <View style={{width: 80}}>
-            <Text
-              style={{
-                color: 'white',
-                paddingVertical: 5,
-                paddingHorizontal: 7,
-                borderRadius: 10,
-                fontSize: 10,
-              }}>
-              {getTimeOnChat()}
-            </Text>
-          </View>
+          <Text
+            style={{
+              color: 'white',
+              paddingVertical: 5,
+              paddingHorizontal: 7,
+              borderRadius: 10,
+              fontSize: 10,
+            }}>
+            {getTimeOnChat()}
+          </Text>
           <View>
             {content_type != 'image' ? (
               <Text
@@ -199,15 +242,39 @@ function ItemMess(props) {
             ) : (
               <View style={{backgroundColor: 'white', flex: 1}}>
                 <TouchableOpacity>
-                  <Image
-                    source={{
-                      uri: `${content}`,
-                    }}
-                    style={{height: 150, width: 350, left: 0, right: 0}}
-                    resizeMode="contain"></Image>
+                  {imageContent != null ? (
+                    <FlatList
+                      data={imageContent}
+                      keyExtractor={item => item.name}
+                      renderItem={({item, index}) => (
+                        <ItemImage item={item} index={index} />
+                      )}
+                    />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: imageContent1,
+                      }}
+                      style={{height: 150, width: 350, left: 0, right: 0}}
+                      resizeMode="contain"></Image>
+                  )}
                 </TouchableOpacity>
               </View>
             )}
+
+            <View>
+              {/* <Video
+                source={{
+                  uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                }}
+                style={{width: 300, height: 300}}
+                controls={true}
+                onBuffer={this.videoBuffer}
+                ref={ref => {
+                  this.player = ref;
+                }}
+              /> */}
+            </View>
           </View>
         </View>
       </View>
@@ -253,4 +320,12 @@ function ItemMess(props) {
     </TouchableOpacity>
   );
 }
+// Later on in your styles..
+var styles = StyleSheet.create({
+  backgroundVideo: {
+    position: 'absolute',
+    width: 150,
+    height: 300,
+  },
+});
 export default ItemMess;

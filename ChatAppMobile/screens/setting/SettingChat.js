@@ -46,6 +46,9 @@ function SettingChat(props) {
       })
       .finally();
   };
+  handleImageAll = () => {
+    alert('okkk');
+  };
   return (
     <View style={{flex: 1}}>
       <UIHeaderChat
@@ -231,6 +234,7 @@ function SettingChat(props) {
                   key={eachChat => eachChat._id}
                 />
                 <TouchableOpacity
+                  onPress={() => handleImageAll()}
                   style={{
                     padding: 10,
                     height: 50,
