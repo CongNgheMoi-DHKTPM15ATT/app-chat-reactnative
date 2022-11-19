@@ -14,7 +14,7 @@ import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';
 import Video from 'react-native-video';
 function ItemImage(props) {
-  let {item} = props;
+  let {item, onLongPress} = props;
 
   const [videoContent, setVideoContent] = useState([]);
   useEffect(() => {
@@ -25,10 +25,10 @@ function ItemImage(props) {
     });
   }, []);
   return (
-    <View style={{backgroundColor: 'white', flex: 1}}>
+    <View style={{flex: 1}}>
       {item.avatar.map(t =>
         t.slice(-3) != 'mp4' ? (
-          <TouchableOpacity>
+          <TouchableOpacity onLongPress={onLongPress}>
             <Image
               source={{
                 uri: `${t}`,

@@ -14,6 +14,7 @@ import {
   Keyboard,
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import EmojiPicker from 'rn-emoji-keyboard';
 import {UIHeaderChat} from '../../components';
 import {images} from '../../constants';

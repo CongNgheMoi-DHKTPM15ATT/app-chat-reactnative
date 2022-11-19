@@ -18,6 +18,7 @@ import MessengerModel from '../../model/MessengerModel';
 import moment from 'moment-feiertage';
 import Video from 'react-native-video';
 import ItemImage from '../messenger/ItemImage';
+import MessengerModelRep from '../../model/MessengerModelRep';
 function ItemMess(props) {
   let {
     content,
@@ -35,6 +36,7 @@ function ItemMess(props) {
   const {index} = props;
   const {title} = props;
   const [modalOpen, setModal] = useState(false);
+  const [modalOpenRep, setModalRep] = useState(false);
   const [imageContent, setImageContent] = useState([]);
   const [videoContent, setVideoContent] = useState([]);
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
@@ -112,12 +114,12 @@ function ItemMess(props) {
       })
       .finally(() => setModal(false));
   };
-
+  let handleSetModel = () => {
+    setModalRep(true);
+  };
   return sender == null || sender.nick_name == title ? (
     <TouchableOpacity
-      onLongPress={() => {
-        setModal(true);
-      }}
+      onLongPress={() => setModalRep(true)}
       style={{
         flexDirection: 'row',
         marginTop: 5,
@@ -152,19 +154,34 @@ function ItemMess(props) {
         <View style={{width: 40, height: 40}}></View>
       )} */}
 
-      <View style={{width: screenWidth * 0.7, flexDirection: 'row'}}>
+      <View style={{width: screenWidth * 0.5, flexDirection: 'column'}}>
+        <Text
+          style={{
+            color: 'white',
+            paddingVertical: 5,
+            fontSize: 10,
+            width: 60,
+            borderRadius: 10,
+          }}>
+          {getTimeOnChat()}
+        </Text>
         <View>
           {content_type != 'image' ? (
-            <Text
-              style={{
-                color: 'white',
-                paddingVertical: 5,
-                paddingHorizontal: 7,
-                backgroundColor: '#202124',
-                borderRadius: 10,
+            <TouchableOpacity
+              onLongPress={() => {
+                handleSetModel();
               }}>
-              {content}
-            </Text>
+              <Text
+                style={{
+                  color: 'white',
+                  paddingVertical: 5,
+                  paddingHorizontal: 7,
+                  backgroundColor: '#202124',
+                  borderRadius: 10,
+                }}>
+                {content}
+              </Text>
+            </TouchableOpacity>
           ) : imageContent.length !== null ? (
             <FlatList
               data={imageContent}
@@ -189,22 +206,28 @@ function ItemMess(props) {
         </View>
         <View style={{width: 20}}></View>
       </View>
-      <Text
+      <Modal
         style={{
-          color: 'white',
-          paddingVertical: 5,
-          fontSize: 5,
-          width: 60,
-          borderRadius: 10,
-        }}>
-        {getTimeOnChat()}
-      </Text>
+          justifyContent: 'center',
+        }}
+        transparent={true}
+        visible={modalOpenRep}
+        animationType="fade">
+        <MessengerModel
+          data={_id}
+          onPress={() => {
+            setModalRep(false);
+          }}
+          onPressDelete={() => {
+            removeMess();
+          }}></MessengerModel>
+      </Modal>
     </TouchableOpacity>
   ) : (
     //Nay la nguoi nhan sender
     <TouchableOpacity
       onLongPress={() => {
-        setModal(true);
+        setModalRep(true);
       }}
       style={{
         flexDirection: 'row',
@@ -241,26 +264,28 @@ function ItemMess(props) {
                 {content}
               </Text>
             ) : (
-              <View style={{backgroundColor: 'white', flex: 1}}>
-                <TouchableOpacity>
-                  {imageContent != null ? (
-                    <FlatList
-                      data={imageContent}
-                      keyExtractor={item => item.name}
-                      renderItem={({item, index}) => (
-                        <ItemImage item={item} index={index} />
-                      )}
-                    />
-                  ) : (
-                    <Image
-                      source={{
-                        uri: imageContent1,
-                      }}
-                      style={{height: 150, width: 350, left: 0, right: 0}}
-                      resizeMode="contain"></Image>
-                  )}
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                onLongPress={() => {
+                  setModalRep(true);
+                }}>
+                {imageContent != null ? (
+                  <FlatList
+                    style={{flexDirection: 'row'}}
+                    data={imageContent}
+                    keyExtractor={item => item.name}
+                    renderItem={({item, index}) => (
+                      <ItemImage item={item} index={index} />
+                    )}
+                  />
+                ) : (
+                  <Image
+                    source={{
+                      uri: imageContent1,
+                    }}
+                    style={{height: 150, width: 350, left: 0, right: 0}}
+                    resizeMode="contain"></Image>
+                )}
+              </TouchableOpacity>
             )}
 
             <View>
@@ -302,21 +327,22 @@ function ItemMess(props) {
       {/* ) : (
         <View style={{width: 40, height: 40}}></View>
       )} */}
+
       <Modal
         style={{
           justifyContent: 'center',
         }}
         transparent={true}
-        visible={modalOpen}
+        visible={modalOpenRep}
         animationType="fade">
-        <MessengerModel
+        <MessengerModelRep
           data={_id}
           onPress={() => {
-            setModal(false);
+            setModalRep(false);
           }}
           onPressDelete={() => {
             removeMess();
-          }}></MessengerModel>
+          }}></MessengerModelRep>
       </Modal>
     </TouchableOpacity>
   );
