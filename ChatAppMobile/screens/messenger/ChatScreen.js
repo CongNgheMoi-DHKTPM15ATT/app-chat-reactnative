@@ -43,8 +43,16 @@ export default function ChatScreen(props) {
   const [user, setUser] = useState('');
   const [userId, setUserId] = useState('');
   const [contentType, setContentType] = useState('');
-  let {receiver, _id, content, image, time, numberOfChat, content_type} =
-    props.route.params.users;
+  let {
+    receiver,
+    _id,
+    is_group,
+    content,
+    image,
+    time,
+    numberOfChat,
+    content_type,
+  } = props.route.params.users;
   const {navigate, goBack} = props.navigation;
   const [photo, setPhoto] = React.useState(null);
   const [activeUser, setActiveUser] = useState([]);
@@ -207,7 +215,7 @@ export default function ChatScreen(props) {
           goBack();
         }}
         onPressRightIcon={() => {
-          navigate('SettingChat', {id: {_id, receiver}});
+          navigate('SettingChat', {id: {_id, receiver, is_group}});
           ////////////////// xu ly
         }}
         onPressPhoneRightIcon={() => {

@@ -18,7 +18,7 @@ function SettingChat(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
-  let {_id, receiver} = props.route.params.id;
+  let {_id, receiver, is_group} = props.route.params.id;
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
   useEffect(() => {
     getImage();
@@ -123,30 +123,57 @@ function SettingChat(props) {
                 Tìm tin nhắn
               </Text>
             </View>
-            <View style={{flexDirection: 'column', alignItems: 'center'}}>
-              <TouchableOpacity
-                style={{
-                  padding: 10,
-                  height: 50,
-                  width: 50,
-                  backgroundColor: 'gray',
-                  marginHorizontal: 15,
-                  borderRadius: 100,
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={images.account}
-                  style={{height: 24, width: 24}}></Image>
-              </TouchableOpacity>
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  width: 55,
-                }}>
-                Trang cá nhân
-              </Text>
-            </View>
+            {is_group == true ? (
+              <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    height: 50,
+                    width: 50,
+                    backgroundColor: 'gray',
+                    marginHorizontal: 15,
+                    borderRadius: 100,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={images.account}
+                    style={{height: 24, width: 24}}></Image>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    width: 100,
+                  }}>
+                  Thêm thành viên
+                </Text>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                <TouchableOpacity
+                  style={{
+                    padding: 10,
+                    height: 50,
+                    width: 50,
+                    backgroundColor: 'gray',
+                    marginHorizontal: 15,
+                    borderRadius: 100,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    source={images.account}
+                    style={{height: 24, width: 24}}></Image>
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    width: 55,
+                  }}>
+                  Trang cá nhân
+                </Text>
+              </View>
+            )}
             <View style={{flexDirection: 'column', alignItems: 'center'}}>
               <TouchableOpacity
                 style={{
