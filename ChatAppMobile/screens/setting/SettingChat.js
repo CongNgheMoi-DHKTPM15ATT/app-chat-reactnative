@@ -18,7 +18,7 @@ function SettingChat(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
-  let _id = props.route.params.id;
+  let {_id, receiver} = props.route.params.id;
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
   useEffect(() => {
     getImage();
@@ -76,13 +76,23 @@ function SettingChat(props) {
             alignItems: 'center',
           }}>
           <Image
-            source={images.avatar}
+            source={{uri: receiver.avatar}}
             style={{
               height: 90,
               width: 90,
               borderRadius: 100,
               marginTop: 10,
             }}></Image>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              width: 300,
+              fontSize: 18,
+              fontWeight: 'bold',
+            }}>
+            {receiver.nick_name}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
