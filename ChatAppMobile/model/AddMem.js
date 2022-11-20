@@ -158,7 +158,7 @@ function AddMem(props) {
       .catch(resJson => {
         console.log(resJson);
       })
-      .finally(() => navigate('Messenger'));
+      .finally(() => goBack());
   };
   return (
     <ScrollView

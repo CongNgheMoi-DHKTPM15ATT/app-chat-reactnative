@@ -12,6 +12,7 @@ import CallScreen from './messenger/CallScreen';
 import IncommingCall from './messenger/IncommingCall';
 import ProfileDetail from './profile/ProfileDetail';
 import AcceptActivity from './friendaccept/draw/AcceptActivity';
+import RegisterPhoneActivity from './RegisterPhoneActivity';
 export {
   LoadingActivity,
   ChatFlaxlist,
@@ -27,4 +28,5 @@ export {
   IncommingCall,
   ProfileDetail,
   AcceptActivity,
+  RegisterPhoneActivity,
 };

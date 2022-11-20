@@ -27,6 +27,7 @@ import {
   CallScreen,
   ProfileDetail,
   AcceptActivity,
+  RegisterPhoneActivity,
 } from '../screens';
 import UITag from './UITag';
 import {AuthProvider} from '../repositories/AuthContext';
@@ -34,6 +35,7 @@ import SearchPhone from '../model/SearchPhone';
 import AddGroup from '../model/AddGroup';
 import SettingChat from '../screens/setting/SettingChat';
 import AddMem from '../model/AddMem';
+import CountryPicker from '../components/CountryPicker';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -49,6 +51,10 @@ function App(props) {
         <Stack.Screen name={'UITag'} component={UITag} />
         <Stack.Screen name={'Messenger'} component={ChatScreen} />
         <Stack.Screen name={'RegisterActivity'} component={RegisterActivity} />
+        <Stack.Screen
+          name={'RegisterPhoneActivity'}
+          component={RegisterPhoneActivity}
+        />
         <Stack.Screen name={'CallScreen'} component={CallScreen} />
         <Stack.Screen name={'ProfileDetail'} component={ProfileDetail} />
         <Stack.Screen name={'SearchPhone'} component={SearchPhone} />
@@ -57,6 +63,7 @@ function App(props) {
         <Stack.Screen name={'AcceptActivity'} component={AcceptActivity} />
         <Stack.Screen name={'SettingChat'} component={SettingChat} />
         <Stack.Screen name={'AddMem'} component={AddMem} />
+        <Stack.Screen name={'CountryPicker'} component={CountryPicker} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -47,4 +47,5 @@ export default {
   camera: require('../assets/camera.png'),
   adduser: require('../assets/add-user.png'),
   updateimage: require('../assets/updateimage.png'),
+  next: require('../assets/next.png'),
 };

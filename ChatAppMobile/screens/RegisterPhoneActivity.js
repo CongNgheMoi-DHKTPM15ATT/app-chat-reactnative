@@ -8,42 +8,39 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
-function RegisterActivity(props) {
-  //state for validating
+function RegisterPhoneActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
   const [erroPass, setErrorPass] = useState('');
   //state to store email/pass
   const [phone, setPhone] = useState('');
   const [pass, setPass] = useState('');
   const [sercuPass, setSercuPass] = useState(true);
+
+  const {navigation, route} = props;
+  const {navigate, goBack} = navigation;
   const isValidationOk = () =>
     phone.length > 0 &&
     pass.length > 0 &&
     isValidPhone(phone) == true &&
     isValidPass(pass) == true;
-  const {navigation, route} = props;
-  const {navigate, goBack} = navigation;
-  handleRegister = () => {
-    const url = 'https://halo-chat.herokuapp.com/api/auth/register';
-    const method = 'POST';
-    fetch(url, {
-      method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        phone: phone,
-        password: pass,
-      }),
-    })
-      .then(res => res.json())
-      .then(resJson => {
-        console.log(resJson.data);
-        goBack();
-      });
-    // alert(phone + ' ' + pass);
+
+  const [data, setData] = useState({
+    name: 'Vietnam',
+    dialCode: '+84',
+    isoCode: 'VN',
+    flag: 'https://cdn.kcak11.com/CountryFlags/countries/vn.svg',
+  });
+  let check = () => {
+    let demo = null;
+    if (props.route.params.code === undefined) {
+      return data.dialCode;
+    } else {
+      demo = props.route.params.code;
+
+      return demo.dialCode;
+    }
   };
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
@@ -60,7 +57,6 @@ function RegisterActivity(props) {
             source={images.back}
             style={{height: 25, width: 25, margin: 10}}></Image>
         </TouchableOpacity>
-
         <Text
           style={{
             color: 'white',
@@ -79,9 +75,17 @@ function RegisterActivity(props) {
             fontSize: fontSizes.h1,
             paddingLeft: 15,
           }}>
-          Tên zalo
+          Nhập số điện thoại của bạn để tạo tài khoản mới
         </Text>
-        <View style={{flexDirection: 'column'}}>
+
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigate('CountryPicker');
+            }}
+            style={{height: 60, width: 80, paddingTop: 20, paddingLeft: 25}}>
+            <Text style={{color: 'white'}}>{check()}</Text>
+          </TouchableOpacity>
           <TextInput
             onChangeText={text => {
               setErrorPass(
@@ -90,46 +94,19 @@ function RegisterActivity(props) {
               setPass(text);
             }}
             value={pass}
-            placeholder="Gồm 2-40 kí tự"
+            placeholder="Nhập số điện thoại của bạn"
             placeholderTextColor="gray"
             style={{paddingLeft: 15, color: 'white'}}></TextInput>
-          <View
-            style={{
-              height: 1,
-              width: 340,
-              marginHorizontal: 10,
-              backgroundColor: 'blue',
-            }}></View>
-          <Text
-            style={{
-              color: 'white',
-              marginTop: 10,
-              fontSize: fontSizes.h0,
-              paddingLeft: 15,
-            }}>
-            Lưu ý khi đặt tên:
-          </Text>
-          <Text
-            style={{
-              color: 'white',
-              marginTop: 10,
-              fontSize: fontSizes.h0,
-              paddingLeft: 15,
-            }}>
-            * Không vi phạm Quy định đặt tên trên Zalo
-          </Text>
-          <Text
-            style={{
-              color: 'white',
-              marginTop: 10,
-              fontSize: fontSizes.h0,
-              paddingLeft: 15,
-            }}>
-            * Nên sử dụng tên thật để giúp bạn bè dễ nhận ra bạn
-          </Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', top: 300, padding: 10}}>
+      <View
+        style={{
+          height: 1,
+          width: 340,
+          marginHorizontal: 10,
+          backgroundColor: 'blue',
+        }}></View>
+      <View style={{flexDirection: 'row', top: 380, padding: 10}}>
         <Text
           style={{
             color: 'white',
@@ -142,7 +119,13 @@ function RegisterActivity(props) {
         </Text>
         <View style={{flex: 1}}></View>
         <TouchableOpacity
-          onPress={() => navigate('RegisterPhoneActivity', {code: undefined})}
+          onPress={() => {
+            // alert(check() + pass);
+            Alert.alert(
+              'Xác nhận số điện thoại ' + pass,
+              'Mã kích hoạt sẽ được gửi tới số điện thoại này',
+            );
+          }}
           style={{
             height: 60,
             width: 60,
@@ -163,4 +146,4 @@ function RegisterActivity(props) {
     </View>
   );
 }
-export default RegisterActivity;
+export default RegisterPhoneActivity;
