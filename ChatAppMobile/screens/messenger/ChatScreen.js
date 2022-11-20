@@ -31,7 +31,7 @@ const options = {
 };
 export default function ChatScreen(props) {
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages';
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages';
+  const BASE_URL = 'http://192.168.0.3:8080/api/messages';
 
   // https://codejava-app-anime.herokuapp.com/upload
   const SERVER_URL = 'https://codejava-app-anime.herokuapp.com/upload';
@@ -145,7 +145,7 @@ export default function ChatScreen(props) {
   };
   sendMessage = () => {
     // const url = 'http://192.168.43.91:8080/api/messages/send';
-    const url = 'http://192.168.1.104:8080/api/messages/send';
+    const url = 'http://192.168.0.3:8080/api/messages/send';
 
     const method = 'POST';
     if (contentType != null) {

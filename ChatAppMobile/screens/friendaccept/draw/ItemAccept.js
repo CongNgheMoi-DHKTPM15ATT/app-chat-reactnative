@@ -15,8 +15,8 @@ function ItemAccept(props) {
   const [userId, setUser_id] = useState('');
   const navigation = useNavigation();
   const {onPress} = props;
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/confirm-friend-request';
-  const CON_URL = 'http://192.168.1.104:8080/api/conversation/create';
+  const BASE_URL = 'http://192.168.0.3:8080/api/user/confirm-friend-request';
+  const CON_URL = 'http://192.168.0.3:8080/api/conversation/create';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
@@ -63,7 +63,7 @@ function ItemAccept(props) {
     })
       .then(res => res.json())
       .then(resJson => {
-        const url = 'http://192.168.1.104:8080/api/messages/send';
+        const url = 'http://192.168.0.3:8080/api/messages/send';
 
         const method = 'POST';
         fetch(url, {

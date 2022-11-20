@@ -40,7 +40,7 @@ function ItemMess(props) {
   const [imageContent, setImageContent] = useState([]);
   const [videoContent, setVideoContent] = useState([]);
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages/recover';
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages/recover';
+  const BASE_URL = 'http://192.168.0.3:8080/api/messages/recover';
   var formattedDate = moment(createdAt).utc().format('MM/DD/YY h:mm a');
   var formattedDateOfCreateAt = moment(createdAt).utc().format('MM/DD/YY');
   getTimeOnChat = () => {

@@ -8,6 +8,7 @@ import {
   FlatList,
   Modal,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {UIHeaderChat} from '../../components';
@@ -19,7 +20,7 @@ function SettingChat(props) {
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
   let {_id, receiver, is_group} = props.route.params.id;
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
+  const BASE_URL = 'http://192.168.0.3:8080/api/messages/content-type-top-4';
   useEffect(() => {
     getImage();
   }, []);
@@ -126,6 +127,7 @@ function SettingChat(props) {
             {is_group == true ? (
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <TouchableOpacity
+                  onPress={() => navigate('AddMem', {id: {_id, receiver}})}
                   style={{
                     padding: 10,
                     height: 50,
