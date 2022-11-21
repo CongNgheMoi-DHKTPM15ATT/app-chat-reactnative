@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "941941692182",
+    "project_id": "auth-phone-reactnative",
+    "storage_bucket": "auth-phone-reactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941941692182:android:51f0d7a19a4824decda237",
+        "android_client_info": {
+          "package_name": "com.chatappmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941941692182-baai4j0i8b9un3li564d63c1nqp19h8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chatappmobile",
+            "certificate_hash": "77955f8082edb6f7c5cbf14f234126a9550cc02b"
+          }
+        },
+        {
+          "client_id": "941941692182-0v8331vcglu8grid6hb8t28du2vsm3dp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGtGQXFJ_KWGVsRNb6Jp3ezC2qMrAM51Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941941692182-0v8331vcglu8grid6hb8t28du2vsm3dp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
