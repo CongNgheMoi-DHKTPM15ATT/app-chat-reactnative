@@ -36,7 +36,6 @@ import AddGroup from '../model/AddGroup';
 import SettingChat from '../screens/setting/SettingChat';
 import AddMem from '../model/AddMem';
 import CountryPicker from '../components/CountryPicker';
-import OTPActivity from '../screens/OTPActivity';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -65,7 +64,6 @@ function App(props) {
         <Stack.Screen name={'SettingChat'} component={SettingChat} />
         <Stack.Screen name={'AddMem'} component={AddMem} />
         <Stack.Screen name={'CountryPicker'} component={CountryPicker} />
-        <Stack.Screen name={'OTPActivity'} component={OTPActivity} />
       </Stack.Navigator>
     </NavigationContainer>
   );
