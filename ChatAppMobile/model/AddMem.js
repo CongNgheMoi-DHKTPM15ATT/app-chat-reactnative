@@ -34,9 +34,9 @@ function AddMem(props) {
   const [taskItems, setTaskItems] = useState([]);
   let {_id, receiver} = props.route.params.id;
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  const BASE_URL = 'http://192.168.0.3:8080/api/user/search';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
   // const GROUP_URL = 'http://192.168.43.91:8080/api/conversation/create-group';
-  const GROUP_URL = 'http://192.168.0.3:8080/api/group/add-mems';
+  const GROUP_URL = 'http://192.168.1.104:8080/api/group/add-mems';
   const handlePick = (emojiObject: EmojiType) => {
     setNameGroup(emojiObject.emoji);
     console.log(emojiObject);
@@ -75,7 +75,7 @@ function AddMem(props) {
     // console.log('éc éc éc', taskItems);
   }, [taskItems]);
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
-  const BASE_URL_Con = 'http://192.168.0.3:8080/api/user/get-friends-pending';
+  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
   getAllUsers = () => {
     const method = 'POST';
@@ -139,7 +139,8 @@ function AddMem(props) {
   //
   const onPickToGroup = taskItems => {
     let listUserId = [];
-    let _id = taskItems.map(t => listUserId.push(t._id));
+    let __id = taskItems.map(t => listUserId.push(t._id));
+    alert(listUserId);
     const method = 'POST';
     fetch(GROUP_URL, {
       method,
@@ -156,6 +157,7 @@ function AddMem(props) {
       .then(res => res.json())
       .then(resJson => {})
       .catch(resJson => {
+        alert(resJson);
         console.log(resJson);
       })
       .finally(() => goBack());

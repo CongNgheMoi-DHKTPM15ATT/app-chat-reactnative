@@ -20,7 +20,7 @@ function SettingChat(props) {
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
   let {_id, receiver, is_group} = props.route.params.id;
-  const BASE_URL = 'http://192.168.0.3:8080/api/messages/content-type-top-4';
+  const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
   useEffect(() => {
     getImage();
   }, []);
@@ -287,6 +287,231 @@ function SettingChat(props) {
                     style={{height: 24, width: 24}}></Image>
                 </TouchableOpacity>
               </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#252526',
+            height: 120,
+            marginTop: 10,
+            alignContent: 'center',
+            flexDirection: 'column',
+          }}>
+          <TouchableOpacity
+            onPress={() => navigate('MemberScreen')}
+            style={{
+              padding: 10,
+              marginHorizontal: 20,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image
+              source={images.adduser}
+              style={{height: 25, width: 25}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 15,
+                }}>
+                Xem thành viên (5)
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 20,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image source={images.link} style={{height: 25, width: 25}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 15,
+                }}>
+                Link tham gia nhóm
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#252526',
+            height: 230,
+            marginTop: 10,
+            alignContent: 'center',
+            flexDirection: 'column',
+          }}>
+          <TouchableOpacity
+            style={{
+              padding: 15,
+              marginHorizontal: 17,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image source={images.tag} style={{height: 20, width: 20}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 2,
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Phân loại
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 15,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image source={images.pin} style={{height: 30, width: 30}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 15,
+                }}>
+                Ghim trò chuyện
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 20,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image source={images.eye} style={{height: 20, width: 20}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Ẩn trò chuyện
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 15,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image
+              source={images.setting_user}
+              style={{height: 25, width: 25}}></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Cài đặt cá nhân
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            backgroundColor: '#252526',
+            height: 150,
+            marginTop: 10,
+            flexDirection: 'column',
+          }}>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 20,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image
+              source={images.warning}
+              style={{height: 25, width: 25}}></Image>
+            <View>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Báo xấu
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 15,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image
+              source={images.delete}
+              style={{height: 30, width: 30}}></Image>
+            <View>
+              <Text
+                style={{
+                  color: 'red',
+                  padding: 5,
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Xóa lịch xử trò chuyện
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              padding: 10,
+              marginHorizontal: 25,
+              borderRadius: 100,
+              flexDirection: 'row',
+              alignContent: 'center',
+            }}>
+            <Image
+              source={images.logout}
+              style={{height: 20, width: 20, color: 'red'}}></Image>
+            <View>
+              <Text
+                style={{
+                  color: 'red',
+                  fontSize: 18,
+                  paddingHorizontal: 20,
+                }}>
+                Rời nhóm
+              </Text>
             </View>
           </TouchableOpacity>
         </View>

@@ -36,9 +36,9 @@ function AddGroup(props) {
   const [taskItems, setTaskItems] = useState([]);
 
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  const BASE_URL = 'http://192.168.0.3:8080/api/user/search';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/search';
   // const GROUP_URL = 'http://192.168.43.91:8080/api/conversation/create-group';
-  const GROUP_URL = 'http://192.168.0.3:8080/api/conversation/create-group';
+  const GROUP_URL = 'http://192.168.1.104:8080/api/conversation/create-group';
   const handlePick = (emojiObject: EmojiType) => {
     setNameGroup(emojiObject.emoji);
     console.log(emojiObject);
@@ -74,7 +74,7 @@ function AddGroup(props) {
     // console.log('éc éc éc', taskItems);
   }, [taskItems]);
   // const BASE_URL_Con = 'http://192.168.43.91:8080/api/user/get-friends-pending';
-  const BASE_URL_Con = 'http://192.168.0.3:8080/api/user/get-friends-pending';
+  const BASE_URL_Con = 'http://192.168.1.104:8080/api/user/get-friends-pending';
 
   getAllUsers = () => {
     const method = 'POST';

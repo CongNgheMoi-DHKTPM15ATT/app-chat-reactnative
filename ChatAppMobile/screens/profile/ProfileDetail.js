@@ -42,7 +42,7 @@ const optionsCam = {
   },
 };
 function ProfileDetail(props) {
-  const BASE_URL = 'http://192.168.0.3:8080/api/user/send-friend-request';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/send-friend-request';
   const {navigate, goBack} = props.navigation;
   const [userId, setUser_id] = useState('');
   // const [conversation, setConversation] = useState('');
@@ -113,7 +113,7 @@ function ProfileDetail(props) {
         })
           .then(res => res.json())
           .then(async resJson => {
-            await fetch('http://192.168.0.3:8080/api/user/update', {
+            await fetch('http://192.168.1.104:8080/api/user/update', {
               method: 'POST',
               body: JSON.stringify({
                 _id: _id,
@@ -156,7 +156,7 @@ function ProfileDetail(props) {
     })
       .then(res => res.json())
       .then(async resJson => {
-        await fetch('http://192.168.0.3:8080/api/user/update', {
+        await fetch('http://192.168.1.104:8080/api/user/update', {
           method: 'POST',
           body: JSON.stringify({
             _id: _id,

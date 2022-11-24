@@ -18,8 +18,8 @@ function MyProfile(props) {
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('');
   const [userId, setUser_id] = useState('');
-  const BASE_URL = 'http://192.168.0.3:8080/api/user/id';
-  const USER_URL = 'http://192.168.0.3:8080/api/user/id';
+  const BASE_URL = 'http://192.168.1.104:8080/api/user/id';
+  const USER_URL = 'http://192.168.1.104:8080/api/user/id';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_name').then(result => {

@@ -16,8 +16,8 @@ function ItemFriend(props) {
   const {onPress} = props;
   const [modalOpenUser, setModalUser] = useState(false);
   const [userId, setUser_id] = useState('');
-  const REMOVE_URL = 'http://192.168.0.3:8080/api/user/remove-friend';
-  const BLOCK_URL = 'http://192.168.0.3:8080/api/user/block-friend';
+  const REMOVE_URL = 'http://192.168.1.104:8080/api/user/remove-friend';
+  const BLOCK_URL = 'http://192.168.1.104:8080/api/user/block-friend';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {

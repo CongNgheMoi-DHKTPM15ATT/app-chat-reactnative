@@ -48,4 +48,12 @@ export default {
   adduser: require('../assets/add-user.png'),
   updateimage: require('../assets/updateimage.png'),
   next: require('../assets/next.png'),
+  logout: require('../assets/logout.png'),
+  delete: require('../assets/delete.png'),
+  warning: require('../assets/attention.png'),
+  eye: require('../assets/eye.png'),
+  setting_user: require('../assets/setting_user.png'),
+  pin: require('../assets/pin.png'),
+  tag: require('../assets/tag.png'),
+  link: require('../assets/link.png'),
 };
