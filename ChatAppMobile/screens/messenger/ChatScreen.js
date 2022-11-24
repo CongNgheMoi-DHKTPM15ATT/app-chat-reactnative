@@ -71,6 +71,7 @@ export default function ChatScreen(props) {
     setIsLoading(true);
     getMessagesByUserId();
     getUsername();
+    AsyncStorage.setItem('conver_id', _id);
   }, [chatHistory]);
   //kiểm tra user
   const getUsername = async () => {

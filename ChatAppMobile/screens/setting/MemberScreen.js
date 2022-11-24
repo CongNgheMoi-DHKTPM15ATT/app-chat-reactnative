@@ -1,28 +1,23 @@
 import * as React from 'react';
-import {View, useWindowDimensions, FlatList} from 'react-native';
+import {useState, useEffect} from 'react';
+import {
+  View,
+  useWindowDimensions,
+  FlatList,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  ToastAndroid,
+} from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
 import {UIHeaderChat} from '../../components';
-
-const FirstRoute = () => (
-  <View style={{flex: 1, backgroundColor: '#ff4081'}}>
-    <FlatList
-      data={friends}
-      renderItem={({item, index}) => (
-        <ItemFriend
-          data={item}
-
-          // onPress={() => {
-          //   // alert(`name is: ${item._id}`);
-          //   getMessById(item._id);
-          //   navigate('Messenger', {users: chat});
-          // }}
-        />
-      )}
-      keyExtractor={eachChat => eachChat._id}
-      key={eachChat => eachChat._id}
-    />
-  </View>
-);
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ItemFriend from '../phonebook/draws/ItemFriend';
+import ListMemOnGroup from './ListMemOnGroup';
+const FirstRoute = () => <ListMemOnGroup></ListMemOnGroup>;
 
 const SecondRoute = () => (
   <View style={{flex: 1, backgroundColor: '#673ab7'}} />
@@ -41,7 +36,7 @@ export default function MemberScreen() {
     {key: 'first', title: 'Tất cả'},
     {key: 'second', title: 'Đã mời'},
   ]);
-  const [friends, setFriend] = React.useState([]);
+
   return (
     <TabView
       navigationState={{index, routes}}

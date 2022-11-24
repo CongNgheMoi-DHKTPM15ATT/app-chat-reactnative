@@ -318,7 +318,7 @@ function SettingChat(props) {
                   fontSize: 18,
                   paddingHorizontal: 15,
                 }}>
-                Xem thành viên (5)
+                Xem thành viên ({receiver.members.length})
               </Text>
             </View>
           </TouchableOpacity>
