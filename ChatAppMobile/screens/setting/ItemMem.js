@@ -9,13 +9,17 @@ import {
 } from 'react-native';
 import {images} from '../../constants';
 import moment from 'moment-feiertage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function ItemMem(props) {
   let {user_id, nick_name} = props.chat;
-
+  const [admin, setAdmin] = useState('');
   const {onPress} = props;
   const {index} = props;
   useEffect(() => {
     console.log('demo day nha: ', user_id);
+    AsyncStorage.getItem('user_id').then(result => {
+      setAdmin(result);
+    });
   }, []);
   return (
     <TouchableOpacity
@@ -40,15 +44,27 @@ function ItemMem(props) {
             </Text>
 
             <View style={{flex: 1}}></View>
-            <Text
-              style={{
-                color: 'white',
-                paddingHorizontal: 2,
-                opacity: 0.5,
-                fontSize: 10,
-              }}>
-              Đã tham gia
-            </Text>
+            {user_id == admin ? (
+              <Text
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 2,
+                  opacity: 0.5,
+                  fontSize: 10,
+                }}>
+                Trưởng nhóm
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  paddingHorizontal: 2,
+                  opacity: 0.5,
+                  fontSize: 10,
+                }}>
+                Đã tham gia
+              </Text>
+            )}
           </View>
         </View>
       </View>
