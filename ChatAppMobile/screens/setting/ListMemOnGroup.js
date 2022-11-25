@@ -8,7 +8,8 @@ import {
   FlatList,
   SectionList,
   ScrollView,
-  Modal,
+  Dimensions,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ItemChat from '../chat/draws/ItemChat';
@@ -17,18 +18,16 @@ function ListMemOnGroup(props) {
   const [userId, setUser_id] = useState('');
   const [friend, setFriend] = useState([]);
   const BASE_URL = 'http://192.168.1.104:8080/api/conversation/id';
-
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('conver_id').then(result => {
       setUser_id(result);
     });
-  }, []);
+  });
   useEffect(() => {
     // setIsLoading(true);
     getAllUsers();
-  });
-
+  }, [userId]);
   getAllUsers = () => {
     const method = 'POST';
     fetch(BASE_URL, {
@@ -59,15 +58,7 @@ function ListMemOnGroup(props) {
         <FlatList
           data={friend}
           renderItem={({item, index}) => (
-            <ItemMem
-              chat={item}
-              key={item._id}
-              index={index}
-              onPress={() => {
-                // alert(`name is: ${item._id}`);
-                navigate('Messenger', {users: item});
-              }}
-            />
+            <ItemMem chat={item} key={item.user_id} index={index} />
           )}
           keyExtractor={eachChat => eachChat.title}
         />

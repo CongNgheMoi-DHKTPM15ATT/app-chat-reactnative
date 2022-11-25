@@ -19,7 +19,7 @@ function SettingChat(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
-  let {_id, receiver, is_group} = props.route.params.id;
+  let {_id, receiver, is_group, admin} = props.route.params.id;
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
   useEffect(() => {
     getImage();
@@ -310,17 +310,33 @@ function SettingChat(props) {
             <Image
               source={images.adduser}
               style={{height: 25, width: 25}}></Image>
-            <View style={{flexDirection: 'column'}}>
-              <Text
-                style={{
-                  color: 'white',
-                  padding: 5,
-                  fontSize: 18,
-                  paddingHorizontal: 15,
-                }}>
-                Xem thành viên ({receiver.members.length})
-              </Text>
-            </View>
+            {is_group == true ? (
+              <View style={{flexDirection: 'column'}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    padding: 5,
+                    fontSize: 18,
+                    paddingHorizontal: 15,
+                  }}>
+                  Xem thành viên ({receiver.members.length + 1})
+                </Text>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'column'}}>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={{
+                    color: 'white',
+                    padding: 5,
+                    fontSize: 18,
+                    paddingHorizontal: 15,
+                  }}>
+                  Tạo nhóm với {receiver.nick_name}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={{
@@ -442,7 +458,7 @@ function SettingChat(props) {
         <View
           style={{
             backgroundColor: '#252526',
-            height: 150,
+            height: 200,
             marginTop: 10,
             flexDirection: 'column',
           }}>
@@ -492,28 +508,79 @@ function SettingChat(props) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              padding: 10,
-              marginHorizontal: 25,
-              borderRadius: 100,
-              flexDirection: 'row',
-              alignContent: 'center',
-            }}>
-            <Image
-              source={images.logout}
-              style={{height: 20, width: 20, color: 'red'}}></Image>
-            <View>
-              <Text
-                style={{
-                  color: 'red',
-                  fontSize: 18,
-                  paddingHorizontal: 20,
-                }}>
-                Rời nhóm
-              </Text>
-            </View>
-          </TouchableOpacity>
+          {is_group == true || receiver._id == admin ? (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                marginHorizontal: 25,
+                borderRadius: 100,
+                flexDirection: 'row',
+                alignContent: 'center',
+              }}>
+              <Image
+                source={images.logout}
+                style={{height: 20, width: 20, color: 'red'}}></Image>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    paddingHorizontal: 20,
+                  }}>
+                  Chuyển quyền trưởng nhóm
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
+          {is_group == true ? (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                marginHorizontal: 25,
+                borderRadius: 100,
+                flexDirection: 'row',
+                alignContent: 'center',
+              }}>
+              <Image
+                source={images.logout}
+                style={{height: 20, width: 20, color: 'red'}}></Image>
+              <View>
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 18,
+                    paddingHorizontal: 20,
+                  }}>
+                  Rời nhóm
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                marginHorizontal: 25,
+                borderRadius: 100,
+                flexDirection: 'row',
+                alignContent: 'center',
+              }}>
+              <Image
+                source={images.logout}
+                style={{height: 20, width: 20, color: 'red'}}></Image>
+              <View>
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 18,
+                    paddingHorizontal: 20,
+                  }}>
+                  Xóa bạn
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </View>

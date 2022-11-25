@@ -20,7 +20,17 @@ import ListMemOnGroup from './ListMemOnGroup';
 const FirstRoute = () => <ListMemOnGroup></ListMemOnGroup>;
 
 const SecondRoute = () => (
-  <View style={{flex: 1, backgroundColor: '#673ab7'}} />
+  <View style={{flex: 1}}>
+    <Text
+      style={{
+        color: 'white',
+        alignSelf: 'center',
+        textAlign: 'center',
+        padding: 10,
+      }}>
+      Người nhận đã nhận được lời mời vào nhóm nhưng chưa đồng ý tham gia
+    </Text>
+  </View>
 );
 
 const renderScene = SceneMap({

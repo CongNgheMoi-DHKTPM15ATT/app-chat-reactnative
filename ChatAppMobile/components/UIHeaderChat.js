@@ -95,7 +95,7 @@ function UIHeaderChat(props) {
               marginLeft: 5,
               fontSize: 10,
             }}>
-            Số thành viên: {numOfMember.length}
+            Số thành viên: {numOfMember.length + 1}
           </Text>
         ) : (
           <View></View>

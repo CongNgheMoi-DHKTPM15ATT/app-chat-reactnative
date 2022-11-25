@@ -47,6 +47,7 @@ export default function ChatScreen(props) {
     receiver,
     _id,
     is_group,
+    admin,
     content,
     image,
     time,
@@ -216,7 +217,7 @@ export default function ChatScreen(props) {
           goBack();
         }}
         onPressRightIcon={() => {
-          navigate('SettingChat', {id: {_id, receiver, is_group}});
+          navigate('SettingChat', {id: {_id, receiver, is_group, admin}});
           ////////////////// xu ly
         }}
         onPressPhoneRightIcon={() => {
