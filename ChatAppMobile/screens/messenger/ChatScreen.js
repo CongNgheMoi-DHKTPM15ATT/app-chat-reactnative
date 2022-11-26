@@ -29,12 +29,15 @@ const options = {
     mediaType: 'mixed',
   },
 };
+import Modal from 'react-native-modal';
+import ItemMem from '../messenger/ItemMem';
 export default function ChatScreen(props) {
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages';
   const BASE_URL = 'http://192.168.1.104:8080/api/messages';
 
   // https://codejava-app-anime.herokuapp.com/upload
   const SERVER_URL = 'https://codejava-app-anime.herokuapp.com/upload';
+  const [isModalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [typeText, setTypeText] = useState('');
@@ -56,6 +59,7 @@ export default function ChatScreen(props) {
   } = props.route.params.users;
   const {navigate, goBack} = props.navigation;
   const [photo, setPhoto] = React.useState(null);
+  const [conId, setConId] = React.useState('');
   const [activeUser, setActiveUser] = useState([]);
   const handlePick = (emojiObject: EmojiType) => {
     setTypeText(emojiObject.emoji);
@@ -67,13 +71,43 @@ export default function ChatScreen(props) {
       }
     */
   };
-
   useEffect(() => {
     setIsLoading(true);
     getMessagesByUserId();
     getUsername();
     AsyncStorage.setItem('conver_id', _id);
   }, [chatHistory]);
+
+  const [friend, setFriend] = useState([]);
+  const CON_URL = 'http://192.168.1.104:8080/api/conversation/id';
+
+  useEffect(() => {
+    // setIsLoading(true);
+    getAllUsersCon();
+  }, [userId]);
+  const getAllUsersCon = () => {
+    const method = 'POST';
+    fetch(CON_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id: _id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson.members;
+        // console.log('demo day nha: ', currentUser.members);
+        setFriend(currentUser);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => setIsLoading(false));
+  };
   //kiểm tra user
   const getUsername = async () => {
     try {
@@ -132,7 +166,7 @@ export default function ChatScreen(props) {
       };
   });
   //gửi tin nhắn nè mấy bà
-  handleSendMessage = async () => {
+  let handleSendMessage = async () => {
     const response = await sendMessage();
     socket.emit('send', {
       senderId: userId,
@@ -145,7 +179,7 @@ export default function ChatScreen(props) {
     setTypeText('');
     return;
   };
-  sendMessage = () => {
+  let sendMessage = () => {
     // const url = 'http://192.168.43.91:8080/api/messages/send';
     const url = 'http://192.168.1.104:8080/api/messages/send';
 
@@ -175,7 +209,7 @@ export default function ChatScreen(props) {
   };
 
   //get image form library
-  handleChoosePhoto = async () => {
+  let handleChoosePhoto = async () => {
     const images = await launchImageLibrary(options);
     // console.log(images.assets[0]);
     const formData = new FormData();
@@ -279,6 +313,9 @@ export default function ChatScreen(props) {
           autoCorrect={false}
           placeholder="Tin nhắn"
           onChangeText={text => {
+            if (is_group == true && text == '@') {
+              setModalVisible(!isModalVisible);
+            }
             setTypeText(text);
           }}
           value={typeText}
@@ -342,9 +379,38 @@ export default function ChatScreen(props) {
         onEmojiSelected={handlePick}
         open={isOpen}
         value={typeText}
-        onChange={setTypeText}
+        onChange={() => setTypeText(typeText, ...typeText)}
         onClose={() => setIsOpen(false)}
       />
+      <Modal
+        style={{
+          backgroundColor: 'black',
+          height: 50,
+          marginTop: 400,
+          marginLeft: 0,
+          marginBottom: 40,
+          width: '100%',
+        }}
+        isVisible={isModalVisible}
+        onBackdropPress={() => setModalVisible(false)}>
+        <ScrollView style={{}}>
+          <FlatList
+            data={friend}
+            renderItem={({item, index}) => (
+              <ItemMem
+                chat={item}
+                key={item.user_id}
+                index={index}
+                onPress={() => {
+                  setTypeText('@' + item.nick_name);
+                  setModalVisible(false);
+                }}
+              />
+            )}
+            keyExtractor={eachChat => eachChat.title}
+          />
+        </ScrollView>
+      </Modal>
     </View>
   );
 }

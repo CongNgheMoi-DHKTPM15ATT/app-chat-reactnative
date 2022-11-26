@@ -37,6 +37,7 @@ import SettingChat from '../screens/setting/SettingChat';
 import AddMem from '../model/AddMem';
 import CountryPicker from '../components/CountryPicker';
 import MemberScreen from '../screens/setting/MemberScreen';
+import RegisterPassword from '../screens/RegisterPassword';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -66,6 +67,7 @@ function App(props) {
         <Stack.Screen name={'AddMem'} component={AddMem} />
         <Stack.Screen name={'CountryPicker'} component={CountryPicker} />
         <Stack.Screen name={'MemberScreen'} component={MemberScreen} />
+        <Stack.Screen name={'RegisterPassword'} component={RegisterPassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );

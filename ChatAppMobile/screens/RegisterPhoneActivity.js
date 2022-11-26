@@ -53,10 +53,13 @@ function RegisterPhoneActivity(props) {
     try {
       await confirm.confirm(code);
       alert('Xác thực thành công!');
+      AsyncStorage.setItem('phone_register', pass);
+      navigate('RegisterPassword');
     } catch (error) {
-      alert(JSON.stringify(error));
+      alert('Mã OTP không thành công!');
     }
   };
+
   if (!confirm) {
     return (
       <View style={{flex: 1, backgroundColor: 'black'}}>
