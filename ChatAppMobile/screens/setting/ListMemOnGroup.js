@@ -45,6 +45,7 @@ function ListMemOnGroup(props) {
         const currentUser = resJson.members;
         // console.log('demo day nha: ', currentUser.members);
         setFriend(currentUser);
+        AsyncStorage.setItem('admin', resJson.admin);
         AsyncStorage.removeItem('conver_id');
       })
       .catch(resJson => {
@@ -52,6 +53,7 @@ function ListMemOnGroup(props) {
       })
       .finally(() => setIsLoading(false));
   };
+
   return (
     <ScrollView horizontal={false} style={{flex: 1}}>
       <View>

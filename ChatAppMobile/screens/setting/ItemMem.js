@@ -14,17 +14,56 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function ItemMem(props) {
   let {user_id, nick_name} = props.chat;
   const [admin, setAdmin] = useState('');
+  const [myUser, setMyUser] = useState('');
+  const [con_id, setCon_id] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const {onPress} = props;
   const {index} = props;
+  const BASE_URL = 'http://192.168.1.104:8080/api/group/remove-mem';
+  const LOAD_URL = 'http://192.168.1.104:8080/api/conversation/id';
   useEffect(() => {
-    console.log('demo day nha: ', user_id);
     AsyncStorage.getItem('user_id').then(result => {
+      setMyUser(result);
+    });
+    AsyncStorage.getItem('admin').then(result => {
       setAdmin(result);
     });
-  }, []);
+    AsyncStorage.getItem('conver_id').then(result => {
+      setCon_id(result);
+    });
+  });
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const handleRemoveMembers = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        conversation_id: con_id,
+        user_id: user_id,
+        user_control_id: user_id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        // console.log('demo day nha: ', currentUser.members);
+        //  currentUserRequests.map(req=>{
+        //   if (req==) {
+
+        //   }
+        //  })
+        alert(resJson.msg);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
   };
   return (
     <TouchableOpacity
@@ -79,7 +118,7 @@ function ItemMem(props) {
           opacity: 0.2,
           marginStart: 80,
         }}></View>
-      {user_id != admin ? (
+      {myUser != user_id && myUser == admin ? (
         <Modal
           style={{
             backgroundColor: 'gray',
@@ -135,7 +174,9 @@ function ItemMem(props) {
                 Chặn thành viên
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection: 'row', padding: 10}}>
+            <TouchableOpacity
+              onPress={() => handleRemoveMembers()}
+              style={{flexDirection: 'row', padding: 10}}>
               <Text
                 style={{color: 'red', marginHorizontal: 15, marginVertical: 5}}>
                 Xóa khỏi nhóm

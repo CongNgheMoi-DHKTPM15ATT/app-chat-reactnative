@@ -34,7 +34,6 @@ function MessengerModelRep(props) {
         <Image source={images.close} style={{height: 24, width: 24}}></Image>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPressDelete}
         style={{
           height: 40,
           width: '100%',
@@ -59,6 +58,7 @@ function MessengerModelRep(props) {
         <Text style={{color: 'white', fontSize: 16}}>Chuyển tiếp tin nhắn</Text>
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={onPressDelete}
         style={{
           height: 40,
           width: '100%',

@@ -12,6 +12,7 @@ import {
   FlatList,
   ScrollView,
   Keyboard,
+  Alert,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -140,7 +141,6 @@ function AddMem(props) {
   const onPickToGroup = taskItems => {
     let listUserId = [];
     let __id = taskItems.map(t => listUserId.push(t._id));
-    alert(listUserId);
     const method = 'POST';
     fetch(GROUP_URL, {
       method,
@@ -155,9 +155,10 @@ function AddMem(props) {
       }),
     })
       .then(res => res.json())
-      .then(resJson => {})
+      .then(resJson => {
+        // Alert.alert('Thêm thành công!', resJson.msg);
+      })
       .catch(resJson => {
-        alert(resJson);
         console.log(resJson);
       })
       .finally(() => goBack());

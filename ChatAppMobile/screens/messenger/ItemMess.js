@@ -105,6 +105,7 @@ function ItemMess(props) {
       },
       body: JSON.stringify({
         _id: _id,
+        content_type: 'recover',
       }),
     })
       .then(res => res.json())
@@ -112,7 +113,7 @@ function ItemMess(props) {
       .catch(resJson => {
         console.log(resJson);
       })
-      .finally(() => setModal(false));
+      .finally(() => setModalRep(false));
   };
   let handleSetModel = () => {
     setModalRep(true);

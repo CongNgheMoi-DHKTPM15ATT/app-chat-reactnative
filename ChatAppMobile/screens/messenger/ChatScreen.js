@@ -47,7 +47,7 @@ export default function ChatScreen(props) {
     receiver,
     _id,
     is_group,
-    admin,
+    nick_name,
     content,
     image,
     time,
@@ -104,7 +104,7 @@ export default function ChatScreen(props) {
       .then(resJson => {
         const currentUser = resJson.messages;
         setChatHistory(currentUser);
-        console.log(currentUser);
+        // console.log(currentUser);
         currentUser.sort(function (a, b) {
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -217,7 +217,7 @@ export default function ChatScreen(props) {
           goBack();
         }}
         onPressRightIcon={() => {
-          navigate('SettingChat', {id: {_id, receiver, is_group, admin}});
+          navigate('SettingChat', {id: {_id, receiver, is_group, nick_name}});
           ////////////////// xu ly
         }}
         onPressPhoneRightIcon={() => {

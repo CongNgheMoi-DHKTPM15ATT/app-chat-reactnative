@@ -17,20 +17,11 @@ import {UIHeaderChat} from '../../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ItemFriend from '../phonebook/draws/ItemFriend';
 import ListMemOnGroup from './ListMemOnGroup';
+import ListMemOnGroupWaitingAccept from './ListMemOnGroupWaitingAccept';
 const FirstRoute = () => <ListMemOnGroup></ListMemOnGroup>;
 
 const SecondRoute = () => (
-  <View style={{flex: 1}}>
-    <Text
-      style={{
-        color: 'white',
-        alignSelf: 'center',
-        textAlign: 'center',
-        padding: 10,
-      }}>
-      Người nhận đã nhận được lời mời vào nhóm nhưng chưa đồng ý tham gia
-    </Text>
-  </View>
+  <ListMemOnGroupWaitingAccept></ListMemOnGroupWaitingAccept>
 );
 
 const renderScene = SceneMap({

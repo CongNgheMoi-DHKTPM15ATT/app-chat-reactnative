@@ -19,11 +19,22 @@ function SettingChat(props) {
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
   const [imagesMess, setImagesMess] = useState([]);
-  let {_id, receiver, is_group, admin} = props.route.params.id;
+  let {_id, receiver, is_group, nick_name} = props.route.params.id;
+  const [adminGr, setAdminGr] = useState('');
+  const [myUser, setMyUser] = useState('');
   const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
+  useEffect(() => {
+    //get user_name
+    AsyncStorage.getItem('user_name').then(result => {
+      setMyUser(result);
+    });
+    console.log('eiu a: ', myUser);
+    console.log('eiu a: ', nick_name);
+  });
   useEffect(() => {
     getImage();
   }, []);
+
   const getImage = () => {
     const method = 'POST';
     fetch(BASE_URL, {
@@ -47,7 +58,7 @@ function SettingChat(props) {
       })
       .finally();
   };
-  handleImageAll = () => {
+  let handleImageAll = () => {
     alert('okkk');
   };
   return (
@@ -508,7 +519,7 @@ function SettingChat(props) {
               </Text>
             </View>
           </TouchableOpacity>
-          {is_group == true || receiver._id == admin ? (
+          {is_group == true && nick_name == receiver.nick_name ? (
             <TouchableOpacity
               style={{
                 padding: 10,
