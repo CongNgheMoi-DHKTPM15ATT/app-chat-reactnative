@@ -17,7 +17,7 @@ import ItemMem from './ItemMem';
 function ListMemOnGroup(props) {
   const [userId, setUser_id] = useState('');
   const [friend, setFriend] = useState([]);
-  const BASE_URL = 'http://192.168.1.104:8080/api/conversation/id';
+  const BASE_URL = 'http://192.168.43.91:8080/api/conversation/id';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('conver_id').then(result => {

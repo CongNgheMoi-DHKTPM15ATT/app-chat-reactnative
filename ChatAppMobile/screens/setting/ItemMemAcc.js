@@ -19,8 +19,8 @@ function ItemMemAcc(props) {
   const [isModalVisible, setModalVisible] = useState(false);
   const {onPress} = props;
   const {index} = props;
-  const BASE_URL = 'http://192.168.1.104:8080/api/group/accept';
-  const LOAD_URL = 'http://192.168.1.104:8080/api/conversation/id';
+  const BASE_URL = 'http://192.168.43.91:8080/api/group/accept';
+  const LOAD_URL = 'http://192.168.43.91:8080/api/conversation/id';
   useEffect(() => {
     AsyncStorage.getItem('user_id').then(result => {
       setMyUser(result);

@@ -22,7 +22,7 @@ function ListMemOnGroupWaitingAccept(props) {
   const [admin, setAdmin] = useState('');
   const [myUser, setMyUser] = useState('');
   const BASE_URL =
-    'http://192.168.1.104:8080/api/conversation/get-request-list';
+    'http://192.168.43.91:8080/api/conversation/get-request-list';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('conver_id').then(result => {

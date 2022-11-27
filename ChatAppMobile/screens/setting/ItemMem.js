@@ -19,8 +19,9 @@ function ItemMem(props) {
   const [isModalVisible, setModalVisible] = useState(false);
   const {onPress} = props;
   const {index} = props;
-  const BASE_URL = 'http://192.168.1.104:8080/api/group/remove-mem';
-  const LOAD_URL = 'http://192.168.1.104:8080/api/conversation/id';
+  const BASE_URL = 'http://192.168.43.91:8080/api/group/remove-mem';
+  const ADMIN_URL = 'http://192.168.43.91:8080/api/conversation/give-admin';
+  const LOAD_URL = 'http://192.168.43.91:8080/api/conversation/id';
   useEffect(() => {
     AsyncStorage.getItem('user_id').then(result => {
       setMyUser(result);
@@ -59,6 +60,37 @@ function ItemMem(props) {
         //   }
         //  })
         alert(resJson.msg);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
+  };
+
+  const handleAdmin = id => {
+    const method = 'POST';
+    fetch(ADMIN_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: id,
+        conversation_id: con_id,
+        admin_id: myUser,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        // console.log('demo day nha: ', currentUser.members);
+        //  currentUserRequests.map(req=>{
+        //   if (req==) {
+
+        //   }
+        //  })
+        alert(resJson.msg);
+        setModalVisible(false);
       })
       .catch(resJson => {
         console.log(resJson);
@@ -154,14 +186,16 @@ function ItemMem(props) {
                 Xem trang cá nhân
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection: 'row', padding: 10}}>
+            <TouchableOpacity
+              onPress={() => handleAdmin(user_id)}
+              style={{flexDirection: 'row', padding: 10}}>
               <Text
                 style={{
                   color: 'white',
                   marginHorizontal: 15,
                   marginVertical: 5,
                 }}>
-                Bổ nhiệm làm nhóm phó
+                Bổ nhiệm làm nhóm trưởng
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={{flexDirection: 'row', padding: 10}}>

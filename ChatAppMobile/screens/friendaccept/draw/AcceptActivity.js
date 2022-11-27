@@ -25,7 +25,7 @@ function AcceptActivity(props) {
   const [userId, setUser_id] = useState('');
   const [friends, setFriend] = useState([]);
   // const BASE_URL = 'http://192.168.43.91:8080/api/user/search';
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/get-friends-pending';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/get-friends-pending';
 
   useEffect(() => {
     //get user_name

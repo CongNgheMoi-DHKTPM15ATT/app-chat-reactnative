@@ -42,8 +42,8 @@ const optionsCam = {
   },
 };
 function ProfileDetail(props) {
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/send-friend-request';
-  const USER_URL = 'http://192.168.1.104:8080/api/user/id';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/send-friend-request';
+  const USER_URL = 'http://192.168.43.91:8080/api/user/id';
   const {navigate, goBack} = props.navigation;
   const [userId, setUser_id] = useState('');
   // const [conversation, setConversation] = useState('');
@@ -114,7 +114,7 @@ function ProfileDetail(props) {
         })
           .then(res => res.json())
           .then(async resJson => {
-            await fetch('http://192.168.1.104:8080/api/user/update', {
+            await fetch('http://192.168.43.91:8080/api/user/update', {
               method: 'POST',
               body: JSON.stringify({
                 _id: _id,
@@ -157,7 +157,7 @@ function ProfileDetail(props) {
     })
       .then(res => res.json())
       .then(async resJson => {
-        await fetch('http://192.168.1.104:8080/api/user/update', {
+        await fetch('http://192.168.43.91:8080/api/user/update', {
           method: 'POST',
           body: JSON.stringify({
             _id: _id,
@@ -294,13 +294,14 @@ function ProfileDetail(props) {
             )}
             <Text
               style={{
-                paddingHorizontal: 100,
+                paddingHorizontal: 90,
                 paddingTop: 380,
                 position: 'absolute',
                 alignSelf: 'center',
                 fontSize: 20,
                 color: 'white',
                 fontWeight: 'bold',
+                textAlign: 'center',
                 padding: 0,
               }}>
               {user_name}
@@ -338,7 +339,7 @@ function ProfileDetail(props) {
               <TouchableOpacity onPress={() => handleMyProfile(userId)}>
                 <Text
                   style={{
-                    paddingTop: 100,
+                    paddingTop: 120,
                     alignSelf: 'center',
                     margin: 15,
                     fontSize: 15,

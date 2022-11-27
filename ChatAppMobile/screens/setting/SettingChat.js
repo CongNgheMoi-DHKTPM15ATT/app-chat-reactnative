@@ -22,11 +22,16 @@ function SettingChat(props) {
   let {_id, receiver, is_group, nick_name} = props.route.params.id;
   const [adminGr, setAdminGr] = useState('');
   const [myUser, setMyUser] = useState('');
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages/content-type-top-4';
+  const [userId, setUserId] = useState('');
+  const BASE_URL = 'http://192.168.43.91:8080/api/messages/content-type-top-4';
+  const RM_URL = 'http://192.168.43.91:8080/api/group/remove-mem';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_name').then(result => {
       setMyUser(result);
+    });
+    AsyncStorage.getItem('user_id').then(result => {
+      setUserId(result);
     });
     console.log('eiu a: ', myUser);
     console.log('eiu a: ', nick_name);
@@ -60,6 +65,36 @@ function SettingChat(props) {
   };
   let handleImageAll = () => {
     alert('okkk');
+  };
+  const handleRemoveMembers = () => {
+    const method = 'POST';
+    fetch(RM_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        conversation_id: _id,
+        user_id: userId,
+        user_control_id: userId,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        // console.log('demo day nha: ', currentUser.members);
+        //  currentUserRequests.map(req=>{
+        //   if (req==) {
+
+        //   }
+        //  })
+        alert('Rời nhóm thành công!');
+        navigate('UITag');
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally();
   };
   return (
     <View style={{flex: 1}}>
@@ -547,6 +582,7 @@ function SettingChat(props) {
           )}
           {is_group == true ? (
             <TouchableOpacity
+              onPress={() => handleRemoveMembers()}
               style={{
                 padding: 10,
                 marginHorizontal: 25,

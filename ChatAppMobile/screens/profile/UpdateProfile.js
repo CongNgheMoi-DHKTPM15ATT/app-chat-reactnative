@@ -22,7 +22,7 @@ import {UIHeaderChat} from '../../components';
 import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 function ProfileDetail(props) {
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/update';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/update';
   const {navigate, goBack} = props.navigation;
   const [userId, setUser_id] = useState('');
   const [background, setBackground] = useState('');

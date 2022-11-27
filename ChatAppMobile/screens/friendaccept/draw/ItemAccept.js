@@ -15,8 +15,8 @@ function ItemAccept(props) {
   const [userId, setUser_id] = useState('');
   const navigation = useNavigation();
   const {onPress} = props;
-  const BASE_URL = 'http://192.168.1.104:8080/api/user/confirm-friend-request';
-  const CON_URL = 'http://192.168.1.104:8080/api/conversation/create';
+  const BASE_URL = 'http://192.168.43.91:8080/api/user/confirm-friend-request';
+  const CON_URL = 'http://192.168.43.91:8080/api/conversation/create';
   useEffect(() => {
     //get user_name
     AsyncStorage.getItem('user_id').then(result => {
@@ -49,6 +49,32 @@ function ItemAccept(props) {
         navigation.navigate('UITag');
       });
   };
+  handleNoAccept = () => {
+    const method = 'POST';
+    fetch(BASE_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        receiver_id: _id,
+        is_accept: false,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        // console.log(friends);
+      })
+      .catch(resJson => {
+        console.log(resJson);
+      })
+      .finally(() => {
+        handleCreateConversation();
+        navigation.navigate('UITag');
+      });
+  };
   handleCreateConversation = () => {
     const method = 'POST';
     fetch(CON_URL, {
@@ -63,7 +89,7 @@ function ItemAccept(props) {
     })
       .then(res => res.json())
       .then(resJson => {
-        const url = 'http://192.168.1.104:8080/api/messages/send';
+        const url = 'http://192.168.43.91:8080/api/messages/send';
 
         const method = 'POST';
         fetch(url, {
@@ -139,6 +165,7 @@ function ItemAccept(props) {
             marginHorizontal: 10,
           }}>
           <TouchableOpacity
+            onPress={() => handleNoAccept()}
             style={{
               height: 30,
               width: 100,

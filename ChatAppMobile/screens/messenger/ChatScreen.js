@@ -33,7 +33,7 @@ import Modal from 'react-native-modal';
 import ItemMem from '../messenger/ItemMem';
 export default function ChatScreen(props) {
   // const BASE_URL = 'http://192.168.43.91:8080/api/messages';
-  const BASE_URL = 'http://192.168.1.104:8080/api/messages';
+  const BASE_URL = 'http://192.168.43.91:8080/api/messages';
 
   // https://codejava-app-anime.herokuapp.com/upload
   const SERVER_URL = 'https://codejava-app-anime.herokuapp.com/upload';
@@ -79,7 +79,7 @@ export default function ChatScreen(props) {
   }, [chatHistory]);
 
   const [friend, setFriend] = useState([]);
-  const CON_URL = 'http://192.168.1.104:8080/api/conversation/id';
+  const CON_URL = 'http://192.168.43.91:8080/api/conversation/id';
 
   useEffect(() => {
     // setIsLoading(true);
@@ -179,9 +179,9 @@ export default function ChatScreen(props) {
     setTypeText('');
     return;
   };
-  let sendMessage = () => {
+  sendMessage = () => {
     // const url = 'http://192.168.43.91:8080/api/messages/send';
-    const url = 'http://192.168.1.104:8080/api/messages/send';
+    const url = 'http://192.168.43.91:8080/api/messages/send';
 
     const method = 'POST';
     if (contentType != null) {
