@@ -59,7 +59,7 @@ function ListFriend(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson;
-        console.log('day ne ba da: ', currentUser);
+        // console.log('day ne ba da: ', currentUser);
         setFriend(currentUser);
         // console.log(friends);
       })
@@ -130,7 +130,11 @@ function ListFriend(props) {
               Lời mời kết bạn
             </Text>
           </TouchableOpacity>
-          <View style={{flexDirection: 'row', marginBottom: 15}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigate('ContactsList');
+            }}
+            style={{flexDirection: 'row', marginBottom: 15}}>
             <Image
               source={images.listfriend}
               style={{
@@ -162,7 +166,7 @@ function ListFriend(props) {
                 Các liên hệ có dùng zalo
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={{flex: 20, backgroundColor: '#252526'}}>
           <View style={{height: 10, backgroundColor: 'black'}}></View>

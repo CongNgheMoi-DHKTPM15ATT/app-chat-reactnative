@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -38,6 +38,8 @@ import AddMem from '../model/AddMem';
 import CountryPicker from '../components/CountryPicker';
 import MemberScreen from '../screens/setting/MemberScreen';
 import RegisterPassword from '../screens/RegisterPassword';
+import ContactsList from '../screens/phonebook/draws/ContactsList';
+import UpdateProfile from '../screens/profile/UpdateProfile';
 const Stack = createNativeStackNavigator();
 function App(props) {
   return (
@@ -68,6 +70,8 @@ function App(props) {
         <Stack.Screen name={'CountryPicker'} component={CountryPicker} />
         <Stack.Screen name={'MemberScreen'} component={MemberScreen} />
         <Stack.Screen name={'RegisterPassword'} component={RegisterPassword} />
+        <Stack.Screen name={'ContactsList'} component={ContactsList} />
+        <Stack.Screen name={'UpdateProfile'} component={UpdateProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );

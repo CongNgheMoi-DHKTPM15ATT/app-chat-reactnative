@@ -31,7 +31,7 @@ function ListGroup(props) {
   useEffect(() => {
     // setIsLoading(true);
     getAllUsers();
-  });
+  }, [userId]);
 
   getAllUsers = () => {
     const method = 'POST';
@@ -48,7 +48,7 @@ function ListGroup(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.conversations;
-        console.log(currentUser);
+        // console.log(currentUser);
         setChat(currentUser);
       })
       .catch(resJson => {

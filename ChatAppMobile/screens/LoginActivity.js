@@ -50,13 +50,16 @@ function LoginActivity(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.data;
+        const token = resJson.token;
         alert(resJson.message);
         AsyncStorage.setItem('avatar', currentUser.avatar);
         AsyncStorage.setItem('phone', currentUser.phone);
         AsyncStorage.setItem('user_name', currentUser.user_name);
         AsyncStorage.setItem('user_id', currentUser._id);
+        AsyncStorage.setItem('jwt_token', token);
         setUser_id(currentUser._id);
         // setAccount(resJson.data);
+
         navigate('UITag');
       })
       .catch(resJson => {

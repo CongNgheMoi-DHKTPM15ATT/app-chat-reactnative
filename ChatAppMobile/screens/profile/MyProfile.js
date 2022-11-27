@@ -32,7 +32,7 @@ function MyProfile(props) {
       setUser_id(result);
     });
   });
-  handleMyProfile = id => {
+  let handleMyProfile = id => {
     const method = 'POST';
     fetch(BASE_URL, {
       method,
@@ -52,6 +52,11 @@ function MyProfile(props) {
         console.log(resJson);
       })
       .finally();
+  };
+  const handleLogout = () => {
+    AsyncStorage.clear();
+
+    navigate('LoginActivity');
   };
   return (
     <ScrollView style={{flex: 1}}>
@@ -173,6 +178,24 @@ function MyProfile(props) {
             <View style={{marginLeft: 15}}>
               <Text style={{color: 'white', fontSize: 16, marginVertical: 5}}>
                 Quyền riêng tư
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            height: 1,
+            backgroundColor: 'gray',
+            marginLeft: 80,
+          }}></View>
+        <TouchableOpacity
+          onPress={() => handleLogout()}
+          style={{padding: 15, marginLeft: 20}}>
+          <View style={{flexDirection: 'row'}}>
+            <Image source={images.logout} style={{height: 35, width: 35}} />
+            <View style={{marginLeft: 15}}>
+              <Text style={{color: 'white', fontSize: 16, marginVertical: 5}}>
+                Đăng xuất
               </Text>
             </View>
           </View>

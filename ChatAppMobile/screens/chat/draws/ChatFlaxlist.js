@@ -51,7 +51,7 @@ function ChatActivity(props) {
       .then(res => res.json())
       .then(resJson => {
         const currentUser = resJson.conversations;
-        console.log(currentUser);
+        // console.log(currentUser);
         setChat(currentUser);
       })
       .catch(resJson => {

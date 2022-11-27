@@ -6,16 +6,30 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors, fontSizes} from '../constants';
-
 function LoadingActivity(props) {
+  const [myUser, setMyUser] = useState('');
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+
   useEffect(() => {
-    setTimeout(() => {
-      navigate('LoginActivity');
-    }, 5000);
-  }, []);
+    AsyncStorage.getItem('jwt_token').then(result => {
+      setMyUser(result);
+    });
+    // alert(myUser);
+    if (myUser != null) {
+      setTimeout(() => {
+        navigate('UITag');
+      }, 5000);
+      return;
+    } else {
+      setTimeout(() => {
+        navigate('LoginActivity');
+      }, 5000);
+      return;
+    }
+  });
   return (
     <TouchableOpacity
       onPress={() => {

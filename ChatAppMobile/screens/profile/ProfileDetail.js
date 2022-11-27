@@ -43,6 +43,7 @@ const optionsCam = {
 };
 function ProfileDetail(props) {
   const BASE_URL = 'http://192.168.1.104:8080/api/user/send-friend-request';
+  const USER_URL = 'http://192.168.1.104:8080/api/user/id';
   const {navigate, goBack} = props.navigation;
   const [userId, setUser_id] = useState('');
   // const [conversation, setConversation] = useState('');
@@ -171,6 +172,28 @@ function ProfileDetail(props) {
         });
       })
       .catch(resJson => {
+        // console.log(resJson);
+        AsyncStorage.setItem('avatar', resJson.avatar);
+      })
+      .finally();
+  };
+  let handleMyProfile = id => {
+    const method = 'POST';
+    fetch(USER_URL, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        _id: id,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        navigate('UpdateProfile', {user: resJson});
+      })
+      .catch(resJson => {
         console.log(resJson);
       })
       .finally();
@@ -226,7 +249,7 @@ function ProfileDetail(props) {
                 style={{
                   zIndex: 3,
                   position: 'absolute',
-                  marginTop: 230,
+                  marginTop: -60,
                   height: 120,
                   width: 120,
                   borderRadius: 100,
@@ -241,7 +264,7 @@ function ProfileDetail(props) {
                   style={{
                     zIndex: 3,
                     position: 'absolute',
-                    marginTop: 230,
+                    marginTop: -60,
                     height: 120,
                     width: 120,
                     borderRadius: 100,
@@ -312,19 +335,21 @@ function ProfileDetail(props) {
                 Kết bạn để tìm hiểu nhau hơn
               </Text>
             ) : (
-              <Text
-                style={{
-                  paddingTop: 420,
-                  position: 'absolute',
-                  alignSelf: 'center',
-                  margin: 15,
-                  fontSize: 15,
-                  color: 'white',
-                  padding: 0,
-                  textAlign: 'center',
-                }}>
-                Cập nhật giới thiệu bản thân
-              </Text>
+              <TouchableOpacity onPress={() => handleMyProfile(userId)}>
+                <Text
+                  style={{
+                    paddingTop: 100,
+                    alignSelf: 'center',
+                    margin: 15,
+                    fontSize: 15,
+                    color: 'white',
+                    padding: 0,
+                    zIndex: 3,
+                    textAlign: 'center',
+                  }}>
+                  Cập nhật giới thiệu bản thân
+                </Text>
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -342,7 +367,7 @@ function ProfileDetail(props) {
                   }}
                   style={{
                     marginLeft: 230,
-                    marginTop: 530,
+                    marginTop: 300,
                     borderColor: 'white',
                     borderWidth: 0.5,
                     height: 35,
@@ -372,7 +397,7 @@ function ProfileDetail(props) {
                 <TouchableOpacity
                   style={{
                     marginLeft: 230,
-                    marginTop: 530,
+                    marginTop: 300,
                     borderColor: 'white',
                     borderWidth: 0.5,
                     height: 35,
@@ -402,7 +427,7 @@ function ProfileDetail(props) {
                 <TouchableOpacity
                   style={{
                     marginLeft: 230,
-                    marginTop: 530,
+                    marginTop: 300,
                     borderColor: 'white',
                     borderWidth: 0.5,
                     height: 35,

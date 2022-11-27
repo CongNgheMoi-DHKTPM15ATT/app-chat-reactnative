@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import setupFirebase from '../setup';
 function RegisterPhoneActivity(props) {
   const [erroPhone, setErrorPhone] = useState('');
@@ -54,7 +55,6 @@ function RegisterPhoneActivity(props) {
       await confirm.confirm(code);
       alert('Xác thực thành công!');
       AsyncStorage.setItem('phone_register', pass);
-      navigate('RegisterPassword');
     } catch (error) {
       alert('Mã OTP không thành công!');
     }
@@ -231,7 +231,10 @@ function RegisterPhoneActivity(props) {
         </Text>
         <View style={{flex: 1}}></View>
         <TouchableOpacity
-          onPress={() => confirmOTP()}
+          onPress={() => {
+            confirmOTP();
+            navigate('RegisterPassword');
+          }}
           style={{
             height: 60,
             width: 60,

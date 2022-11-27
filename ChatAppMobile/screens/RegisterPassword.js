@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {images, fontSizes, colors} from '../constants';
 import {isValidPhone, isValidPass} from '../utils/Validation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Text,
   View,
@@ -24,6 +25,7 @@ function RegisterPassword(props) {
   const [code, setCode] = useState('');
   const {navigation, route} = props;
   const {navigate, goBack} = navigation;
+  const [userId, setUser_id] = useState('');
   const isValidationOk = () =>
     phone.length > 0 &&
     pass.length > 0 &&
@@ -54,11 +56,46 @@ function RegisterPassword(props) {
     })
       .then(res => res.json())
       .then(resJson => {
-        console.log(resJson.data);
-        goBack();
+        handleLogin();
       });
     // alert(phone + ' ' + pass);
   };
+  let handleLogin = () => {
+    // const url = 'https://halo-chat.herokuapp.com/api/auth/login';
+    // http://localhost:8080/api/auth/login
+    // const url = 'http://192.168.43.91:8080/api/auth/login';
+    const url = 'http://192.168.1.104:8080/api/auth/login';
+    const method = 'POST';
+    fetch(url, {
+      method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        //mot sua lại dang nhap bang sdt
+        phone: phone,
+        password: pass,
+      }),
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        const currentUser = resJson.data;
+        alert(resJson.message);
+        AsyncStorage.setItem('avatar', currentUser.avatar);
+        AsyncStorage.setItem('phone', currentUser.phone);
+        AsyncStorage.setItem('user_name', currentUser.user_name);
+        AsyncStorage.setItem('user_id', currentUser._id);
+        setUser_id(currentUser._id);
+        // setAccount(resJson.data);
+        navigate('UITag');
+      })
+      .catch(resJson => {
+        alert(resJson.message);
+      });
+    // alert(phone + ' ' + pass);
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'black'}}>
       {/* <Text>{val}</Text> */}
@@ -103,6 +140,7 @@ function RegisterPassword(props) {
             value={pass}
             placeholder="Nhập mật khẩu của bạn"
             placeholderTextColor="gray"
+            secureTextEntry={sercuPass}
             style={{paddingLeft: 15, color: 'white'}}></TextInput>
         </View>
       </View>
