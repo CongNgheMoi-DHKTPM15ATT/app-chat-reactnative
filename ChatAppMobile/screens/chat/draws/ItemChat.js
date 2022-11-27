@@ -18,6 +18,7 @@ function ItemChat(props) {
     numberOfChat,
     last_message,
     seen_last_messages,
+    is_blocked,
     _id,
   } = props.chat;
   var formattedDate = moment(last_message.createdAt)
@@ -37,7 +38,7 @@ function ItemChat(props) {
   };
   const {onPress} = props;
   const {index} = props;
-  return (
+  return is_blocked == false ? (
     <TouchableOpacity
       onPress={onPress}
       style={{
@@ -165,6 +166,8 @@ function ItemChat(props) {
           marginStart: 80,
         }}></View>
     </TouchableOpacity>
+  ) : (
+    <View></View>
   );
 }
 export default ItemChat;
